@@ -21,3 +21,32 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+bin/
+dist/
+client-dist/
+build/
+client-build/
+*.log
+*.log.*
+.settings
+.eclipse
+executeLog*
+*.pyc
+*.class
+productionLog
+*~
+.project
+.classpath
+
+# IDEs
+nbproject/
+nb-build.xml
+.idea/
+apache-tomcat*
+prefixed
+failures.list
+*.jks
+*.iml
+out/
+.gradle/
