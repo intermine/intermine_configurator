@@ -3,6 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.validation.annotation.Validated;
@@ -13,13 +14,50 @@ import javax.validation.constraints.*;
  * DataFile
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-22T09:44:44.307Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-23T15:20:22.668Z[GMT]")
 public class DataFile   {
   @JsonProperty("name")
   private String name = null;
 
   @JsonProperty("fileContents")
   private String fileContents = null;
+
+  /**
+   * Gets or Sets fileType
+   */
+  public enum FileFormatEnum {
+    FASTA("fasta"),
+    
+    GFF("gff"),
+    
+    TAB("tab"),
+    
+    CSV("csv");
+
+    private String value;
+
+    FileFormatEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static FileFormatEnum fromValue(String text) {
+      for (FileFormatEnum b : FileFormatEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+  }
+  @JsonProperty("fileType")
+  private FileFormatEnum fileFormat = null;
 
   @JsonProperty("organism")
   private Object organism = null;
@@ -64,6 +102,26 @@ public class DataFile   {
     this.fileContents = fileContents;
   }
 
+  public DataFile fileFormat(FileFormatEnum fileFormat) {
+    this.fileFormat = fileFormat;
+    return this;
+  }
+
+  /**
+   * Get fileType
+   * @return fileType
+  **/
+  @ApiModelProperty(example = "fasta", required = true, value = "")
+  @NotNull
+
+  public FileFormatEnum getFileFormat() {
+    return fileFormat;
+  }
+
+  public void setFileFormat(FileFormatEnum fileFormat) {
+    this.fileFormat = fileFormat;
+  }
+
   public DataFile organism(Object organism) {
     this.organism = organism;
     return this;
@@ -96,12 +154,13 @@ public class DataFile   {
     DataFile dataFile = (DataFile) o;
     return Objects.equals(this.name, dataFile.name) &&
         Objects.equals(this.fileContents, dataFile.fileContents) &&
+        Objects.equals(this.fileFormat, dataFile.fileFormat) &&
         Objects.equals(this.organism, dataFile.organism);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, fileContents, organism);
+    return Objects.hash(name, fileContents, fileFormat, organism);
   }
 
   @Override
@@ -111,6 +170,7 @@ public class DataFile   {
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    fileContents: ").append(toIndentedString(fileContents)).append("\n");
+    sb.append("    fileType: ").append(toIndentedString(fileFormat)).append("\n");
     sb.append("    organism: ").append(toIndentedString(organism)).append("\n");
     sb.append("}");
     return sb.toString();

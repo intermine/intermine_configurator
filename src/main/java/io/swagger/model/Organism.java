@@ -13,10 +13,32 @@ import javax.validation.constraints.*;
  * Organism
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-22T09:44:44.307Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-23T15:20:22.668Z[GMT]")
 public class Organism   {
+  @JsonProperty("name")
+  private String name = null;
+
   @JsonProperty("taxonID")
   private Integer taxonID = null;
+
+  public Organism name(String name) {
+    this.name = name;
+    return this;
+  }
+
+  /**
+   * Get name
+   * @return name
+  **/
+  @ApiModelProperty(example = "Homo sapiens", value = "")
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 
   public Organism taxonID(Integer taxonID) {
     this.taxonID = taxonID;
@@ -48,12 +70,13 @@ public class Organism   {
       return false;
     }
     Organism organism = (Organism) o;
-    return Objects.equals(this.taxonID, organism.taxonID);
+    return Objects.equals(this.name, organism.name) &&
+        Objects.equals(this.taxonID, organism.taxonID);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(taxonID);
+    return Objects.hash(name, taxonID);
   }
 
   @Override
@@ -61,6 +84,7 @@ public class Organism   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Organism {\n");
     
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    taxonID: ").append(toIndentedString(taxonID)).append("\n");
     sb.append("}");
     return sb.toString();

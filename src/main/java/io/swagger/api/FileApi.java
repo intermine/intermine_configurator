@@ -24,28 +24,28 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-22T09:44:44.307Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-23T12:52:20.308Z[GMT]")
 @Api(value = "file", description = "the file API")
 public interface FileApi {
 
+//    @ApiOperation(value = "Return identified file type", nickname = "detectFileProperties", notes = "", response = DataFileProperties.class, tags={  })
+//    @ApiResponses(value = {
+//        @ApiResponse(code = 200, message = "successfully detected file type", response = DataFileProperties.class) })
+//    @RequestMapping(value = "/file/properties/detect",
+//        produces = { "application/json", "application/xml" },
+//        consumes = { "application/json", "application/xml", "multipart/form-data" },
+//        method = RequestMethod.POST)
+//    ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "File or file snippet that needs to be identified." ,required=true )  @Valid @RequestBody DataFile body);
+//
+
     @ApiOperation(value = "Return identified file type", nickname = "detectFileProperties", notes = "", response = DataFileProperties.class, tags={  })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 200, message = "successfully detected file type", response = DataFileProperties.class) })
     @RequestMapping(value = "/file/properties/detect",
-        produces = { "application/json", "application/xml" }, 
+        produces = { "application/json", "application/xml" },
         consumes = { "application/json", "application/xml", "multipart/form-data" },
         method = RequestMethod.POST)
-    ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "File or file snippet that needs to be identified." ,required=true )  @Valid @RequestBody DataFile body);
-
-
-    // @ApiOperation(value = "Return identified file type", nickname = "detectFileProperties", notes = "", response = DataFileProperties.class, tags={  })
-    // @ApiResponses(value = { 
-    //     @ApiResponse(code = 200, message = "successfully detected file type", response = DataFileProperties.class) })
-    // @RequestMapping(value = "/file/properties/detect",
-    //     produces = { "application/json", "application/xml" }, 
-    //     consumes = { "application/json", "application/xml", "multipart/form-data" },
-    //     method = RequestMethod.POST)
-    // ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "") @RequestParam(value="name", required=false)  String name,@ApiParam(value = "") @RequestParam(value="fileContents", required=false)  String fileContents,@ApiParam(value = "") @RequestParam(value="organism", required=false)  Object organism);
+    ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "") @RequestParam(value="name", required=true)  String name,@ApiParam(value = "") @RequestParam(value="fileContents", required=true)  String fileContents,@ApiParam(value = "", allowableValues="fasta, gff, tab, csv") @RequestParam(value="fileFormat", required=true)  String fileFormat,@ApiParam(value = "") @RequestParam(value="organism", required=true)  Object organism);
 
 
     @ApiOperation(value = "Delete file and associated properties", nickname = "fileDeletePost", notes = "Remove uploaded file and any properties detected or mapped by user.", tags={  })

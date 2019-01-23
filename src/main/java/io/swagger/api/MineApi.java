@@ -44,7 +44,7 @@ public interface MineApi {
     @RequestMapping(value = "/mine/dataTool/{mineId}",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.POST)
-    ResponseEntity<DataToolResponse> mineDataToolMineIdPost(@ApiParam(value = "ID of mineconfig to set tools for",required=true) @PathVariable("mineId") Long mineId);
+    ResponseEntity<DataToolResponse> mineDataToolMineIdPost(@ApiParam(value = "ID of mineconfig to set tools for",required=true) @PathVariable("mineId") UUID mineId);
 
 
     @ApiOperation(value = "Retrieve set of tools suitable for the given mine", nickname = "mineDataToolsMineIdGet", notes = "", response = DataTool.class, responseContainer = "List", tags={  })
@@ -53,16 +53,16 @@ public interface MineApi {
     @RequestMapping(value = "/mine/dataTools/{mineId}",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<DataTool>> mineDataToolsMineIdGet(@ApiParam(value = "ID of mineconfig to fetch tools for",required=true) @PathVariable("mineId") Long mineId);
+    ResponseEntity<List<DataTool>> mineDataToolsMineIdGet(@ApiParam(value = "ID of mineconfig to fetch tools for",required=true) @PathVariable("mineId") UUID mineId);
 
 
     @ApiOperation(value = "Start new mine build config entry", nickname = "setMineConfig", notes = "Create a new entry for a set of uploaded files and associated configs to launch a new mine. This can allocate an id which all file uploads will be associated with.", response = String.class, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "New mineconfig instance created", response = String.class) })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "New mineconfig instance created", response = String.class) })
     @RequestMapping(value = "/mine/config",
-        produces = { "application/json", "application/xml" }, 
-        consumes = { "application/json", "application/xml" },
-        method = RequestMethod.POST)
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml" },
+            method = RequestMethod.POST)
     ResponseEntity<String> setMineConfig(@ApiParam(value = "Config to set for Mine"  )  @Valid @RequestBody MineConfig body);
 
 }
