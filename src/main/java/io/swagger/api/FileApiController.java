@@ -46,42 +46,41 @@ public class FileApiController implements FileApi {
         this.request = request;
     }
 
-//    public ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "File or file snippet that needs to be identified." ,required=true )  @Valid @RequestBody DataFile body) {
-//        String accept = request.getHeader("Accept");
-
-//        String fileContents = body.getFileContents();
-//        String fileFormat = body.getFileFormat().toString();
-//
-//        BioValidationResults validationResults = BioValidator.Validate(fileFormat, fileContents, false);
-//        // invalid file
-//        if (!validationResults.isValid()) {
-//            throw new ApiException(1, validationResults.getErrorMessage());
-//        }
-//        DataFileProperties fileProps = new DataFileProperties();
-//        fileProps.setFileFormat(body.getFileFormat().toString());
-//        fileProps.setName(body.getName());
-//        fileProps.setRowCount(validationResults.getRowCount());
-//        fileProps.setOrganism(body.getOrganism());
-//        //fileProps.setFilePreview("nothing yet\nnot implemented");
-//        return new ResponseEntity<DataFileProperties>(fileProps, HttpStatus.OK);
-//    }
-
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "") @RequestParam(value="name", required=false)  String name,@ApiParam(value = "") @RequestParam(value="fileContents", required=false)  String fileContents,@ApiParam(value = "", allowableValues="fasta, gff, tab, csv") @RequestParam(value="fileFormat", required=false)  String fileFormat,@ApiParam(value = "") @RequestParam(value="organism", required=false)  Object organism) {
+    public ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "File or file snippet that needs to be identified." ,required=true )  @Valid @RequestBody DataFile body) {
         String accept = request.getHeader("Accept");
+
+        String fileContents = body.getFileContents();
+        String fileFormat = body.getFileFormat().toString();
+
         BioValidationResults validationResults = BioValidator.Validate(fileFormat, fileContents, false);
         // invalid file
         if (!validationResults.isValid()) {
             return new ResponseEntity(validationResults.getErrorMessage(), HttpStatus.BAD_REQUEST);
         }
         DataFileProperties fileProps = new DataFileProperties();
-        fileProps.setFileFormat(fileFormat);
-        fileProps.setName(name);
+        fileProps.setFileFormat(body.getFileFormat().toString());
+        fileProps.setName(body.getName());
         fileProps.setRowCount(validationResults.getRowCount());
-        fileProps.setOrganism(organism);
+        fileProps.setOrganism(body.getOrganism());
         //fileProps.setFilePreview("nothing yet\nnot implemented");
         return new ResponseEntity<DataFileProperties>(fileProps, HttpStatus.OK);
     }
+
+//    @ExceptionHandler(ApiException.class)
+//    public ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "") @RequestParam(value="name", required=true)  String name,@ApiParam(value = "") @RequestParam(value="fileContents", required=true)  String fileContents,@ApiParam(value = "", allowableValues="fasta, gff, tab, csv") @RequestParam(value="fileFormat", required=true)  String fileFormat,@ApiParam(value = "") @RequestParam(value="organism", required=true)  Object organism) {
+//        String accept = request.getHeader("Accept");
+//        BioValidationResults validationResults = BioValidator.Validate(fileFormat, fileContents, false);
+//        if (!validationResults.isValid()) {
+//            return new ResponseEntity(validationResults.getErrorMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//        DataFileProperties fileProps = new DataFileProperties();
+//        fileProps.setFileFormat(fileFormat);
+//        fileProps.setName(name);
+//        fileProps.setRowCount(validationResults.getRowCount());
+//        fileProps.setOrganism(organism);
+//        //fileProps.setFilePreview("nothing yet\nnot implemented");
+//        return new ResponseEntity<DataFileProperties>(fileProps, HttpStatus.OK);
+//    }
 
     public ResponseEntity<Void> fileDeletePost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody String body) {
         String accept = request.getHeader("Accept");

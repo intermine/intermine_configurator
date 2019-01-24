@@ -38,14 +38,15 @@ public interface FileApi {
 //    ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "File or file snippet that needs to be identified." ,required=true )  @Valid @RequestBody DataFile body);
 //
 
-    @ApiOperation(value = "Return identified file type", nickname = "detectFileProperties", notes = "", response = DataFileProperties.class, tags={  })
+    @ApiOperation(value = "Validate data file", nickname = "detectFileProperties", notes = "", response = DataFileProperties.class, tags={  })
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "successfully detected file type", response = DataFileProperties.class) })
     @RequestMapping(value = "/file/properties/detect",
         produces = { "application/json", "application/xml" },
         consumes = { "application/json", "application/xml", "multipart/form-data" },
         method = RequestMethod.POST)
-    ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "") @RequestParam(value="name", required=true)  String name,@ApiParam(value = "") @RequestParam(value="fileContents", required=true)  String fileContents,@ApiParam(value = "", allowableValues="fasta, gff, tab, csv") @RequestParam(value="fileFormat", required=true)  String fileFormat,@ApiParam(value = "") @RequestParam(value="organism", required=true)  Object organism);
+    //ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "") @RequestParam(value="name", required=true)  String name,@ApiParam(value = "") @RequestParam(value="fileContents", required=true)  String fileContents,@ApiParam(value = "", allowableValues="fasta, gff, tab, csv") @RequestParam(value="fileFormat", required=true)  String fileFormat,@ApiParam(value = "") @RequestParam(value="organism", required=true)  Object organism);
+    ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "File or file snippet that needs to be identified." ,required=true )  @Valid @RequestBody DataFile body);
 
 
     @ApiOperation(value = "Delete file and associated properties", nickname = "fileDeletePost", notes = "Remove uploaded file and any properties detected or mapped by user.", tags={  })

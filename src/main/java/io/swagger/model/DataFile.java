@@ -23,7 +23,7 @@ public class DataFile   {
   private String fileContents = null;
 
   /**
-   * Gets or Sets fileType
+   * Gets or Sets fileFormat
    */
   public enum FileFormatEnum {
     FASTA("fasta"),
@@ -56,7 +56,7 @@ public class DataFile   {
       return null;
     }
   }
-  @JsonProperty("fileType")
+  @JsonProperty("fileFormat")
   private FileFormatEnum fileFormat = null;
 
   @JsonProperty("organism")
@@ -108,8 +108,8 @@ public class DataFile   {
   }
 
   /**
-   * Get fileType
-   * @return fileType
+   * Get fileFormat
+   * @return fileFormat
   **/
   @ApiModelProperty(example = "fasta", required = true, value = "")
   @NotNull
@@ -170,7 +170,7 @@ public class DataFile   {
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    fileContents: ").append(toIndentedString(fileContents)).append("\n");
-    sb.append("    fileType: ").append(toIndentedString(fileFormat)).append("\n");
+    sb.append("    fileFormat: ").append(toIndentedString(fileFormat)).append("\n");
     sb.append("    organism: ").append(toIndentedString(organism)).append("\n");
     sb.append("}");
     return sb.toString();

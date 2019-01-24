@@ -7,12 +7,12 @@ public class BioValidator {
 
     /**
      *
-     * @param fileType Type of file, e.g. GFF, FASTA, CSV or TAB
+     * @param fileFormat Type of file, e.g. GFF, FASTA, CSV or TAB
      * @param fileContents contents of file to analyse
      * @param strict if TRUE, validate entire file instead of just header
      * @return Results object that contains: whether or not the file is valid
      */
-    public static BioValidationResults Validate(String fileType, String fileContents, boolean strict) {
+    public static BioValidationResults Validate(String fileFormat, String fileContents, boolean strict) {
         BioValidationResults results = new BioValidationResults(true);
         int rowCount = countLines(fileContents);
         results.setRowCount(rowCount);
@@ -21,6 +21,6 @@ public class BioValidator {
 
     private static int countLines(String str){
         String[] lines = str.split("\r\n|\r|\n");
-        return  lines.length;
+        return lines.length;
     }
 }
