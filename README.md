@@ -22,6 +22,6 @@ API Specification
 -------------------------------
 
 
-The code is generated using [swagger-spec.json](https://github.com/julie-sullivan/wizard-api-specs/blob/master/swagger-spec.json)
+The code is generated using [openapi.json](openapi.json)
 
 
