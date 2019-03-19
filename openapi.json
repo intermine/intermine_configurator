@@ -1,0 +1,729 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "ISA-InterMine Data import wizard prototype spec",
+    "version": "0.1.0",
+    "title": "InterMine Import Wizard API Specs - working draft",
+    "contact": {
+      "email": "info@intermine.org",
+      "url": "http://www.intermine.org"
+    },
+    "license": {
+      "name": "LGPL 2.1",
+      "url": "https://github.com/intermine/intermine/blob/dev/LICENSE"
+    }
+  },
+  "paths": {
+    "/mine/descriptors": {
+      "post": {
+        "summary": "Start new mine build config entry",
+        "description": "Create a new entry for a set of attributes associated with a new mine. This can allocate an id which all mine config",
+        "operationId": "setMineDescriptor",
+        "requestBody": {
+          "required": false,
+          "description": "Descriptors to set for Mine",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MineDescriptor"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/MineDescriptor"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New MineDescriptor instance created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "123e4567-e89b-12d3-a456-556642440000"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string",
+                  "example": "123e4567-e89b-12d3-a456-556642440000"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mine/descriptors/{mineId}": {
+      "get": {
+        "summary": "Get mine descriptors",
+        "description": "return configured details (if any) for a given mine id.",
+        "operationId": "getMineDescriptors",
+        "parameters": [{
+          "name": "mineId",
+          "in": "path",
+          "description": "ID of mine to fetch",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-556642440000"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MineDescriptor"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/MineDescriptor"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/file/properties/detect": {
+      "post": {
+        "summary": "Return identified file type",
+        "description": "",
+        "operationId": "detectFileProperties",
+        "responses": {
+          "200": {
+            "description": "successfully detected file type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataFileProperties"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataFileProperties"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataFile"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/DataFile"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/DataFile"
+              }
+            }
+          },
+          "description": "File or file snippet that needs to be identified.",
+          "required": true
+        }
+      }
+    },
+    "/file/properties/save": {
+      "post": {
+        "summary": "Save file properties to a given InterMine pre-build config",
+        "description": "Following on from `detectFileProperties`, we need to save a set of configs associated with a file. This can be run multiple times, as the user may upload an unknown number of files.",
+        "operationId": "saveFileProperties",
+        "responses": {
+          "200": {
+            "description": "successfully saved provided DataFileProperties details"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataFilePropertiesResponse"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/DataFilePropertiesResponse"
+              }
+            }
+          },
+          "description": "File or file snippet that needs to be identified.",
+          "required": true
+        }
+      }
+    },
+    "/mine/dataTools/{mineId}": {
+      "get": {
+        "summary": "Retrieve set of tools suitable for the given mine",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataTool"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataTool"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [{
+          "name": "mineId",
+          "in": "path",
+          "description": "ID of mineconfig to fetch tools for",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-556642440000"
+          }
+        }]
+      }
+    },
+    "/mine/dataTool/{mineId}": {
+      "post": {
+        "summary": "Set tools to be used for the given mine",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataToolResponse"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataToolResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [{
+          "name": "mineId",
+          "in": "path",
+          "description": "ID of mineconfig to set tools for",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-556642440000"
+          }
+        }]
+      }
+    },
+   "/supplementaryDataSources": {
+      "get": {
+        "summary": "Get list of possible supplementary data sources for this mine config",
+        "description": "Returns a list of possible external data sources to add to this mine, e.g. GO terms, publications, etc.",
+        "operationId": "getSupplementaryDataSources",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SupplementaryDataSource"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SupplementaryDataSource"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "set list of desired supplementary data sources",
+        "description": "Saves a list of possible external data sources to add to this mine, e.g. GO terms, publications, etc.",
+        "operationId": "setSupplementaryDataSources",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupplementaryDataSourcesResponse"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupplementaryDataSourcesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mine/config/{mineId}": {
+      "get": {
+        "summary": "Get mine config",
+        "description": "return configured details (if any) for a given mine id.",
+        "operationId": "getMineConfig",
+        "parameters": [{
+          "name": "mineId",
+          "in": "path",
+          "description": "ID of mine to fetch",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-556642440000"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MineConfig"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/MineConfig"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [{
+      "url": "https://wizard.intermine.org/v1"
+    },
+    {
+      "url": "http://wizard.intermine.org/v1"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "MineDescriptor": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "mineName": {
+            "type": "string",
+            "example": "MyFirstMine"
+          },
+          "privacy": {
+            "type": "string",
+            "enum": [
+              "unlisted",
+              "public"
+            ],
+            "example": "unlisted"
+          },
+          "licence": {
+            "type": "string",
+            "example": "CC0"
+          }
+        },
+        "xml": {
+          "name": "MineConfig"
+        }
+      },
+      "DataFile": {
+        "type": "object",
+        "required": [
+          "name",
+          "fileLocation",
+          "fileFormat",
+          "organism"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "humanfile.gff"
+          },
+          "fileLocation": {
+            "type": "string"
+          },
+          "fileFormat": {
+            "type": "string",
+            "enum": [
+              "fasta",
+              "gff",
+              "tab",
+              "csv"
+            ],
+            "example": "fasta"
+          },
+          "organism": {
+            "allOf": [{
+              "$ref": "#/components/schemas/Organism"
+            }]
+          }
+        },
+        "xml": {
+          "name": "DataFile"
+        }
+      },
+      "DataFileProperties": {
+        "type": "object",
+        "required": [
+          "name",
+          "fileFormat",
+          "rowCount",
+          "organism",
+          "fileID",
+          "mineID"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "humanfile.gff"
+          },
+          "fileFormat": {
+            "type": "string",
+            "example": "gff"
+          },
+          "rowCount": {
+            "type": "integer",
+            "example": 22395
+          },
+          "filePreview": {
+            "type": "object",
+            "properties": {
+              "headerRow": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": [
+                    "seqID",
+                    "source",
+                    "type",
+                    "start",
+                    "end",
+                    "score",
+                    "strand",
+                    "phase"
+                  ]
+                }
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": [
+                      "NC_000001.11",
+                      "RefSeq",
+                      "region  1",
+                      "248956422",
+                      ".",
+                      "+",
+                      ".",
+                      "ID=id0;Dbxref=taxon:9606;Name=1;chromosome=1;gbkey=Src;genome=chromosome;mol_type=genomic DNA"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataFilePropertiesQuestion"
+            }
+          },
+          "fileID": {
+            "type": "integer"
+          },
+          "mineID": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "DataFileProperties"
+        }
+      },
+      "Organism": {
+        "type": "object",
+        "required": [
+          "taxonID"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Homo sapiens"
+          },
+          "taxonID": {
+            "type": "integer",
+            "example": "9606"
+          }
+        }
+      },
+      "DataFilePropertiesQuestion": {
+        "type": "object",
+        "required": [
+          "fileID",
+          "mineID",
+          "question"
+        ],
+        "properties": {
+          "fileId": {
+            "type": "string"
+          },
+          "mineId": {
+            "type": "string"
+          },
+          "question": {
+            "type": "object",
+            "properties": {
+              "questionType": {
+                "type": "string",
+                "example": "nucleotideOrProtein"
+              },
+              "questionWording": {
+                "type": "string",
+                "description": "Human-readable question aimed at a wizard user.",
+                "example": "Does this file contain nucleotides or proteins?"
+              },
+              "possibleAnswers": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DataFilePropertiesAnswerOption"
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "DataFilePropertiesQuestion"
+        }
+      },
+      "DataFilePropertiesAnswerOption": {
+        "type": "object",
+        "required": [
+          "fileID",
+          "mineID"
+        ],
+        "properties": {
+          "fileId": {
+            "type": "string"
+          },
+          "mineId": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "description": "Array of possible answers the user can choose from.",
+            "example": [{
+                "answerID": "nucleotides",
+                "answerWording": "Nucleotides"
+              },
+              {
+                "answerID": "proteins",
+                "answerWording": "Proteins"
+              }
+            ],
+            "items": {
+              "type": "object",
+              "properties": {
+                "answerID": {
+                  "type": "string",
+                  "example": "nucleotide",
+                },
+                "answerWording": {
+                  "type": "string",
+                  "example": "Nucleotide"
+                }
+              }
+            },
+          },
+          "defaultAnswer": {
+            "type": "string",
+            "example": "answerID of one of the questions above"
+          }
+        },
+        "xml": {
+          "name": "DataFilePropertiesAnswerOption"
+        }
+      },
+      "DataFilePropertiesResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "fileID",
+            "mineID"
+          ],
+          "properties": {
+            "answers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "answerID": {
+                    "type": "string",
+                    "example": "GeneID"
+                  },
+                  "answerChosen": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "primaryIdentifier"
+                  }
+                }
+              }
+            },
+            "fileID": {
+              "type": "integer"
+            },
+            "mineID": {
+              "type": "string"
+            }
+          },
+          "xml": {
+            "name": "DataFilePropertiesResponse"
+          }
+        }
+      },
+      "SupplementaryDataSource": {
+        "type": "object",
+        "required": [
+          "label",
+          "description",
+          "url"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "example": "NCBI Taxon ID information"
+          },
+          "description": {
+            "type": "string",
+            "example": "Will populate empty fields for Organism, e.g. name (Based on NCBI taxon ID)"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://intermine.readthedocs.io/en/latest/database/data-sources/library/organism/"
+          }
+        },
+        "xml": {
+          "name": "SupplementaryDataSources"
+        }
+      },
+      "SupplementaryDataSourcesResponse": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "GOAnnotations",
+          "PubMed"
+        ]
+      },
+      "DataTool": {
+        "type": "object",
+        "required": [
+          "toolId",
+          "toolName",
+          "toolDescription",
+          "toolPreview",
+          "requiredClasses"
+        ],
+        "properties": {
+          "toolId": {
+            "type": "string"
+          },
+          "toolName": {
+            "type": "string",
+            "example": "ProtVista"
+          },
+          "toolDescription": {
+            "type": "string",
+            "example": "Protein feature browser"
+          },
+          "toolPreview": {
+            "type": "string",
+            "example": "http://toolregistry.intermine.org/protvista.png"
+          },
+          "requiredClasses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "Gene",
+              "Gene.homologues.homologue"
+            ]
+          }
+        }
+      },
+      "DataToolResponse": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "ids of tools to use in this mine."
+      },
+      "MineConfig": {
+        "type": "object",
+        "properties": {
+          "mineDescriptor": {
+            "$ref": "#/components/schemas/MineDescriptor"
+          },
+          "dataTools": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dataFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataFile"
+            }
+          },
+          "projectXML": {
+            "type": "string",
+            "format": "base64"
+          },
+          "globalAdditions": {
+            "type": "string",
+            "format": "base64"
+          }
+        } 
+      }
+    }
+  }
+}
