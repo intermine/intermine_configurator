@@ -372,8 +372,8 @@
     }
   },
   "servers": [{
-    "url": "https://wizard.intermine.org/v1"
-  },
+      "url": "https://wizard.intermine.org/v1"
+    },
     {
       "url": "http://wizard.intermine.org/v1"
     }
@@ -604,9 +604,9 @@
             "type": "array",
             "description": "Array of possible answers the user can choose from.",
             "example": [{
-              "answerID": "nucleotides",
-              "answerWording": "Nucleotides"
-            },
+                "answerID": "nucleotides",
+                "answerWording": "Nucleotides"
+              },
               {
                 "answerID": "proteins",
                 "answerWording": "Proteins"
@@ -617,14 +617,14 @@
               "properties": {
                 "answerID": {
                   "type": "string",
-                  "example": "nucleotide",
+                  "example": "nucleotide"
                 },
                 "answerWording": {
                   "type": "string",
                   "example": "Nucleotide"
                 }
               }
-            },
+            }
           },
           "defaultAnswer": {
             "type": "string",
