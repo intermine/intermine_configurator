@@ -4,9 +4,11 @@ import json
 import pygit2
 
 # clone intermine_compose git repo in current dir
+repoUrl = os.environ.get("GIT_REPO_URL")
+repoBranch = os.environ.get("GIT_REPO_BRANCH")
 print('Cloning intermine-compose repo')
 intermineComposeRepo = pygit2.clone_repository(
-    "https://github.com/intermine/intermine-compose", "intermine-compose", checkout_branch="master")
+    repoUrl, "intermine-compose", checkout_branch=repoBranch)
 
 
 composeRepoPath = os.path.join(os.curdir, "intermine-compose")
@@ -73,8 +75,8 @@ oid = intermineComposeRepo.create_commit(
 print("pushing changes to intermine-compose master branch")
 remote = intermineComposeRepo.remotes["origin"]
 # Create a new git user and give it write access to master branch
-gitUsername = os.environ.get("gitUserName")
-gitPassword = os.environ.get("gitPassword")
+gitUsername = os.environ.get("GIT_USERNAME")
+gitPassword = os.environ.get("GIT_PASSWORD")
 credentials = pygit2.UserPass(gitUsername, gitPassword)
 remote.credentials = credentials
 callbacks = pygit2.RemoteCallbacks(credentials=credentials)
