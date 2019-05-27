@@ -70,7 +70,7 @@ commiter = pygit2.Signature("Ankur Kumar", "ank@leoank.me")
 tree = index.write_tree()
 message = "Merge intermine_configurator API"
 oid = intermineComposeRepo.create_commit(
-    "refs/heads/master", author, commiter, message, tree, [intermineComposeRepo.head.get_object().hex])
+    "refs/heads/master", author, commiter, message, tree, [intermineComposeRepo.head.peel().hex])
 
 print("pushing changes to intermine-compose master branch")
 remote = intermineComposeRepo.remotes["origin"]
