@@ -40,6 +40,29 @@
         }
       }
     },
+    "/mine/delete/{mineId}": {
+      "delete": {
+        "summary": "Delete config associated with mine instance",
+        "operationId": "deleteConfig",
+        "parameters": [
+          {
+            "name": "mineId",
+            "in": "path",
+            "description": "ID of mine config to delete",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "123e4567-e89b-12d3-a456-556642440000"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mine config succesfully deleted"
+          }
+        }
+      }
+    },
     "/file/properties/detect": {
       "post": {
         "summary": "Return information about this file",

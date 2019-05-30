@@ -46,7 +46,8 @@ public class FileApiController implements FileApi {
 
     public ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "", required=true) @RequestParam(value="name", required=true)  String name,@ApiParam(value = "", required=true) @RequestParam(value="fileLocation", required=true)  String fileLocation,@ApiParam(value = "", required=true, allowableValues="fasta, gff, tab, csv") @RequestParam(value="fileFormat", required=true)  String fileFormat,@ApiParam(value = "", required=true) @RequestParam(value="organism", required=true)  Object organism) {
         String accept = request.getHeader("Accept");
-        String fileContents = body.getFileContents();
+        String fileName = body.getFileName.toString();
+        String fileLocation = body.getFileLocation.toString();
         String fileFormat = body.getFileFormat().toString();
 
         BioValidationResults validationResults = BioValidator.Validate(fileFormat, fileContents, false);
@@ -55,8 +56,8 @@ public class FileApiController implements FileApi {
             return new ResponseEntity(validationResults.getErrorMessage(), HttpStatus.BAD_REQUEST);
         }
         DataFileProperties fileProps = new DataFileProperties();
-        fileProps.setFileFormat(body.getFileFormat().toString());
-        fileProps.setName(body.getName());
+        fileProps.setFileFormat(fileFormat);
+        fileProps.setName(fileName);
         fileProps.setRowCount(validationResults.getRowCount());
         fileProps.setOrganism(body.getOrganism());
         //fileProps.setFilePreview("nothing yet\nnot implemented");
