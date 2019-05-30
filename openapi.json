@@ -26,12 +26,14 @@
               "application/json": {
                 "schema": {
                   "type": "string",
+                  "format": "uuid",
                   "example": "123e4567-e89b-12d3-a456-556642440000"
                 }
               },
               "application/xml": {
                 "schema": {
                   "type": "string",
+                  "format": "uuid",
                   "example": "123e4567-e89b-12d3-a456-556642440000"
                 }
               }
@@ -52,6 +54,7 @@
             "required": true,
             "schema": {
               "type": "string",
+              "format": "uuid",
               "example": "123e4567-e89b-12d3-a456-556642440000"
             }
           }
@@ -120,6 +123,7 @@
           "required": true,
           "schema": {
             "type": "string",
+            "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-556642440000"
           }
         }],
@@ -148,7 +152,7 @@
     },
     "/mine/dataTools/{mineId}": {
       "get": {
-        "summary": "Retrieve set of tools suitable for the given mine",
+        "summary": "Retrieve set tools to be used for the given mine",
         "responses": {
           "200": {
             "description": "success",
@@ -192,12 +196,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DataToolResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataTool"
                 }
               },
               "application/xml": {
                 "schema": {
-                  "$ref": "#/components/schemas/DataToolResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataTool"
                 }
               }
             }
@@ -267,6 +275,7 @@
           "required": true,
           "schema": {
             "type": "string",
+            "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-556642440000"
           }
         }],
@@ -301,6 +310,7 @@
           "required": true,
           "schema": {
             "type": "string",
+            "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-556642440000"
           }
         }],
@@ -337,6 +347,7 @@
           "required": true,
           "schema": {
             "type": "string",
+            "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-556642440000"
           }
         }],
@@ -371,6 +382,7 @@
           "required": true,
           "schema": {
             "type": "string",
+            "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-556642440000"
           }
         }],
@@ -769,13 +781,6 @@
             ]
           }
         }
-      },
-      "DataToolResponse": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "description": "ids of tools to use in this mine."
       },
       "MineConfig": {
         "type": "object",

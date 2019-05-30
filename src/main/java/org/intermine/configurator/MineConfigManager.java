@@ -10,5 +10,5 @@ import java.util.UUID;
 public class MineConfigManager {
 
     // temporary class. this is all going in mongo db
-    public static Map<String, MineConfig> MINE_CONFIGS = new HashMap<String, MineConfig>();
+    public static Map<UUID, MineConfig> MINE_CONFIGS = new HashMap<UUID, MineConfig>();
 }

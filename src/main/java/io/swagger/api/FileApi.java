@@ -8,34 +8,30 @@ package io.swagger.api;
 import io.swagger.model.DataFile;
 import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataFilePropertiesResponseInner;
+import java.util.UUID;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
 import java.util.List;
-import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T09:11:48.356Z[GMT]")
+
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T13:08:33.831Z[GMT]")
 @Api(value = "file", description = "the file API")
 public interface FileApi {
 
-    // @ApiOperation(value = "Return information about this file", nickname = "detectFileProperties", notes = "", response = DataFileProperties.class, tags={  })
-    // @ApiResponses(value = { 
-    //     @ApiResponse(code = 200, message = "successfully detected file type", response = DataFileProperties.class) })
-    // @RequestMapping(value = "/file/properties/detect",
-    //     produces = { "application/json", "application/xml" }, 
-    //     consumes = { "application/json", "application/xml", "multipart/form-data" },
-    //     method = RequestMethod.POST)
-    // ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody DataFile body);
+//    @ApiOperation(value = "Return information about this file", nickname = "detectFileProperties", notes = "", response = DataFileProperties.class, tags={  })
+//    @ApiResponses(value = {
+//        @ApiResponse(code = 200, message = "successfully detected file type", response = DataFileProperties.class) })
+//    @RequestMapping(value = "/file/properties/detect",
+//        produces = { "application/json", "application/xml" },
+//        consumes = { "application/json", "application/xml", "multipart/form-data" },
+//        method = RequestMethod.POST)
+//    ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody DataFile body);
 
 
     @ApiOperation(value = "Return information about this file", nickname = "detectFileProperties", notes = "", response = DataFileProperties.class, tags={  })
@@ -54,6 +50,6 @@ public interface FileApi {
     @RequestMapping(value = "/file/properties/save/{mineId}",
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> saveFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody List<DataFilePropertiesResponseInner> body,@ApiParam(value = "ID of mine to fetch",required=true) @PathVariable("mineId") String mineId);
+    ResponseEntity<Void> saveFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody List<DataFilePropertiesResponseInner> body,@ApiParam(value = "ID of mine to fetch",required=true) @PathVariable("mineId") UUID mineId);
 
 }

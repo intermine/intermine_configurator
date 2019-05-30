@@ -26,14 +26,13 @@ public class SupplementaryDataSourcesApiControllerIntegrationTest {
     @Test
     public void getSupplementaryDataSourcesTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
-
         ResponseEntity<List<SupplementaryDataSource>> responseEntity = api.getSupplementaryDataSources(mineId);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
     @Test
     public void setSupplementaryDataSourcesTest() throws Exception {
-        String mineId = "mineId_example";
+        UUID mineId = java.util.UUID.randomUUID();
         ResponseEntity<SupplementaryDataSourcesResponse> responseEntity = api.setSupplementaryDataSources(mineId);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }

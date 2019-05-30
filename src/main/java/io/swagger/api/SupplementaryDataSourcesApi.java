@@ -24,7 +24,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T09:11:48.356Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T13:08:33.831Z[GMT]")
 @Api(value = "supplementaryDataSources", description = "the supplementaryDataSources API")
 public interface SupplementaryDataSourcesApi {
 
@@ -43,6 +43,6 @@ public interface SupplementaryDataSourcesApi {
     @RequestMapping(value = "/supplementaryDataSources/{mineId}",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.POST)
-    ResponseEntity<SupplementaryDataSourcesResponse> setSupplementaryDataSources(@ApiParam(value = "ID of mine to fetch",required=true) @PathVariable("mineId") String mineId);
+    ResponseEntity<SupplementaryDataSourcesResponse> setSupplementaryDataSources(@ApiParam(value = "ID of mine to fetch",required=true) @PathVariable("mineId") UUID mineId);
 
 }

@@ -3,6 +3,7 @@ package io.swagger.api;
 import io.swagger.model.DataFile;
 import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataFilePropertiesResponseInner;
+import java.util.UUID;
 
 import java.util.*;
 
@@ -43,7 +44,7 @@ public class FileApiControllerIntegrationTest {
     @Test
     public void saveFilePropertiesTest() throws Exception {
         List<DataFilePropertiesResponseInner> body = Arrays.asList(new DataFilePropertiesResponseInner());
-        String mineId = "mineId_example";
+        UUID mineId = java.util.UUID.randomUUID();
         ResponseEntity<Void> responseEntity = api.saveFileProperties(body, mineId);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }

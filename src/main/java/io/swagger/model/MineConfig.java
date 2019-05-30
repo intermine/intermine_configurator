@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.DataFile;
+import io.swagger.model.DataTool;
 import io.swagger.model.MineDescriptor;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +18,14 @@ import javax.validation.constraints.*;
  * MineConfig
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T09:11:48.356Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T13:08:33.831Z[GMT]")
 public class MineConfig   {
   @JsonProperty("mineDescriptor")
   private MineDescriptor mineDescriptor = null;
 
   @JsonProperty("dataTools")
   @Valid
-  private List<String> dataTools = null;
+  private List<DataTool> dataTools = null;
 
   @JsonProperty("dataFiles")
   @Valid
@@ -56,14 +57,14 @@ public class MineConfig   {
     this.mineDescriptor = mineDescriptor;
   }
 
-  public MineConfig dataTools(List<String> dataTools) {
+  public MineConfig dataTools(List<DataTool> dataTools) {
     this.dataTools = dataTools;
     return this;
   }
 
-  public MineConfig addDataToolsItem(String dataToolsItem) {
+  public MineConfig addDataToolsItem(DataTool dataToolsItem) {
     if (this.dataTools == null) {
-      this.dataTools = new ArrayList<String>();
+      this.dataTools = new ArrayList<DataTool>();
     }
     this.dataTools.add(dataToolsItem);
     return this;
@@ -74,12 +75,12 @@ public class MineConfig   {
    * @return dataTools
   **/
   @ApiModelProperty(value = "")
-
-  public List<String> getDataTools() {
+  @Valid
+  public List<DataTool> getDataTools() {
     return dataTools;
   }
 
-  public void setDataTools(List<String> dataTools) {
+  public void setDataTools(List<DataTool> dataTools) {
     this.dataTools = dataTools;
   }
 
