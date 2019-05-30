@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.DataFilePropertiesResponseInnerMappedColumns;
+import io.swagger.model.DataFilePropertiesResponseInnerAnswers;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -16,84 +16,63 @@ import javax.validation.constraints.*;
  * DataFilePropertiesResponseInner
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-23T15:20:22.668Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T07:36:59.085Z[GMT]")
 public class DataFilePropertiesResponseInner   {
-  @JsonProperty("mappedColumns")
+  @JsonProperty("answers")
   @Valid
-  private List<DataFilePropertiesResponseInnerMappedColumns> mappedColumns = null;
+  private List<DataFilePropertiesResponseInnerAnswers> answers = null;
 
-  @JsonProperty("organism")
-  private Object organism = null;
-
-  @JsonProperty("fileID")
-  private Integer fileID = null;
+  @JsonProperty("fileLocation")
+  private String fileLocation = null;
 
   @JsonProperty("mineID")
   private String mineID = null;
 
-  public DataFilePropertiesResponseInner mappedColumns(List<DataFilePropertiesResponseInnerMappedColumns> mappedColumns) {
-    this.mappedColumns = mappedColumns;
+  public DataFilePropertiesResponseInner answers(List<DataFilePropertiesResponseInnerAnswers> answers) {
+    this.answers = answers;
     return this;
   }
 
-  public DataFilePropertiesResponseInner addMappedColumnsItem(DataFilePropertiesResponseInnerMappedColumns mappedColumnsItem) {
-    if (this.mappedColumns == null) {
-      this.mappedColumns = new ArrayList<DataFilePropertiesResponseInnerMappedColumns>();
+  public DataFilePropertiesResponseInner addAnswersItem(DataFilePropertiesResponseInnerAnswers answersItem) {
+    if (this.answers == null) {
+      this.answers = new ArrayList<DataFilePropertiesResponseInnerAnswers>();
     }
-    this.mappedColumns.add(mappedColumnsItem);
+    this.answers.add(answersItem);
     return this;
   }
 
   /**
-   * Get mappedColumns
-   * @return mappedColumns
+   * Get answers
+   * @return answers
   **/
   @ApiModelProperty(value = "")
   @Valid
-  public List<DataFilePropertiesResponseInnerMappedColumns> getMappedColumns() {
-    return mappedColumns;
+  public List<DataFilePropertiesResponseInnerAnswers> getAnswers() {
+    return answers;
   }
 
-  public void setMappedColumns(List<DataFilePropertiesResponseInnerMappedColumns> mappedColumns) {
-    this.mappedColumns = mappedColumns;
+  public void setAnswers(List<DataFilePropertiesResponseInnerAnswers> answers) {
+    this.answers = answers;
   }
 
-  public DataFilePropertiesResponseInner organism(Object organism) {
-    this.organism = organism;
+  public DataFilePropertiesResponseInner fileLocation(String fileLocation) {
+    this.fileLocation = fileLocation;
     return this;
   }
 
   /**
-   * Get organism
-   * @return organism
+   * Get fileLocation
+   * @return fileLocation
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "/data/myGFF", required = true, value = "")
+  @NotNull
 
-  public Object getOrganism() {
-    return organism;
+  public String getFileLocation() {
+    return fileLocation;
   }
 
-  public void setOrganism(Object organism) {
-    this.organism = organism;
-  }
-
-  public DataFilePropertiesResponseInner fileID(Integer fileID) {
-    this.fileID = fileID;
-    return this;
-  }
-
-  /**
-   * Get fileID
-   * @return fileID
-  **/
-  @ApiModelProperty(value = "")
-
-  public Integer getFileID() {
-    return fileID;
-  }
-
-  public void setFileID(Integer fileID) {
-    this.fileID = fileID;
+  public void setFileLocation(String fileLocation) {
+    this.fileLocation = fileLocation;
   }
 
   public DataFilePropertiesResponseInner mineID(String mineID) {
@@ -105,7 +84,8 @@ public class DataFilePropertiesResponseInner   {
    * Get mineID
    * @return mineID
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "123e4567-e89b-12d3-a456-556642440000", required = true, value = "")
+  @NotNull
 
   public String getMineID() {
     return mineID;
@@ -125,15 +105,14 @@ public class DataFilePropertiesResponseInner   {
       return false;
     }
     DataFilePropertiesResponseInner dataFilePropertiesResponseInner = (DataFilePropertiesResponseInner) o;
-    return Objects.equals(this.mappedColumns, dataFilePropertiesResponseInner.mappedColumns) &&
-        Objects.equals(this.organism, dataFilePropertiesResponseInner.organism) &&
-        Objects.equals(this.fileID, dataFilePropertiesResponseInner.fileID) &&
+    return Objects.equals(this.answers, dataFilePropertiesResponseInner.answers) &&
+        Objects.equals(this.fileLocation, dataFilePropertiesResponseInner.fileLocation) &&
         Objects.equals(this.mineID, dataFilePropertiesResponseInner.mineID);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(mappedColumns, organism, fileID, mineID);
+    return Objects.hash(answers, fileLocation, mineID);
   }
 
   @Override
@@ -141,9 +120,8 @@ public class DataFilePropertiesResponseInner   {
     StringBuilder sb = new StringBuilder();
     sb.append("class DataFilePropertiesResponseInner {\n");
     
-    sb.append("    mappedColumns: ").append(toIndentedString(mappedColumns)).append("\n");
-    sb.append("    organism: ").append(toIndentedString(organism)).append("\n");
-    sb.append("    fileID: ").append(toIndentedString(fileID)).append("\n");
+    sb.append("    answers: ").append(toIndentedString(answers)).append("\n");
+    sb.append("    fileLocation: ").append(toIndentedString(fileLocation)).append("\n");
     sb.append("    mineID: ").append(toIndentedString(mineID)).append("\n");
     sb.append("}");
     return sb.toString();

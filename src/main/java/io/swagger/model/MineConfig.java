@@ -3,9 +3,12 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.model.DataFile;
+import io.swagger.model.MineDescriptor;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,102 +17,135 @@ import javax.validation.constraints.*;
  * MineConfig
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-23T15:20:22.668Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T07:36:59.085Z[GMT]")
 public class MineConfig   {
-  @JsonProperty("mineName")
-  private String mineName = null;
+  @JsonProperty("mineDescriptor")
+  private MineDescriptor mineDescriptor = null;
 
-  /**
-   * Gets or Sets privacy
-   */
-  public enum PrivacyEnum {
-    UNLISTED("unlisted"),
-    
-    PUBLIC("public");
+  @JsonProperty("dataTools")
+  @Valid
+  private List<String> dataTools = null;
 
-    private String value;
+  @JsonProperty("dataFiles")
+  @Valid
+  private List<DataFile> dataFiles = null;
 
-    PrivacyEnum(String value) {
-      this.value = value;
-    }
+  @JsonProperty("projectXML")
+  private String projectXML = null;
 
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
+  @JsonProperty("globalAdditions")
+  private String globalAdditions = null;
 
-    @JsonCreator
-    public static PrivacyEnum fromValue(String text) {
-      for (PrivacyEnum b : PrivacyEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-  @JsonProperty("privacy")
-  private PrivacyEnum privacy = null;
-
-  @JsonProperty("licence")
-  private String licence = null;
-
-  public MineConfig mineName(String mineName) {
-    this.mineName = mineName;
+  public MineConfig mineDescriptor(MineDescriptor mineDescriptor) {
+    this.mineDescriptor = mineDescriptor;
     return this;
   }
 
   /**
-   * Get mineName
-   * @return mineName
+   * Get mineDescriptor
+   * @return mineDescriptor
   **/
-  @ApiModelProperty(example = "MyFirstMine", value = "")
+  @ApiModelProperty(value = "")
 
-  public String getMineName() {
-    return mineName;
+  @Valid
+  public MineDescriptor getMineDescriptor() {
+    return mineDescriptor;
   }
 
-  public void setMineName(String mineName) {
-    this.mineName = mineName;
+  public void setMineDescriptor(MineDescriptor mineDescriptor) {
+    this.mineDescriptor = mineDescriptor;
   }
 
-  public MineConfig privacy(PrivacyEnum privacy) {
-    this.privacy = privacy;
+  public MineConfig dataTools(List<String> dataTools) {
+    this.dataTools = dataTools;
+    return this;
+  }
+
+  public MineConfig addDataToolsItem(String dataToolsItem) {
+    if (this.dataTools == null) {
+      this.dataTools = new ArrayList<String>();
+    }
+    this.dataTools.add(dataToolsItem);
     return this;
   }
 
   /**
-   * Get privacy
-   * @return privacy
+   * Get dataTools
+   * @return dataTools
   **/
-  @ApiModelProperty(example = "unlisted", value = "")
+  @ApiModelProperty(value = "")
 
-  public PrivacyEnum getPrivacy() {
-    return privacy;
+  public List<String> getDataTools() {
+    return dataTools;
   }
 
-  public void setPrivacy(PrivacyEnum privacy) {
-    this.privacy = privacy;
+  public void setDataTools(List<String> dataTools) {
+    this.dataTools = dataTools;
   }
 
-  public MineConfig licence(String licence) {
-    this.licence = licence;
+  public MineConfig dataFiles(List<DataFile> dataFiles) {
+    this.dataFiles = dataFiles;
+    return this;
+  }
+
+  public MineConfig addDataFilesItem(DataFile dataFilesItem) {
+    if (this.dataFiles == null) {
+      this.dataFiles = new ArrayList<DataFile>();
+    }
+    this.dataFiles.add(dataFilesItem);
     return this;
   }
 
   /**
-   * Get licence
-   * @return licence
+   * Get dataFiles
+   * @return dataFiles
   **/
-  @ApiModelProperty(example = "CC0", value = "")
-
-  public String getLicence() {
-    return licence;
+  @ApiModelProperty(value = "")
+  @Valid
+  public List<DataFile> getDataFiles() {
+    return dataFiles;
   }
 
-  public void setLicence(String licence) {
-    this.licence = licence;
+  public void setDataFiles(List<DataFile> dataFiles) {
+    this.dataFiles = dataFiles;
+  }
+
+  public MineConfig projectXML(String projectXML) {
+    this.projectXML = projectXML;
+    return this;
+  }
+
+  /**
+   * Get projectXML
+   * @return projectXML
+  **/
+  @ApiModelProperty(value = "")
+
+  public String getProjectXML() {
+    return projectXML;
+  }
+
+  public void setProjectXML(String projectXML) {
+    this.projectXML = projectXML;
+  }
+
+  public MineConfig globalAdditions(String globalAdditions) {
+    this.globalAdditions = globalAdditions;
+    return this;
+  }
+
+  /**
+   * Get globalAdditions
+   * @return globalAdditions
+  **/
+  @ApiModelProperty(value = "")
+
+  public String getGlobalAdditions() {
+    return globalAdditions;
+  }
+
+  public void setGlobalAdditions(String globalAdditions) {
+    this.globalAdditions = globalAdditions;
   }
 
 
@@ -122,14 +158,16 @@ public class MineConfig   {
       return false;
     }
     MineConfig mineConfig = (MineConfig) o;
-    return Objects.equals(this.mineName, mineConfig.mineName) &&
-        Objects.equals(this.privacy, mineConfig.privacy) &&
-        Objects.equals(this.licence, mineConfig.licence);
+    return Objects.equals(this.mineDescriptor, mineConfig.mineDescriptor) &&
+        Objects.equals(this.dataTools, mineConfig.dataTools) &&
+        Objects.equals(this.dataFiles, mineConfig.dataFiles) &&
+        Objects.equals(this.projectXML, mineConfig.projectXML) &&
+        Objects.equals(this.globalAdditions, mineConfig.globalAdditions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(mineName, privacy, licence);
+    return Objects.hash(mineDescriptor, dataTools, dataFiles, projectXML, globalAdditions);
   }
 
   @Override
@@ -137,9 +175,11 @@ public class MineConfig   {
     StringBuilder sb = new StringBuilder();
     sb.append("class MineConfig {\n");
     
-    sb.append("    mineName: ").append(toIndentedString(mineName)).append("\n");
-    sb.append("    privacy: ").append(toIndentedString(privacy)).append("\n");
-    sb.append("    licence: ").append(toIndentedString(licence)).append("\n");
+    sb.append("    mineDescriptor: ").append(toIndentedString(mineDescriptor)).append("\n");
+    sb.append("    dataTools: ").append(toIndentedString(dataTools)).append("\n");
+    sb.append("    dataFiles: ").append(toIndentedString(dataFiles)).append("\n");
+    sb.append("    projectXML: ").append(toIndentedString(projectXML)).append("\n");
+    sb.append("    globalAdditions: ").append(toIndentedString(globalAdditions)).append("\n");
     sb.append("}");
     return sb.toString();
   }

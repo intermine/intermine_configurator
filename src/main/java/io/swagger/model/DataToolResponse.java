@@ -13,8 +13,8 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "ids of tools to use in this mine.")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-23T15:20:22.668Z[GMT]")
-public class DataToolResponse extends ArrayList<Integer>  {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T07:36:59.085Z[GMT]")
+public class DataToolResponse extends ArrayList<String>  {
 
   @Override
   public boolean equals(java.lang.Object o) {

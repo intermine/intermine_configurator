@@ -15,10 +15,10 @@ import javax.validation.constraints.*;
  * DataTool
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-23T15:20:22.668Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T07:36:59.085Z[GMT]")
 public class DataTool   {
   @JsonProperty("toolId")
-  private Integer toolId = null;
+  private String toolId = null;
 
   @JsonProperty("toolName")
   private String toolName = null;
@@ -31,9 +31,9 @@ public class DataTool   {
 
   @JsonProperty("requiredClasses")
   @Valid
-  private List<String> requiredClasses = null;
+  private List<String> requiredClasses = new ArrayList<String>();
 
-  public DataTool toolId(Integer toolId) {
+  public DataTool toolId(String toolId) {
     this.toolId = toolId;
     return this;
   }
@@ -42,13 +42,14 @@ public class DataTool   {
    * Get toolId
    * @return toolId
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
-  public Integer getToolId() {
+  public String getToolId() {
     return toolId;
   }
 
-  public void setToolId(Integer toolId) {
+  public void setToolId(String toolId) {
     this.toolId = toolId;
   }
 
@@ -61,7 +62,8 @@ public class DataTool   {
    * Get toolName
    * @return toolName
   **/
-  @ApiModelProperty(example = "ProtVista", value = "")
+  @ApiModelProperty(example = "ProtVista", required = true, value = "")
+  @NotNull
 
   public String getToolName() {
     return toolName;
@@ -80,7 +82,8 @@ public class DataTool   {
    * Get toolDescription
    * @return toolDescription
   **/
-  @ApiModelProperty(example = "Protein feature browser", value = "")
+  @ApiModelProperty(example = "Protein feature browser", required = true, value = "")
+  @NotNull
 
   public String getToolDescription() {
     return toolDescription;
@@ -99,7 +102,8 @@ public class DataTool   {
    * Get toolPreview
    * @return toolPreview
   **/
-  @ApiModelProperty(example = "http://toolregistry.intermine.org/protvista.png", value = "")
+  @ApiModelProperty(example = "http://toolregistry.intermine.org/protvista.png", required = true, value = "")
+  @NotNull
 
   public String getToolPreview() {
     return toolPreview;
@@ -115,9 +119,6 @@ public class DataTool   {
   }
 
   public DataTool addRequiredClassesItem(String requiredClassesItem) {
-    if (this.requiredClasses == null) {
-      this.requiredClasses = new ArrayList<String>();
-    }
     this.requiredClasses.add(requiredClassesItem);
     return this;
   }
@@ -126,7 +127,8 @@ public class DataTool   {
    * Get requiredClasses
    * @return requiredClasses
   **/
-  @ApiModelProperty(example = "[\"Gene\",\"Gene.homologues.homologue\"]", value = "")
+  @ApiModelProperty(example = "[\"Gene\",\"Gene.homologues.homologue\"]", required = true, value = "")
+  @NotNull
 
   public List<String> getRequiredClasses() {
     return requiredClasses;

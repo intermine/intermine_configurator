@@ -14,13 +14,13 @@ import javax.validation.constraints.*;
  * DataFile
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-23T15:20:22.668Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T07:36:59.085Z[GMT]")
 public class DataFile   {
   @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("fileContents")
-  private String fileContents = null;
+  @JsonProperty("fileLocation")
+  private String fileLocation = null;
 
   /**
    * Gets or Sets fileFormat
@@ -82,24 +82,24 @@ public class DataFile   {
     this.name = name;
   }
 
-  public DataFile fileContents(String fileContents) {
-    this.fileContents = fileContents;
+  public DataFile fileLocation(String fileLocation) {
+    this.fileLocation = fileLocation;
     return this;
   }
 
   /**
-   * Get fileContents
-   * @return fileContents
+   * Get fileLocation
+   * @return fileLocation
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "/data/myGFF", required = true, value = "")
   @NotNull
 
-  public String getFileContents() {
-    return fileContents;
+  public String getFileLocation() {
+    return fileLocation;
   }
 
-  public void setFileContents(String fileContents) {
-    this.fileContents = fileContents;
+  public void setFileLocation(String fileLocation) {
+    this.fileLocation = fileLocation;
   }
 
   public DataFile fileFormat(FileFormatEnum fileFormat) {
@@ -153,14 +153,14 @@ public class DataFile   {
     }
     DataFile dataFile = (DataFile) o;
     return Objects.equals(this.name, dataFile.name) &&
-        Objects.equals(this.fileContents, dataFile.fileContents) &&
+        Objects.equals(this.fileLocation, dataFile.fileLocation) &&
         Objects.equals(this.fileFormat, dataFile.fileFormat) &&
         Objects.equals(this.organism, dataFile.organism);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, fileContents, fileFormat, organism);
+    return Objects.hash(name, fileLocation, fileFormat, organism);
   }
 
   @Override
@@ -169,7 +169,7 @@ public class DataFile   {
     sb.append("class DataFile {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    fileContents: ").append(toIndentedString(fileContents)).append("\n");
+    sb.append("    fileLocation: ").append(toIndentedString(fileLocation)).append("\n");
     sb.append("    fileFormat: ").append(toIndentedString(fileFormat)).append("\n");
     sb.append("    organism: ").append(toIndentedString(organism)).append("\n");
     sb.append("}");

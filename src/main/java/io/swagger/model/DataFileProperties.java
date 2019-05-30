@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.DataFilePropertiesColumnsToMap;
 import io.swagger.model.DataFilePropertiesFilePreview;
+import io.swagger.model.DataFilePropertiesQuestion;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +17,7 @@ import javax.validation.constraints.*;
  * DataFileProperties
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-01-23T15:20:22.668Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T07:36:59.085Z[GMT]")
 public class DataFileProperties   {
   @JsonProperty("name")
   private String name = null;
@@ -31,15 +31,12 @@ public class DataFileProperties   {
   @JsonProperty("filePreview")
   private DataFilePropertiesFilePreview filePreview = null;
 
-  @JsonProperty("columnsToMap")
+  @JsonProperty("questions")
   @Valid
-  private List<DataFilePropertiesColumnsToMap> columnsToMap = null;
+  private List<DataFilePropertiesQuestion> questions = null;
 
-  @JsonProperty("organism")
-  private Object organism = null;
-
-  @JsonProperty("fileID")
-  private Integer fileID = null;
+  @JsonProperty("fileLocation")
+  private String fileLocation = null;
 
   @JsonProperty("mineID")
   private String mineID = null;
@@ -124,71 +121,51 @@ public class DataFileProperties   {
     this.filePreview = filePreview;
   }
 
-  public DataFileProperties columnsToMap(List<DataFilePropertiesColumnsToMap> columnsToMap) {
-    this.columnsToMap = columnsToMap;
+  public DataFileProperties questions(List<DataFilePropertiesQuestion> questions) {
+    this.questions = questions;
     return this;
   }
 
-  public DataFileProperties addColumnsToMapItem(DataFilePropertiesColumnsToMap columnsToMapItem) {
-    if (this.columnsToMap == null) {
-      this.columnsToMap = new ArrayList<DataFilePropertiesColumnsToMap>();
+  public DataFileProperties addQuestionsItem(DataFilePropertiesQuestion questionsItem) {
+    if (this.questions == null) {
+      this.questions = new ArrayList<DataFilePropertiesQuestion>();
     }
-    this.columnsToMap.add(columnsToMapItem);
+    this.questions.add(questionsItem);
     return this;
   }
 
   /**
-   * Get columnsToMap
-   * @return columnsToMap
+   * Get questions
+   * @return questions
   **/
   @ApiModelProperty(value = "")
   @Valid
-  public List<DataFilePropertiesColumnsToMap> getColumnsToMap() {
-    return columnsToMap;
+  public List<DataFilePropertiesQuestion> getQuestions() {
+    return questions;
   }
 
-  public void setColumnsToMap(List<DataFilePropertiesColumnsToMap> columnsToMap) {
-    this.columnsToMap = columnsToMap;
+  public void setQuestions(List<DataFilePropertiesQuestion> questions) {
+    this.questions = questions;
   }
 
-  public DataFileProperties organism(Object organism) {
-    this.organism = organism;
+  public DataFileProperties fileLocation(String fileLocation) {
+    this.fileLocation = fileLocation;
     return this;
   }
 
   /**
-   * Get organism
-   * @return organism
+   * Get fileLocation
+   * @return fileLocation
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "/data/myGFF", required = true, value = "")
   @NotNull
 
-  public Object getOrganism() {
-    return organism;
+  public String getFileLocation() {
+    return fileLocation;
   }
 
-  public void setOrganism(Object organism) {
-    this.organism = organism;
-  }
-
-  public DataFileProperties fileID(Integer fileID) {
-    this.fileID = fileID;
-    return this;
-  }
-
-  /**
-   * Get fileID
-   * @return fileID
-  **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-  public Integer getFileID() {
-    return fileID;
-  }
-
-  public void setFileID(Integer fileID) {
-    this.fileID = fileID;
+  public void setFileLocation(String fileLocation) {
+    this.fileLocation = fileLocation;
   }
 
   public DataFileProperties mineID(String mineID) {
@@ -200,7 +177,7 @@ public class DataFileProperties   {
    * Get mineID
    * @return mineID
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "123e4567-e89b-12d3-a456-556642440000", required = true, value = "")
   @NotNull
 
   public String getMineID() {
@@ -225,15 +202,14 @@ public class DataFileProperties   {
         Objects.equals(this.fileFormat, dataFileProperties.fileFormat) &&
         Objects.equals(this.rowCount, dataFileProperties.rowCount) &&
         Objects.equals(this.filePreview, dataFileProperties.filePreview) &&
-        Objects.equals(this.columnsToMap, dataFileProperties.columnsToMap) &&
-        Objects.equals(this.organism, dataFileProperties.organism) &&
-        Objects.equals(this.fileID, dataFileProperties.fileID) &&
+        Objects.equals(this.questions, dataFileProperties.questions) &&
+        Objects.equals(this.fileLocation, dataFileProperties.fileLocation) &&
         Objects.equals(this.mineID, dataFileProperties.mineID);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, fileFormat, rowCount, filePreview, columnsToMap, organism, fileID, mineID);
+    return Objects.hash(name, fileFormat, rowCount, filePreview, questions, fileLocation, mineID);
   }
 
   @Override
@@ -245,9 +221,8 @@ public class DataFileProperties   {
     sb.append("    fileFormat: ").append(toIndentedString(fileFormat)).append("\n");
     sb.append("    rowCount: ").append(toIndentedString(rowCount)).append("\n");
     sb.append("    filePreview: ").append(toIndentedString(filePreview)).append("\n");
-    sb.append("    columnsToMap: ").append(toIndentedString(columnsToMap)).append("\n");
-    sb.append("    organism: ").append(toIndentedString(organism)).append("\n");
-    sb.append("    fileID: ").append(toIndentedString(fileID)).append("\n");
+    sb.append("    questions: ").append(toIndentedString(questions)).append("\n");
+    sb.append("    fileLocation: ").append(toIndentedString(fileLocation)).append("\n");
     sb.append("    mineID: ").append(toIndentedString(mineID)).append("\n");
     sb.append("}");
     return sb.toString();
