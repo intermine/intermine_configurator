@@ -786,7 +786,7 @@
           "dataTools": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/DataTool"
             }
           },
           "dataFiles": {

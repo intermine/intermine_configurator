@@ -23,12 +23,12 @@ public class FileApiControllerIntegrationTest {
     @Autowired
     private FileApi api;
 
-    @Test
-    public void detectFilePropertiesTest() throws Exception {
-        DataFile body = new DataFile();
-        ResponseEntity<DataFileProperties> responseEntity = api.detectFileProperties(body);
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
-    }
+//    @Test
+//    public void detectFilePropertiesTest() throws Exception {
+//        DataFile body = new DataFile();
+//        ResponseEntity<DataFileProperties> responseEntity = api.detectFileProperties(body);
+//        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+//    }
 
     @Test
     public void detectFilePropertiesTest() throws Exception {

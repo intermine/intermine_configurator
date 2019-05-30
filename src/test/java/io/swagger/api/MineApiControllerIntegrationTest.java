@@ -47,24 +47,27 @@ public class MineApiControllerIntegrationTest {
 
     @Test
     public void mineDataToolsMineIdGetTest() throws Exception {
-        UUID mineId = new UUID();
-        ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsMineIdGet(mineId);
+        UUID mineId = java.util.UUID.randomUUID();
+        ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsMineIdGet(String.valueOf(mineId));
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
     @Test
     public void mineDataToolsMineIdPostTest() throws Exception {
-        UUID mineId = new UUID();
-        ResponseEntity<DataToolResponse> responseEntity = api.mineDataToolsMineIdPost(mineId);
+        UUID mineId = java.util.UUID.randomUUID();
+        ResponseEntity<DataToolResponse> responseEntity = api.mineDataToolsMineIdPost(String.valueOf(mineId));
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
     @Test
     public void setMineDescriptorsTest() throws Exception {
         MineDescriptor body = new MineDescriptor();
+        body.setMineName("tigerMine");
+        body.setPrivacy(MineDescriptor.PrivacyEnum.UNLISTED);
+        body.setLicence("CC0");
         String mineId = "mineId_example";
         ResponseEntity<Void> responseEntity = api.setMineDescriptors(body, mineId);
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
 }

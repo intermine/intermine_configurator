@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T07:36:59.085Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T09:11:48.356Z[GMT]")
 @Controller
 public class SupplementaryDataSourcesApiController implements SupplementaryDataSourcesApi {
 

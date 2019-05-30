@@ -1,4 +1,4 @@
-package org.intermine.creator;
+package org.intermine.configurator;
 
 import io.swagger.model.MineConfig;
 
@@ -6,8 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+
 public class MineConfigManager {
 
     // temporary class. this is all going in mongo db
-    public static Map<UUID, MineConfig> MINE_CONFIGS = new HashMap<UUID, MineConfig>();
+    public static Map<String, MineConfig> MINE_CONFIGS = new HashMap<String, MineConfig>();
 }

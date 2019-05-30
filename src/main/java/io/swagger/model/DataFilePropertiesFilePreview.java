@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
  * DataFilePropertiesFilePreview
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T07:36:59.085Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T09:11:48.356Z[GMT]")
 public class DataFilePropertiesFilePreview   {
   @JsonProperty("headerRow")
   @Valid

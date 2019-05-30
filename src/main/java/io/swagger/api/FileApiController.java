@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T07:36:59.085Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T09:11:48.356Z[GMT]")
 @Controller
 public class FileApiController implements FileApi {
 
@@ -46,22 +46,7 @@ public class FileApiController implements FileApi {
 
     public ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "", required=true) @RequestParam(value="name", required=true)  String name,@ApiParam(value = "", required=true) @RequestParam(value="fileLocation", required=true)  String fileLocation,@ApiParam(value = "", required=true, allowableValues="fasta, gff, tab, csv") @RequestParam(value="fileFormat", required=true)  String fileFormat,@ApiParam(value = "", required=true) @RequestParam(value="organism", required=true)  Object organism) {
         String accept = request.getHeader("Accept");
-        String fileName = body.getFileName.toString();
-        String fileLocation = body.getFileLocation.toString();
-        String fileFormat = body.getFileFormat().toString();
-
-        BioValidationResults validationResults = BioValidator.Validate(fileFormat, fileContents, false);
-        // invalid file
-        if (!validationResults.isValid()) {
-            return new ResponseEntity(validationResults.getErrorMessage(), HttpStatus.BAD_REQUEST);
-        }
-        DataFileProperties fileProps = new DataFileProperties();
-        fileProps.setFileFormat(fileFormat);
-        fileProps.setName(fileName);
-        fileProps.setRowCount(validationResults.getRowCount());
-        fileProps.setOrganism(body.getOrganism());
-        //fileProps.setFilePreview("nothing yet\nnot implemented");
-        return new ResponseEntity<DataFileProperties>(fileProps, HttpStatus.OK);
+        return new ResponseEntity<DataFileProperties>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Void> saveFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody List<DataFilePropertiesResponseInner> body,@ApiParam(value = "ID of mine to fetch",required=true) @PathVariable("mineId") String mineId) {

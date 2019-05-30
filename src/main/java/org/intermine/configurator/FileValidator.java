@@ -1,4 +1,4 @@
-package org.intermine.creator;
+package org.intermine.configurator;
 
 public abstract class FileValidator {
 

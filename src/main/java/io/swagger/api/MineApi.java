@@ -9,7 +9,6 @@ import io.swagger.model.DataTool;
 import io.swagger.model.DataToolResponse;
 import io.swagger.model.MineConfig;
 import io.swagger.model.MineDescriptor;
-import java.util.UUID;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,9 +25,17 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T07:36:59.085Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T09:11:48.356Z[GMT]")
 @Api(value = "mine", description = "the mine API")
 public interface MineApi {
+
+    @ApiOperation(value = "Delete config associated with mine instance", nickname = "deleteConfig", notes = "", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Mine config succesfully deleted") })
+    @RequestMapping(value = "/mine/config/delete/{mineId}",
+        method = RequestMethod.DELETE)
+    ResponseEntity<Void> deleteConfig(@ApiParam(value = "ID of mine config to delete",required=true) @PathVariable("mineId") String mineId);
+
 
     @ApiOperation(value = "Get mine config", nickname = "getMineConfig", notes = "return configured details (if any) for a given mine id.", response = MineConfig.class, tags={  })
     @ApiResponses(value = { 
@@ -51,7 +58,7 @@ public interface MineApi {
     @ApiOperation(value = "Get mine ID", nickname = "getNewMine", notes = "return a new mine ID to use in all subsequent requests", response = String.class, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "success", response = String.class) })
-    @RequestMapping(value = "/mine/new/",
+    @RequestMapping(value = "/mine/config/new/",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
     ResponseEntity<String> getNewMine();
@@ -63,7 +70,7 @@ public interface MineApi {
     @RequestMapping(value = "/mine/dataTools/{mineId}",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<DataTool>> mineDataToolsMineIdGet(@ApiParam(value = "ID of mineconfig to fetch tools for",required=true) @PathVariable("mineId") UUID mineId);
+    ResponseEntity<List<DataTool>> mineDataToolsMineIdGet(@ApiParam(value = "ID of mineconfig to fetch tools for",required=true) @PathVariable("mineId") String mineId);
 
 
     @ApiOperation(value = "Set tools to be used for the given mine", nickname = "mineDataToolsMineIdPost", notes = "", response = DataToolResponse.class, tags={  })
@@ -72,7 +79,7 @@ public interface MineApi {
     @RequestMapping(value = "/mine/dataTools/{mineId}",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.POST)
-    ResponseEntity<DataToolResponse> mineDataToolsMineIdPost(@ApiParam(value = "ID of mineconfig to set tools for",required=true) @PathVariable("mineId") UUID mineId);
+    ResponseEntity<DataToolResponse> mineDataToolsMineIdPost(@ApiParam(value = "ID of mineconfig to set tools for",required=true) @PathVariable("mineId") String mineId);
 
 
     @ApiOperation(value = "Set mine descriptors", nickname = "setMineDescriptors", notes = "Set the properties associated with this mine, e.g. name", tags={  })

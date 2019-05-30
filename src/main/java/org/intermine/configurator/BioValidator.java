@@ -1,4 +1,4 @@
-package org.intermine.creator;
+package org.intermine.configurator;
 
 /**
  * Dummy class to be replaced with library
