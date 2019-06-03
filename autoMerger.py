@@ -47,14 +47,14 @@ for key in configuratorAPIObject["paths"].keys():
 
 # Check for changes in components section of the spec
 print("Merging components section")
-for key in configuratorAPIObject["components"].keys():
-    if key in composeAPIObject["components"]:
-        if configuratorAPIObject["components"][key] is not composeAPIObject["components"][key]:
-            composeAPIObject["components"][key] = configuratorAPIObject["components"][key]
+for key in configuratorAPIObject["components"]["schemas"].keys():
+    if key in composeAPIObject["components"]["schemas"]:
+        if configuratorAPIObject["components"]["schemas"][key] is not composeAPIObject["components"]["schemas"][key]:
+            composeAPIObject["components"]["schemas"][key] = configuratorAPIObject["components"]["schemas"][key]
         else:
             pass
     else:
-        composeAPIObject["components"][key] = configuratorAPIObject["components"][key]
+        composeAPIObject["components"]["schemas"][key] = configuratorAPIObject["components"]["schemas"][key]
 
 print("Overwriting compose API")
 composeAPI = open(composeAPIPath, "wt")
@@ -65,10 +65,10 @@ print("Commiting changes to intermine-compose repo")
 index = intermineComposeRepo.index
 index.add_all()
 index.write()
-author = pygit2.Signature("Ankur Kumar", "ank@leoank.me")
-commiter = pygit2.Signature("Ankur Kumar", "ank@leoank.me")
+author = pygit2.Signature("Intermine Bot", "info@intermine.org")
+commiter = pygit2.Signature("Intermine Bot", "info@intermine.org")
 tree = index.write_tree()
-message = "Merge intermine_configurator API"
+message = "merged openapi.json from configurator repo with openapi.json in this repo"
 oid = intermineComposeRepo.create_commit(
     "refs/heads/master", author, commiter, message, tree, [intermineComposeRepo.head.peel().hex])
 
