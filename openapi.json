@@ -199,6 +199,7 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/DataTool"
+                  }
                 }
               },
               "application/xml": {
@@ -206,6 +207,7 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/DataTool"
+                  }
                 }
               }
             }
