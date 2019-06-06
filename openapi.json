@@ -61,7 +61,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Mine config succesfully deleted"
+            "description": "Mine config successfully deleted"
           }
         }
       }
@@ -96,11 +96,6 @@
               }
             },
             "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/DataFile"
-              }
-            },
-            "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/DataFile"
               }
@@ -450,7 +445,7 @@
         "type": "object",
         "required": [
           "name",
-          "fileLocation",
+          "fileId",
           "fileFormat",
           "organism"
         ],
@@ -459,9 +454,10 @@
             "type": "string",
             "example": "humanfile.gff"
           },
-          "fileLocation": {
+          "fileId": {
             "type": "string",
-            "example": "/data/myGFF"
+            "format": "uuid",
+            "example": "03641b4d-bd7e-402f-803a-7aaf55c17238"
           },
           "fileFormat": {
             "type": "string",
@@ -490,7 +486,7 @@
           "fileFormat",
           "rowCount",
           "organism",
-          "fileLocation",
+          "fileId",
           "mineId"
         ],
         "properties": {
@@ -552,9 +548,10 @@
               "$ref": "#/components/schemas/DataFilePropertiesQuestion"
             }
           },
-          "fileLocation": {
+          "fileId": {
             "type": "string",
-            "example": "/data/myGFF"
+            "format": "uuid",
+            "example": "03641b4d-bd7e-402f-803a-7aaf55c17238"
           },
           "mineId": {
             "type": "string",
@@ -589,14 +586,15 @@
       "DataFilePropertiesQuestion": {
         "type": "object",
         "required": [
-          "fileLocation",
+          "fileId",
           "mineId",
           "question"
         ],
         "properties": {
-          "fileLocation": {
+          "fileId": {
             "type": "string",
-            "example": "/data/myGFF"
+            "format": "uuid",
+            "example": "03641b4d-bd7e-402f-803a-7aaf55c17238"
           },
           "mineId": {
             "type": "string",
@@ -630,13 +628,14 @@
       "DataFilePropertiesAnswerOption": {
         "type": "object",
         "required": [
-          "fileLocation",
+          "fileId",
           "mineId"
         ],
         "properties": {
-          "fileLocation": {
+          "fileId": {
             "type": "string",
-            "example": "/data/myGFF"
+            "format": "uuid",
+            "example": "03641b4d-bd7e-402f-803a-7aaf55c17238"
           },
           "mineId": {
             "type": "string",
@@ -682,7 +681,7 @@
         "items": {
           "type": "object",
           "required": [
-            "fileLocation",
+            "fileId",
             "mineId"
           ],
           "properties": {
@@ -703,9 +702,10 @@
                 }
               }
             },
-            "fileLocation": {
+            "fileId": {
               "type": "string",
-              "example": "/data/myGFF"
+              "format": "uuid",
+              "example": "03641b4d-bd7e-402f-803a-7aaf55c17238"
             },
             "mineId": {
               "type": "string",
