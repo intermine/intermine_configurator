@@ -1,6 +1,6 @@
 package io.swagger.api;
 
-import io.swagger.model.SupplementaryDataSource;
+import io.swagger.model.DataTool;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -23,23 +23,23 @@ import java.util.List;
 import java.util.Map;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T09:54:09.498Z[GMT]")
 @Controller
-public class SupplementaryDataSourcesApiController implements SupplementaryDataSourcesApi {
+public class DataToolsApiController implements DataToolsApi {
 
-    private static final Logger log = LoggerFactory.getLogger(SupplementaryDataSourcesApiController.class);
+    private static final Logger log = LoggerFactory.getLogger(DataToolsApiController.class);
 
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public SupplementaryDataSourcesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    public DataToolsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
         this.request = request;
     }
 
-    public ResponseEntity<List<SupplementaryDataSource>> getSupplementaryDataSources() {
+    public ResponseEntity<List<DataTool>> dataToolsGet() {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<SupplementaryDataSource>>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<List<DataTool>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

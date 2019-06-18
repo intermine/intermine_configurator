@@ -5,7 +5,7 @@
  */
 package io.swagger.api;
 
-import io.swagger.model.SupplementaryDataSource;
+import io.swagger.model.DataTool;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -23,15 +23,15 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T09:54:09.498Z[GMT]")
-@Api(value = "supplementaryDataSources", description = "the supplementaryDataSources API")
-public interface SupplementaryDataSourcesApi {
+@Api(value = "dataTools", description = "the dataTools API")
+public interface DataToolsApi {
 
-    @ApiOperation(value = "Get list of possible supplementary data sources", nickname = "getSupplementaryDataSources", notes = "Returns a list of possible external data sources to add to this mine, e.g. GO terms, publications, etc.", response = SupplementaryDataSource.class, responseContainer = "List", tags={  })
+    @ApiOperation(value = "Retrieve all available tools", nickname = "dataToolsGet", notes = "", response = DataTool.class, responseContainer = "List", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Success", response = SupplementaryDataSource.class, responseContainer = "List") })
-    @RequestMapping(value = "/supplementaryDataSources",
+        @ApiResponse(code = 200, message = "success", response = DataTool.class, responseContainer = "List") })
+    @RequestMapping(value = "/dataTools",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<SupplementaryDataSource>> getSupplementaryDataSources();
+    ResponseEntity<List<DataTool>> dataToolsGet();
 
 }

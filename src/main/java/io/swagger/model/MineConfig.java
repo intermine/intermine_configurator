@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.DataFile;
 import io.swagger.model.DataTool;
 import io.swagger.model.MineDescriptor;
+import io.swagger.model.SupplementaryDataSource;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -18,7 +19,7 @@ import javax.validation.constraints.*;
  * MineConfig
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T08:43:54.303Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T10:19:50.598Z[GMT]")
 public class MineConfig   {
   @JsonProperty("mineDescriptor")
   private MineDescriptor mineDescriptor = null;
@@ -26,6 +27,10 @@ public class MineConfig   {
   @JsonProperty("dataTools")
   @Valid
   private List<DataTool> dataTools = null;
+
+  @JsonProperty("supplementaryDataSources")
+  @Valid
+  private List<SupplementaryDataSource> supplementaryDataSources = null;
 
   @JsonProperty("dataFiles")
   @Valid
@@ -82,6 +87,33 @@ public class MineConfig   {
 
   public void setDataTools(List<DataTool> dataTools) {
     this.dataTools = dataTools;
+  }
+
+  public MineConfig supplementaryDataSources(List<SupplementaryDataSource> supplementaryDataSources) {
+    this.supplementaryDataSources = supplementaryDataSources;
+    return this;
+  }
+
+  public MineConfig addSupplementaryDataSourcesItem(SupplementaryDataSource supplementaryDataSourcesItem) {
+    if (this.supplementaryDataSources == null) {
+      this.supplementaryDataSources = new ArrayList<SupplementaryDataSource>();
+    }
+    this.supplementaryDataSources.add(supplementaryDataSourcesItem);
+    return this;
+  }
+
+  /**
+   * Get supplementaryDataSources
+   * @return supplementaryDataSources
+  **/
+  @ApiModelProperty(value = "")
+  @Valid
+  public List<SupplementaryDataSource> getSupplementaryDataSources() {
+    return supplementaryDataSources;
+  }
+
+  public void setSupplementaryDataSources(List<SupplementaryDataSource> supplementaryDataSources) {
+    this.supplementaryDataSources = supplementaryDataSources;
   }
 
   public MineConfig dataFiles(List<DataFile> dataFiles) {
@@ -161,6 +193,7 @@ public class MineConfig   {
     MineConfig mineConfig = (MineConfig) o;
     return Objects.equals(this.mineDescriptor, mineConfig.mineDescriptor) &&
         Objects.equals(this.dataTools, mineConfig.dataTools) &&
+        Objects.equals(this.supplementaryDataSources, mineConfig.supplementaryDataSources) &&
         Objects.equals(this.dataFiles, mineConfig.dataFiles) &&
         Objects.equals(this.projectXML, mineConfig.projectXML) &&
         Objects.equals(this.globalAdditions, mineConfig.globalAdditions);
@@ -168,7 +201,7 @@ public class MineConfig   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(mineDescriptor, dataTools, dataFiles, projectXML, globalAdditions);
+    return Objects.hash(mineDescriptor, dataTools, supplementaryDataSources, dataFiles, projectXML, globalAdditions);
   }
 
   @Override
@@ -178,6 +211,7 @@ public class MineConfig   {
     
     sb.append("    mineDescriptor: ").append(toIndentedString(mineDescriptor)).append("\n");
     sb.append("    dataTools: ").append(toIndentedString(dataTools)).append("\n");
+    sb.append("    supplementaryDataSources: ").append(toIndentedString(supplementaryDataSources)).append("\n");
     sb.append("    dataFiles: ").append(toIndentedString(dataFiles)).append("\n");
     sb.append("    projectXML: ").append(toIndentedString(projectXML)).append("\n");
     sb.append("    globalAdditions: ").append(toIndentedString(globalAdditions)).append("\n");

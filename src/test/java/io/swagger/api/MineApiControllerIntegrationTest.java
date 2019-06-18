@@ -3,6 +3,7 @@ package io.swagger.api;
 import io.swagger.model.DataTool;
 import io.swagger.model.MineConfig;
 import io.swagger.model.MineDescriptor;
+import io.swagger.model.SupplementaryDataSource;
 import java.util.UUID;
 
 import java.util.*;
@@ -49,6 +50,14 @@ public class MineApiControllerIntegrationTest {
     }
 
     @Test
+    public void getMineSupplementaryDataSourcesTest() throws Exception {
+        UUID mineId = java.util.UUID.randomUUID();
+        UUID userId = java.util.UUID.randomUUID();
+        ResponseEntity<List<SupplementaryDataSource>> responseEntity = api.getMineSupplementaryDataSources(mineId, userId);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
     public void getNewMineTest() throws Exception {
         UUID userId = java.util.UUID.randomUUID();
         ResponseEntity<UUID> responseEntity = api.getNewMine(userId);
@@ -56,7 +65,7 @@ public class MineApiControllerIntegrationTest {
     }
 
     @Test
-    public void mineDataToolsMineIdGetTest() throws Exception {
+    public void mineDataToolsGetTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
         ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsGet(mineId, userId);
@@ -64,23 +73,30 @@ public class MineApiControllerIntegrationTest {
     }
 
     @Test
-    public void mineDataToolsMineIdPostTest() throws Exception {
+    public void mineDataToolsPostTest() throws Exception {
+        List<Object> body = null;
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
-        ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsPost(mineId, userId);
+        ResponseEntity<Void> responseEntity = api.mineDataToolsPost(body, mineId, userId);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
     @Test
     public void setMineDescriptorsTest() throws Exception {
-        MineDescriptor mineDescriptor = new MineDescriptor();
-        mineDescriptor.setMineName("tigerMine");
-        mineDescriptor.setLicence("myLicence");
-        mineDescriptor.setPrivacy(MineDescriptor.PrivacyEnum.PUBLIC);
+        MineDescriptor body = new MineDescriptor();
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
-        ResponseEntity<Void> responseEntity = api.setMineDescriptors(mineDescriptor, mineId, userId);
+        ResponseEntity<Void> responseEntity = api.setMineDescriptors(body, mineId, userId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void setSupplementaryDataSourcesTest() throws Exception {
+        List<Object> body = null;
+        UUID mineId = java.util.UUID.randomUUID();
+        UUID userId = java.util.UUID.randomUUID();
+        ResponseEntity<Void> responseEntity = api.setSupplementaryDataSources(body, mineId, userId);
+        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
 }

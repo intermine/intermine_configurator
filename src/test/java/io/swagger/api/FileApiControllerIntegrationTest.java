@@ -35,9 +35,9 @@ public class FileApiControllerIntegrationTest {
     @Test
     public void saveFilePropertiesTest() throws Exception {
         List<DataFilePropertiesResponseInner> body = Arrays.asList(new DataFilePropertiesResponseInner());
-        UUID userId = java.util.UUID.randomUUID();
         UUID mineId = java.util.UUID.randomUUID();
-        ResponseEntity<Void> responseEntity = api.saveFileProperties(body, userId, mineId);
+        UUID userId = java.util.UUID.randomUUID();
+        ResponseEntity<Void> responseEntity = api.saveFileProperties(body, mineId, userId);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 

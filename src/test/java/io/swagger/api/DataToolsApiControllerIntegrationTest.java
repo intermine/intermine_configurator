@@ -1,6 +1,6 @@
 package io.swagger.api;
 
-import io.swagger.model.SupplementaryDataSource;
+import io.swagger.model.DataTool;
 
 import java.util.*;
 
@@ -16,14 +16,14 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SupplementaryDataSourcesApiControllerIntegrationTest {
+public class DataToolsApiControllerIntegrationTest {
 
     @Autowired
-    private SupplementaryDataSourcesApi api;
+    private DataToolsApi api;
 
     @Test
-    public void getSupplementaryDataSourcesTest() throws Exception {
-        ResponseEntity<List<SupplementaryDataSource>> responseEntity = api.getSupplementaryDataSources();
+    public void dataToolsGetTest() throws Exception {
+        ResponseEntity<List<DataTool>> responseEntity = api.dataToolsGet();
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 

@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
  * DataTool
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T08:43:54.303Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T10:19:50.598Z[GMT]")
 public class DataTool   {
   @JsonProperty("toolId")
   private String toolId = null;
@@ -42,7 +42,7 @@ public class DataTool   {
    * Get toolId
    * @return toolId
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "ProtVista", required = true, value = "")
   @NotNull
 
   public String getToolId() {
@@ -62,7 +62,7 @@ public class DataTool   {
    * Get toolName
    * @return toolName
   **/
-  @ApiModelProperty(example = "ProtVista", required = true, value = "")
+  @ApiModelProperty(example = "Protein Features", required = true, value = "")
   @NotNull
 
   public String getToolName() {
