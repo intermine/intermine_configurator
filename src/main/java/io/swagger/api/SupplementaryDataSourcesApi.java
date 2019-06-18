@@ -24,25 +24,25 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T13:08:33.831Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T08:43:54.303Z[GMT]")
 @Api(value = "supplementaryDataSources", description = "the supplementaryDataSources API")
 public interface SupplementaryDataSourcesApi {
 
     @ApiOperation(value = "Get list of possible supplementary data sources for this mine config", nickname = "getSupplementaryDataSources", notes = "Returns a list of possible external data sources to add to this mine, e.g. GO terms, publications, etc.", response = SupplementaryDataSource.class, responseContainer = "List", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Success", response = SupplementaryDataSource.class, responseContainer = "List") })
-    @RequestMapping(value = "/supplementaryDataSources/{mineId}",
+    @RequestMapping(value = "/supplementaryDataSources",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<SupplementaryDataSource>> getSupplementaryDataSources(@ApiParam(value = "ID of mine to fetch",required=true) @PathVariable("mineId") UUID mineId);
+    ResponseEntity<List<SupplementaryDataSource>> getSupplementaryDataSources(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
     @ApiOperation(value = "set list of desired supplementary data sources", nickname = "setSupplementaryDataSources", notes = "Saves a list of possible external data sources to add to this mine, e.g. GO terms, publications, etc.", response = SupplementaryDataSourcesResponse.class, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Success", response = SupplementaryDataSourcesResponse.class) })
-    @RequestMapping(value = "/supplementaryDataSources/{mineId}",
+    @RequestMapping(value = "/supplementaryDataSources",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.POST)
-    ResponseEntity<SupplementaryDataSourcesResponse> setSupplementaryDataSources(@ApiParam(value = "ID of mine to fetch",required=true) @PathVariable("mineId") UUID mineId);
+    ResponseEntity<SupplementaryDataSourcesResponse> setSupplementaryDataSources(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 }

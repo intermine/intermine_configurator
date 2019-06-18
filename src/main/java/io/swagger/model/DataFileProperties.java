@@ -9,6 +9,7 @@ import io.swagger.model.DataFilePropertiesFilePreview;
 import io.swagger.model.DataFilePropertiesQuestion;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -17,7 +18,7 @@ import javax.validation.constraints.*;
  * DataFileProperties
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T13:08:33.831Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T08:43:54.303Z[GMT]")
 public class DataFileProperties   {
   @JsonProperty("name")
   private String name = null;
@@ -35,11 +36,14 @@ public class DataFileProperties   {
   @Valid
   private List<DataFilePropertiesQuestion> questions = null;
 
-  @JsonProperty("fileLocation")
-  private String fileLocation = null;
+  @JsonProperty("fileId")
+  private UUID fileId = null;
 
-  @JsonProperty("mineID")
-  private String mineID = null;
+  @JsonProperty("mineId")
+  private String mineId = null;
+
+  @JsonProperty("organism")
+  private Object organism = null;
 
   public DataFileProperties name(String name) {
     this.name = name;
@@ -148,44 +152,65 @@ public class DataFileProperties   {
     this.questions = questions;
   }
 
-  public DataFileProperties fileLocation(String fileLocation) {
-    this.fileLocation = fileLocation;
+  public DataFileProperties fileId(UUID fileId) {
+    this.fileId = fileId;
     return this;
   }
 
   /**
-   * Get fileLocation
-   * @return fileLocation
+   * Get fileId
+   * @return fileId
   **/
-  @ApiModelProperty(example = "/data/myGFF", required = true, value = "")
+  @ApiModelProperty(example = "03641b4d-bd7e-402f-803a-7aaf55c17238", required = true, value = "")
   @NotNull
 
-  public String getFileLocation() {
-    return fileLocation;
+  @Valid
+  public UUID getFileId() {
+    return fileId;
   }
 
-  public void setFileLocation(String fileLocation) {
-    this.fileLocation = fileLocation;
+  public void setFileId(UUID fileId) {
+    this.fileId = fileId;
   }
 
-  public DataFileProperties mineID(String mineID) {
-    this.mineID = mineID;
+  public DataFileProperties mineId(String mineId) {
+    this.mineId = mineId;
     return this;
   }
 
   /**
-   * Get mineID
-   * @return mineID
+   * Get mineId
+   * @return mineId
   **/
   @ApiModelProperty(example = "123e4567-e89b-12d3-a456-556642440000", required = true, value = "")
   @NotNull
 
-  public String getMineID() {
-    return mineID;
+  public String getMineId() {
+    return mineId;
   }
 
-  public void setMineID(String mineID) {
-    this.mineID = mineID;
+  public void setMineId(String mineId) {
+    this.mineId = mineId;
+  }
+
+  public DataFileProperties organism(Object organism) {
+    this.organism = organism;
+    return this;
+  }
+
+  /**
+   * Get organism
+   * @return organism
+  **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+  public Object getOrganism() {
+    return organism;
+  }
+
+  public void setOrganism(Object organism) {
+    this.organism = organism;
   }
 
 
@@ -203,13 +228,14 @@ public class DataFileProperties   {
         Objects.equals(this.rowCount, dataFileProperties.rowCount) &&
         Objects.equals(this.filePreview, dataFileProperties.filePreview) &&
         Objects.equals(this.questions, dataFileProperties.questions) &&
-        Objects.equals(this.fileLocation, dataFileProperties.fileLocation) &&
-        Objects.equals(this.mineID, dataFileProperties.mineID);
+        Objects.equals(this.fileId, dataFileProperties.fileId) &&
+        Objects.equals(this.mineId, dataFileProperties.mineId) &&
+        Objects.equals(this.organism, dataFileProperties.organism);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, fileFormat, rowCount, filePreview, questions, fileLocation, mineID);
+    return Objects.hash(name, fileFormat, rowCount, filePreview, questions, fileId, mineId, organism);
   }
 
   @Override
@@ -222,8 +248,9 @@ public class DataFileProperties   {
     sb.append("    rowCount: ").append(toIndentedString(rowCount)).append("\n");
     sb.append("    filePreview: ").append(toIndentedString(filePreview)).append("\n");
     sb.append("    questions: ").append(toIndentedString(questions)).append("\n");
-    sb.append("    fileLocation: ").append(toIndentedString(fileLocation)).append("\n");
-    sb.append("    mineID: ").append(toIndentedString(mineID)).append("\n");
+    sb.append("    fileId: ").append(toIndentedString(fileId)).append("\n");
+    sb.append("    mineId: ").append(toIndentedString(mineId)).append("\n");
+    sb.append("    organism: ").append(toIndentedString(organism)).append("\n");
     sb.append("}");
     return sb.toString();
   }
