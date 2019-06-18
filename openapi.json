@@ -241,6 +241,34 @@
         }
       }
     },
+    "/dataTools": {
+      "get": {
+        "summary": "Retrieve all available tools",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataTool"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataTool"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/mine/dataTools": {
       "get": {
         "summary": "Retrieve set tools to be used for the given mine",
@@ -320,13 +348,49 @@
         ],
         "responses": {
           "200": {
-            "description": "success",
+            "description": "success"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "format": "string",
+                  "example": "bluegenesToolProtvista"
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "format": "string",
+                  "example": "bluegenesToolProtvista"
+                }
+              }
+            }
+          },
+          "description": "Tool to be used with mine",
+          "required": true
+        }
+      }
+    },
+    "/supplementaryDataSources": {
+      "get": {
+        "summary": "Get list of possible supplementary data sources",
+        "description": "Returns a list of possible external data sources to add to this mine, e.g. GO terms, publications, etc.",
+        "operationId": "getSupplementaryDataSources",
+        "responses": {
+          "200": {
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DataTool"
+                    "$ref": "#/components/schemas/SupplementaryDataSource"
                   }
                 }
               },
@@ -334,7 +398,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DataTool"
+                    "$ref": "#/components/schemas/SupplementaryDataSource"
                   }
                 }
               }
@@ -343,11 +407,11 @@
         }
       }
     },
-    "/supplementaryDataSources": {
+    "/mine/supplementaryDataSources": {
       "get": {
-        "summary": "Get list of possible supplementary data sources for this mine config",
-        "description": "Returns a list of possible external data sources to add to this mine, e.g. GO terms, publications, etc.",
-        "operationId": "getSupplementaryDataSources",
+        "summary": "Get list of supplementary data sources set for this mine config",
+        "description": "Returns a list of external data sources to add to this mine, e.g. GO terms, publications, etc.",
+        "operationId": "getMineSupplementaryDataSources",
         "parameters": [
           {
             "name": "mineId",
@@ -426,20 +490,32 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SupplementaryDataSourcesResponse"
+            "description": "Success"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "format": "string",
+                  "example": "uniprot"
                 }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/SupplementaryDataSourcesResponse"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "format": "string",
+                  "example": "uniprot"
                 }
               }
             }
-          }
+          },
+          "description": "Supplementary sources to be used with mine",
+          "required": true
         }
       }
     },
@@ -881,16 +957,6 @@
           "name": "SupplementaryDataSources"
         }
       },
-      "SupplementaryDataSourcesResponse": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "example": [
-          "GOAnnotations",
-          "PubMed"
-        ]
-      },
       "DataTool": {
         "type": "object",
         "required": [
@@ -902,11 +968,12 @@
         ],
         "properties": {
           "toolId": {
-            "type": "string"
+            "type": "string",
+            "example": "ProtVista"
           },
           "toolName": {
             "type": "string",
-            "example": "ProtVista"
+            "example": "Protein Features"
           },
           "toolDescription": {
             "type": "string",
@@ -938,6 +1005,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DataTool"
+            }
+          },
+          "supplementaryDataSources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupplementaryDataSource"
             }
           },
           "dataFiles": {

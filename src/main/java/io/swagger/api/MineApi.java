@@ -8,6 +8,7 @@ package io.swagger.api;
 import io.swagger.model.DataTool;
 import io.swagger.model.MineConfig;
 import io.swagger.model.MineDescriptor;
+import io.swagger.model.SupplementaryDataSource;
 import java.util.UUID;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T08:43:54.303Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T10:19:50.598Z[GMT]")
 @Api(value = "mine", description = "the mine API")
 public interface MineApi {
 
@@ -55,10 +56,19 @@ public interface MineApi {
     ResponseEntity<MineDescriptor> getMineDescriptors(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
+    @ApiOperation(value = "Get list of supplementary data sources set for this mine config", nickname = "getMineSupplementaryDataSources", notes = "Returns a list of external data sources to add to this mine, e.g. GO terms, publications, etc.", response = SupplementaryDataSource.class, responseContainer = "List", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Success", response = SupplementaryDataSource.class, responseContainer = "List") })
+    @RequestMapping(value = "/mine/supplementaryDataSources",
+        produces = { "application/json", "application/xml" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<List<SupplementaryDataSource>> getMineSupplementaryDataSources(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+
+
     @ApiOperation(value = "Get mine ID", nickname = "getNewMine", notes = "return a new mine ID to use in all subsequent requests", response = UUID.class, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "success", response = UUID.class) })
-    @RequestMapping(value = "/mine/config/new",
+    @RequestMapping(value = "/mine/config/new/",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
     ResponseEntity<UUID> getNewMine(@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
@@ -73,13 +83,13 @@ public interface MineApi {
     ResponseEntity<List<DataTool>> mineDataToolsGet(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
-    @ApiOperation(value = "Set tools to be used for the given mine", nickname = "mineDataToolsPost", notes = "", response = DataTool.class, responseContainer = "List", tags={  })
+    @ApiOperation(value = "Set tools to be used for the given mine", nickname = "mineDataToolsPost", notes = "", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "success", response = DataTool.class, responseContainer = "List") })
+        @ApiResponse(code = 200, message = "success") })
     @RequestMapping(value = "/mine/dataTools",
-        produces = { "application/json", "application/xml" }, 
+        consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
-    ResponseEntity<List<DataTool>> mineDataToolsPost(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+    ResponseEntity<Void> mineDataToolsPost(@ApiParam(value = "Tool to be used with mine" ,required=true )  @Valid @RequestBody List<Object> body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
     @ApiOperation(value = "Set mine descriptors", nickname = "setMineDescriptors", notes = "Set the properties associated with this mine, e.g. name", tags={  })
@@ -89,5 +99,14 @@ public interface MineApi {
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
     ResponseEntity<Void> setMineDescriptors(@ApiParam(value = "Descriptors to set for Mine" ,required=true )  @Valid @RequestBody MineDescriptor body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+
+
+    @ApiOperation(value = "set list of desired supplementary data sources", nickname = "setSupplementaryDataSources", notes = "Saves a list of possible external data sources to add to this mine, e.g. GO terms, publications, etc.", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Success") })
+    @RequestMapping(value = "/mine/supplementaryDataSources",
+        consumes = { "application/json", "application/xml" },
+        method = RequestMethod.POST)
+    ResponseEntity<Void> setSupplementaryDataSources(@ApiParam(value = "Supplementary sources to be used with mine" ,required=true )  @Valid @RequestBody List<Object> body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 }

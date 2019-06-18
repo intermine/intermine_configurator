@@ -3,11 +3,13 @@ package io.swagger.api;
 import io.swagger.model.DataTool;
 import io.swagger.model.MineConfig;
 import io.swagger.model.MineDescriptor;
+import io.swagger.model.SupplementaryDataSource;
 import java.util.UUID;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.intermine.configurator.MineConfigManager;
+import org.intermine.configurator.ToolManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -26,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T08:43:54.303Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T09:54:09.498Z[GMT]")
 @Controller
 public class MineApiController implements MineApi {
 
@@ -72,6 +74,17 @@ public class MineApiController implements MineApi {
         return new ResponseEntity<MineDescriptor>(mineDescriptor, HttpStatus.OK);
     }
 
+    public ResponseEntity<List<SupplementaryDataSource>> getMineSupplementaryDataSources(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
+        String accept = request.getHeader("Accept");
+        MultiKey key = new MultiKey(mineId, userId);
+        MineConfig mineConfig = MineConfigManager.MINE_CONFIGS.get(key);
+        if (mineConfig == null) {
+            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+        }
+        List<SupplementaryDataSource> dataSources = mineConfig.getSupplementaryDataSources();
+        return new ResponseEntity<List<SupplementaryDataSource>>(dataSources, HttpStatus.OK);
+    }
+
     public ResponseEntity<UUID> getNewMine(@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         UUID mineId = java.util.UUID.randomUUID();
@@ -92,27 +105,39 @@ public class MineApiController implements MineApi {
         return new ResponseEntity<List<DataTool>>(dataTools, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<DataTool>> mineDataToolsPost(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
+    public ResponseEntity<Void> mineDataToolsPost(@ApiParam(value = "Tool to be used with mine" ,required=true )  @Valid @RequestBody List<Object> body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         MultiKey key = new MultiKey(mineId, userId);
         MineConfig mineConfig = MineConfigManager.MINE_CONFIGS.get(key);
         if (mineConfig == null) {
             return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
         }
-        List<DataTool> dataToolResponse = mineConfig.getDataTools();
-        return new ResponseEntity<List<DataTool>>(dataToolResponse, HttpStatus.OK);
+        List<Object> dataTools = body;
+        ToolManager.addTools(key, dataTools);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     public ResponseEntity<Void> setMineDescriptors(@ApiParam(value = "Descriptors to set for Mine" ,required=true )  @Valid @RequestBody MineDescriptor body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
+        String mineName = "";
+        String licence = "";
+        // default to be unlisted
+        String privacy = MineDescriptor.PrivacyEnum.UNLISTED.toString();
 
-        String mineName = body.getMineName().toString();
-        String privacy = body.getPrivacy().toString();
+        if (body.getMineName() != null) {
+            mineName = body.getMineName().toString();
+        }
+        if (body.getLicence() != null) {
+            licence = body.getLicence().toString();
+        }
+        if (body.getPrivacy() != null) {
+            privacy = body.getPrivacy().toString();
+        }
+
         MineDescriptor.PrivacyEnum privacyEnum = MineDescriptor.PrivacyEnum.UNLISTED;
-        if (MineDescriptor.PrivacyEnum.PUBLIC.equals(privacy)) {
+        if (MineDescriptor.PrivacyEnum.PUBLIC.toString().equals(privacy)) {
             privacyEnum = MineDescriptor.PrivacyEnum.PUBLIC;
         }
-        String licence = body.getLicence().toString();
 
         MineDescriptor mineDescriptor = new MineDescriptor();
         mineDescriptor.setMineName(mineName);
@@ -126,6 +151,11 @@ public class MineApiController implements MineApi {
 
         MineConfigManager.MINE_CONFIGS.put(key, mineConfig);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> setSupplementaryDataSources(@ApiParam(value = "Supplementary sources to be used with mine" ,required=true )  @Valid @RequestBody List<Object> body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }
