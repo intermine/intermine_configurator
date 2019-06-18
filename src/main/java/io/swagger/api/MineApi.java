@@ -25,69 +25,69 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T06:52:47.921Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T08:43:54.303Z[GMT]")
 @Api(value = "mine", description = "the mine API")
 public interface MineApi {
 
     @ApiOperation(value = "Delete config associated with mine instance", nickname = "deleteConfig", notes = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Mine config successfully deleted") })
-    @RequestMapping(value = "/mine/config/delete/{mineId}",
+    @RequestMapping(value = "/mine/config",
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteConfig(@ApiParam(value = "ID of mine config to delete",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+    ResponseEntity<Void> deleteConfig(@NotNull @ApiParam(value = "ID of mine config to delete", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
     @ApiOperation(value = "Get mine config", nickname = "getMineConfig", notes = "return configured details (if any) for a given mine id.", response = MineConfig.class, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "success", response = MineConfig.class) })
-    @RequestMapping(value = "/mine/config/{mineId}",
+    @RequestMapping(value = "/mine/config",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
-    ResponseEntity<MineConfig> getMineConfig(@ApiParam(value = "ID of mine config to delete",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+    ResponseEntity<MineConfig> getMineConfig(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
     @ApiOperation(value = "Get mine descriptors", nickname = "getMineDescriptors", notes = "return descriptors (if any) for a given mine id.", response = MineDescriptor.class, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "success", response = MineDescriptor.class) })
-    @RequestMapping(value = "/mine/descriptors/{mineId}",
+    @RequestMapping(value = "/mine/descriptors",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
-    ResponseEntity<MineDescriptor> getMineDescriptors(@ApiParam(value = "ID of mine config to delete",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+    ResponseEntity<MineDescriptor> getMineDescriptors(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
     @ApiOperation(value = "Get mine ID", nickname = "getNewMine", notes = "return a new mine ID to use in all subsequent requests", response = UUID.class, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "success", response = UUID.class) })
-    @RequestMapping(value = "/mine/config/new/",
+    @RequestMapping(value = "/mine/config/new",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
     ResponseEntity<UUID> getNewMine(@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
-    @ApiOperation(value = "Retrieve set tools to be used for the given mine", nickname = "mineDataToolsMineIdGet", notes = "", response = DataTool.class, responseContainer = "List", tags={  })
+    @ApiOperation(value = "Retrieve set tools to be used for the given mine", nickname = "mineDataToolsGet", notes = "", response = DataTool.class, responseContainer = "List", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "success", response = DataTool.class, responseContainer = "List") })
-    @RequestMapping(value = "/mine/dataTools/{mineId}",
+    @RequestMapping(value = "/mine/dataTools",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<DataTool>> mineDataToolsMineIdGet(@ApiParam(value = "ID of mine config to delete",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+    ResponseEntity<List<DataTool>> mineDataToolsGet(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
-    @ApiOperation(value = "Set tools to be used for the given mine", nickname = "mineDataToolsMineIdPost", notes = "", response = DataTool.class, responseContainer = "List", tags={  })
+    @ApiOperation(value = "Set tools to be used for the given mine", nickname = "mineDataToolsPost", notes = "", response = DataTool.class, responseContainer = "List", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "success", response = DataTool.class, responseContainer = "List") })
-    @RequestMapping(value = "/mine/dataTools/{mineId}",
+    @RequestMapping(value = "/mine/dataTools",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.POST)
-    ResponseEntity<List<DataTool>> mineDataToolsMineIdPost(@ApiParam(value = "ID of mine config to delete",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+    ResponseEntity<List<DataTool>> mineDataToolsPost(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
     @ApiOperation(value = "Set mine descriptors", nickname = "setMineDescriptors", notes = "Set the properties associated with this mine, e.g. name", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Descriptors successfully added to mine.") })
-    @RequestMapping(value = "/mine/descriptors/{mineId}",
+    @RequestMapping(value = "/mine/descriptors",
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> setMineDescriptors(@ApiParam(value = "Descriptors to set for Mine" ,required=true )  @Valid @RequestBody MineDescriptor body,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId,@ApiParam(value = "ID of mine config to delete",required=true) @PathVariable("mineId") UUID mineId);
+    ResponseEntity<Void> setMineDescriptors(@ApiParam(value = "Descriptors to set for Mine" ,required=true )  @Valid @RequestBody MineDescriptor body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 }

@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T06:52:47.921Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T08:43:54.303Z[GMT]")
 @Controller
 public class SupplementaryDataSourcesApiController implements SupplementaryDataSourcesApi {
 
@@ -39,12 +39,12 @@ public class SupplementaryDataSourcesApiController implements SupplementaryDataS
         this.request = request;
     }
 
-    public ResponseEntity<List<SupplementaryDataSource>> getSupplementaryDataSources(@ApiParam(value = "ID of mine config to delete",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
+    public ResponseEntity<List<SupplementaryDataSource>> getSupplementaryDataSources(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<List<SupplementaryDataSource>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<SupplementaryDataSourcesResponse> setSupplementaryDataSources(@ApiParam(value = "ID of mine config to delete",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
+    public ResponseEntity<SupplementaryDataSourcesResponse> setSupplementaryDataSources(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<SupplementaryDataSourcesResponse>(HttpStatus.NOT_IMPLEMENTED);
     }

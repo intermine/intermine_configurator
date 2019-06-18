@@ -26,9 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.collections4.keyvalue.MultiKey;
-
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T06:52:47.921Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T08:43:54.303Z[GMT]")
 @Controller
 public class MineApiController implements MineApi {
 
@@ -44,18 +42,16 @@ public class MineApiController implements MineApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> deleteConfig(@ApiParam(value = "ID of mine config to delete",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
+    public ResponseEntity<Void> deleteConfig(@NotNull @ApiParam(value = "ID of mine config to delete", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
-        MultiKey key = new MultiKey(mineId, userId);
-        MineConfig mineConfig = MineConfigManager.MINE_CONFIGS.get(key);
-        if (mineConfig == null) {
-            return new ResponseEntity("Mine Id not found", HttpStatus.BAD_REQUEST);
+        boolean success = MineConfigManager.removeConfig(mineId, userId);
+        if (!success) {
+            return new ResponseEntity("Mine Config for that user and mine ID not found", HttpStatus.BAD_REQUEST);
         }
-        MineConfigManager.MINE_CONFIGS.remove(mineId);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<MineConfig> getMineConfig(@ApiParam(value = "ID of mine config to retrieve",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
+    public ResponseEntity<MineConfig> getMineConfig(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         MultiKey key = new MultiKey(mineId, userId);
         MineConfig mineConfig = MineConfigManager.MINE_CONFIGS.get(key);
@@ -65,7 +61,7 @@ public class MineApiController implements MineApi {
         return new ResponseEntity<MineConfig>(mineConfig, HttpStatus.OK);
     }
 
-    public ResponseEntity<MineDescriptor> getMineDescriptors(@ApiParam(value = "ID of mine config to retrieve",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
+    public ResponseEntity<MineDescriptor> getMineDescriptors(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         MultiKey key = new MultiKey(mineId, userId);
         MineConfig mineConfig = MineConfigManager.MINE_CONFIGS.get(key);
@@ -85,7 +81,7 @@ public class MineApiController implements MineApi {
         return new ResponseEntity<UUID>(mineId, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<DataTool>> mineDataToolsMineIdGet(@ApiParam(value = "ID of mine config to retrieve",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
+    public ResponseEntity<List<DataTool>> mineDataToolsGet(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         MultiKey key = new MultiKey(mineId, userId);
         MineConfig mineConfig = MineConfigManager.MINE_CONFIGS.get(key);
@@ -96,7 +92,7 @@ public class MineApiController implements MineApi {
         return new ResponseEntity<List<DataTool>>(dataTools, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<DataTool>> mineDataToolsMineIdPost(@ApiParam(value = "ID of mine config to retrieve",required=true) @PathVariable("mineId") UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
+    public ResponseEntity<List<DataTool>> mineDataToolsPost(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         MultiKey key = new MultiKey(mineId, userId);
         MineConfig mineConfig = MineConfigManager.MINE_CONFIGS.get(key);
@@ -107,7 +103,7 @@ public class MineApiController implements MineApi {
         return new ResponseEntity<List<DataTool>>(dataToolResponse, HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> setMineDescriptors(@ApiParam(value = "Descriptors to set for Mine" ,required=true )  @Valid @RequestBody MineDescriptor body,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId,@ApiParam(value = "ID of mine config to delete",required=true) @PathVariable("mineId") UUID mineId) {
+    public ResponseEntity<Void> setMineDescriptors(@ApiParam(value = "Descriptors to set for Mine" ,required=true )  @Valid @RequestBody MineDescriptor body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
 
         String mineName = body.getMineName().toString();

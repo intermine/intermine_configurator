@@ -59,7 +59,7 @@ public class MineApiControllerIntegrationTest {
     public void mineDataToolsMineIdGetTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
-        ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsMineIdGet(mineId, userId);
+        ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsGet(mineId, userId);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
@@ -67,7 +67,7 @@ public class MineApiControllerIntegrationTest {
     public void mineDataToolsMineIdPostTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
-        ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsMineIdPost(mineId, userId);
+        ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsPost(mineId, userId);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 

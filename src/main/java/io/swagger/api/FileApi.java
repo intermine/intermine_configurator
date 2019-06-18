@@ -25,7 +25,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T06:52:47.921Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T08:43:54.303Z[GMT]")
 @Api(value = "file", description = "the file API")
 public interface FileApi {
 
@@ -42,9 +42,9 @@ public interface FileApi {
     @ApiOperation(value = "Save file properties to a given InterMine pre-build config", nickname = "saveFileProperties", notes = "Following on from `detectFileProperties`, we need to save a set of metadata associated with a file. This can be run multiple times, as the user may upload an unknown number of files.", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successfully saved provided DataFileProperties details") })
-    @RequestMapping(value = "/file/properties/save/{mineId}",
+    @RequestMapping(value = "/file/properties/save",
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> saveFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody List<DataFilePropertiesResponseInner> body,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId,@ApiParam(value = "ID of mine to fetch",required=true) @PathVariable("mineId") UUID mineId);
+    ResponseEntity<Void> saveFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody List<DataFilePropertiesResponseInner> body,@NotNull @ApiParam(value = "ID of mine to fetch", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 }
