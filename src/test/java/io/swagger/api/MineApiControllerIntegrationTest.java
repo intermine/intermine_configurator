@@ -87,7 +87,7 @@ public class MineApiControllerIntegrationTest {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
         ResponseEntity<Void> responseEntity = api.setMineDescriptors(body, mineId, userId);
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class MineApiControllerIntegrationTest {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
         ResponseEntity<Void> responseEntity = api.setSupplementaryDataSources(body, mineId, userId);
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
 }

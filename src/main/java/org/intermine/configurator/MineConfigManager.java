@@ -6,17 +6,37 @@ import io.swagger.model.MineConfig;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
+import io.swagger.model.MineDescriptor;
 import io.swagger.model.SupplementaryDataSource;
 import org.apache.commons.collections4.keyvalue.MultiKey;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 public class MineConfigManager {
 
     // temporary class. this is all going in mongo db
-    public static Map<MultiKey, MineConfig> MINE_CONFIGS = new HashMap<MultiKey, MineConfig>();
+    private static Map<MultiKey, MineConfig> MINE_CONFIGS = new HashMap<MultiKey, MineConfig>();
+
+    public static boolean isValid(UUID mineId, UUID userId) {
+        MultiKey key = new MultiKey(mineId, userId);
+        MineConfig mineConfig = MINE_CONFIGS.get(key);
+        if (mineConfig != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void addConfig(UUID mineId, UUID userId) {
+        MineConfig mineConfig = new MineConfig();
+        MultiKey multiKey = new MultiKey(mineId, userId);
+        MINE_CONFIGS.put(multiKey, mineConfig);
+    }
+
+    public static MineConfig getConfig(UUID mineId, UUID userId) {
+        MultiKey key = new MultiKey(mineId, userId);
+        return MINE_CONFIGS.get(key);
+    }
 
     /**
      * Destroy the associated config for mine
@@ -26,13 +46,26 @@ public class MineConfigManager {
      * @return TRUE if operation successful, FALSE is mineId/userId not found
      */
     public static boolean removeConfig(UUID mineId, UUID userId) {
-        MultiKey key = new MultiKey(mineId, userId);
-        MineConfig mineConfig = MINE_CONFIGS.get(key);
-        if (mineConfig == null) {
+        if (!isValid(mineId, userId)) {
             return false;
         }
+        MultiKey key = new MultiKey(mineId, userId);
         MINE_CONFIGS.remove(key);
         return true;
+    }
+
+    public static MineDescriptor getMineDescriptor(UUID mineId, UUID userId) {
+        MultiKey key = new MultiKey(mineId, userId);
+        return MINE_CONFIGS.get(key).getMineDescriptor();
+    }
+
+    public static void setMineDescriptor(UUID mineId, UUID userId, MineDescriptor descriptor) {
+        if (!isValid(mineId, userId)) {
+            return;
+        }
+        MultiKey key = new MultiKey(mineId, userId);
+        MineConfig config = MINE_CONFIGS.get(key);
+        config.setMineDescriptor(descriptor);
     }
 
     /**
@@ -42,13 +75,25 @@ public class MineConfigManager {
      * @param userId id of user who owns mine
      * @return list of supp sources for this mine
      */
-    public List<SupplementaryDataSource> getSources(String mineId, String userId) {
-        MultiKey key = new MultiKey(mineId, userId);
-        MineConfig mineConfig = MINE_CONFIGS.get(key);
-        if (mineConfig == null) {
+    public static List<SupplementaryDataSource> getSupplementaryDataSources(UUID mineId, UUID userId) {
+        if (!isValid(mineId, userId)) {
             return null;
         }
+        MultiKey key = new MultiKey(mineId, userId);
+        MineConfig mineConfig = MINE_CONFIGS.get(key);
         return mineConfig.getSupplementaryDataSources();
+    }
+
+    public static void setSupplementaryDataSources(UUID mineId, UUID userId, List<Object> sources) {
+        if (!isValid(mineId, userId)) {
+            return;
+        }
+
+        List<SupplementaryDataSource> dataSources = SourceManager.getValidSources(sources);
+
+        MultiKey key = new MultiKey(mineId, userId);
+        MineConfig config = MINE_CONFIGS.get(key);
+        config.setSupplementaryDataSources(dataSources);
     }
 
     /**
@@ -58,13 +103,30 @@ public class MineConfigManager {
      * @param userId id of user who owns mine
      * @return list of tools for this mine
      */
-    public List<DataTool> getTools(String mineId, String userId) {
-        MultiKey key = new MultiKey(mineId, userId);
-        MineConfig mineConfig = MINE_CONFIGS.get(key);
-        if (mineConfig == null) {
+    public static List<DataTool> getTools(UUID mineId, UUID userId) {
+        if (!isValid(mineId, userId)) {
             return null;
         }
+        MultiKey key = new MultiKey(mineId, userId);
+        MineConfig mineConfig = MINE_CONFIGS.get(key);
         return mineConfig.getDataTools();
+    }
+
+    /**
+     * set the tools assigned to this mine
+     *
+     * @param mineId id of mine
+     * @param userId id of user who owns mine
+     * @param toolIds list of tools for this mine
+     */
+    public static void setTools(UUID mineId, UUID userId, List<String> toolIds) {
+        if (!isValid(mineId, userId)) {
+            return;
+        }
+        MultiKey key = new MultiKey(mineId, userId);
+        MineConfig mineConfig = MINE_CONFIGS.get(key);
+        List<DataTool> tools = ToolManager.getTools(toolIds);
+        mineConfig.setDataTools(tools);
     }
 
 }

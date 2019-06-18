@@ -1,6 +1,9 @@
 package org.intermine.configurator;
 
-import io.swagger.model.DataTool;
+
+import io.swagger.model.SupplementaryDataSource;
+
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -10,13 +13,10 @@ import java.util.List;
 public class SourceManager {
 
 
-    /**
-     *
-     * @return list of tools available
-     */
-    public List<DataTool> getTools() {
-        // http://registry.npmjs.com/-/v1/search?text=keywords:bluegenes-intermine-tool&size=500
-        return null;
+    public static List<SupplementaryDataSource> getValidSources(List<Object> dataSources) {
+        SupplementaryDataSource source = new SupplementaryDataSource();
+        source.setLabel("UniProt");
+        return Arrays.asList(source);
     }
 
 }
