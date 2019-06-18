@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.DataFilePropertiesResponseInnerAnswers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -16,17 +17,17 @@ import javax.validation.constraints.*;
  * DataFilePropertiesResponseInner
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T13:08:33.831Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T06:52:47.921Z[GMT]")
 public class DataFilePropertiesResponseInner   {
   @JsonProperty("answers")
   @Valid
   private List<DataFilePropertiesResponseInnerAnswers> answers = null;
 
-  @JsonProperty("fileLocation")
-  private String fileLocation = null;
+  @JsonProperty("fileId")
+  private UUID fileId = null;
 
-  @JsonProperty("mineID")
-  private String mineID = null;
+  @JsonProperty("mineId")
+  private String mineId = null;
 
   public DataFilePropertiesResponseInner answers(List<DataFilePropertiesResponseInnerAnswers> answers) {
     this.answers = answers;
@@ -55,44 +56,45 @@ public class DataFilePropertiesResponseInner   {
     this.answers = answers;
   }
 
-  public DataFilePropertiesResponseInner fileLocation(String fileLocation) {
-    this.fileLocation = fileLocation;
+  public DataFilePropertiesResponseInner fileId(UUID fileId) {
+    this.fileId = fileId;
     return this;
   }
 
   /**
-   * Get fileLocation
-   * @return fileLocation
+   * Get fileId
+   * @return fileId
   **/
-  @ApiModelProperty(example = "/data/myGFF", required = true, value = "")
+  @ApiModelProperty(example = "03641b4d-bd7e-402f-803a-7aaf55c17238", required = true, value = "")
   @NotNull
 
-  public String getFileLocation() {
-    return fileLocation;
+  @Valid
+  public UUID getFileId() {
+    return fileId;
   }
 
-  public void setFileLocation(String fileLocation) {
-    this.fileLocation = fileLocation;
+  public void setFileId(UUID fileId) {
+    this.fileId = fileId;
   }
 
-  public DataFilePropertiesResponseInner mineID(String mineID) {
-    this.mineID = mineID;
+  public DataFilePropertiesResponseInner mineId(String mineId) {
+    this.mineId = mineId;
     return this;
   }
 
   /**
-   * Get mineID
-   * @return mineID
+   * Get mineId
+   * @return mineId
   **/
   @ApiModelProperty(example = "123e4567-e89b-12d3-a456-556642440000", required = true, value = "")
   @NotNull
 
-  public String getMineID() {
-    return mineID;
+  public String getMineId() {
+    return mineId;
   }
 
-  public void setMineID(String mineID) {
-    this.mineID = mineID;
+  public void setMineId(String mineId) {
+    this.mineId = mineId;
   }
 
 
@@ -106,13 +108,13 @@ public class DataFilePropertiesResponseInner   {
     }
     DataFilePropertiesResponseInner dataFilePropertiesResponseInner = (DataFilePropertiesResponseInner) o;
     return Objects.equals(this.answers, dataFilePropertiesResponseInner.answers) &&
-        Objects.equals(this.fileLocation, dataFilePropertiesResponseInner.fileLocation) &&
-        Objects.equals(this.mineID, dataFilePropertiesResponseInner.mineID);
+        Objects.equals(this.fileId, dataFilePropertiesResponseInner.fileId) &&
+        Objects.equals(this.mineId, dataFilePropertiesResponseInner.mineId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(answers, fileLocation, mineID);
+    return Objects.hash(answers, fileId, mineId);
   }
 
   @Override
@@ -121,8 +123,8 @@ public class DataFilePropertiesResponseInner   {
     sb.append("class DataFilePropertiesResponseInner {\n");
     
     sb.append("    answers: ").append(toIndentedString(answers)).append("\n");
-    sb.append("    fileLocation: ").append(toIndentedString(fileLocation)).append("\n");
-    sb.append("    mineID: ").append(toIndentedString(mineID)).append("\n");
+    sb.append("    fileId: ").append(toIndentedString(fileId)).append("\n");
+    sb.append("    mineId: ").append(toIndentedString(mineId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

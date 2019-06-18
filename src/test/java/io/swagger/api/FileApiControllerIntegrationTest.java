@@ -24,28 +24,20 @@ public class FileApiControllerIntegrationTest {
     @Autowired
     private FileApi api;
 
-//    @Test
-//    public void detectFilePropertiesTest() throws Exception {
-//        DataFile body = new DataFile();
-//        ResponseEntity<DataFileProperties> responseEntity = api.detectFileProperties(body);
-//        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
-//    }
-
     @Test
     public void detectFilePropertiesTest() throws Exception {
-        String name = "name_example";
-        String fileLocation = "fileLocation_example";
-        String fileFormat = "fileFormat_example";
-        Object organism = null;
-        ResponseEntity<DataFileProperties> responseEntity = api.detectFileProperties(name, fileLocation, fileFormat, organism);
+        DataFile body = new DataFile();
+        UUID userId = java.util.UUID.randomUUID();
+        ResponseEntity<DataFileProperties> responseEntity = api.detectFileProperties(body, userId);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
     @Test
     public void saveFilePropertiesTest() throws Exception {
         List<DataFilePropertiesResponseInner> body = Arrays.asList(new DataFilePropertiesResponseInner());
+        UUID userId = java.util.UUID.randomUUID();
         UUID mineId = java.util.UUID.randomUUID();
-        ResponseEntity<Void> responseEntity = api.saveFileProperties(body, mineId);
+        ResponseEntity<Void> responseEntity = api.saveFileProperties(body, userId, mineId);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 

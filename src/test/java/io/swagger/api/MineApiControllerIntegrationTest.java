@@ -1,7 +1,6 @@
 package io.swagger.api;
 
 import io.swagger.model.DataTool;
-import io.swagger.model.DataToolResponse;
 import io.swagger.model.MineConfig;
 import io.swagger.model.MineDescriptor;
 import java.util.UUID;
@@ -28,43 +27,47 @@ public class MineApiControllerIntegrationTest {
     @Test
     public void deleteConfigTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
-        ResponseEntity<Void> responseEntity = api.deleteConfig(mineId);
+        UUID userId = java.util.UUID.randomUUID();
+        ResponseEntity<Void> responseEntity = api.deleteConfig(mineId, userId);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
     @Test
     public void getMineConfigTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
-        ResponseEntity<MineConfig> responseEntity = api.getMineConfig(mineId);
+        UUID userId = java.util.UUID.randomUUID();
+        ResponseEntity<MineConfig> responseEntity = api.getMineConfig(mineId, userId);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
     @Test
     public void getMineDescriptorsTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
-        ResponseEntity<MineDescriptor> responseEntity = api.getMineDescriptors(mineId);
+        UUID userId = java.util.UUID.randomUUID();
+        ResponseEntity<MineDescriptor> responseEntity = api.getMineDescriptors(mineId, userId);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
     @Test
     public void getNewMineTest() throws Exception {
-        ResponseEntity<UUID> responseEntity = api.getNewMine();
+        UUID userId = java.util.UUID.randomUUID();
+        ResponseEntity<UUID> responseEntity = api.getNewMine(userId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Test
     public void mineDataToolsMineIdGetTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
-        ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsMineIdGet(mineId);
+        UUID userId = java.util.UUID.randomUUID();
+        ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsMineIdGet(mineId, userId);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
     @Test
     public void mineDataToolsMineIdPostTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
-        DataTool tool = new DataTool();
-        tool.setToolId("toolId");
-        ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsMineIdPost(mineId);
+        UUID userId = java.util.UUID.randomUUID();
+        ResponseEntity<List<DataTool>> responseEntity = api.mineDataToolsMineIdPost(mineId, userId);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
@@ -75,7 +78,8 @@ public class MineApiControllerIntegrationTest {
         mineDescriptor.setLicence("myLicence");
         mineDescriptor.setPrivacy(MineDescriptor.PrivacyEnum.PUBLIC);
         UUID mineId = java.util.UUID.randomUUID();
-        ResponseEntity<Void> responseEntity = api.setMineDescriptors(mineDescriptor, mineId);
+        UUID userId = java.util.UUID.randomUUID();
+        ResponseEntity<Void> responseEntity = api.setMineDescriptors(mineDescriptor, mineId, userId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 

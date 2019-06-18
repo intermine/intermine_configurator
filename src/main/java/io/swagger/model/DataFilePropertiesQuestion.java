@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.DataFilePropertiesQuestionQuestion;
+import java.util.UUID;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,10 +15,10 @@ import javax.validation.constraints.*;
  * DataFilePropertiesQuestion
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T13:08:33.831Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T06:52:47.921Z[GMT]")
 public class DataFilePropertiesQuestion   {
-  @JsonProperty("fileLocation")
-  private String fileLocation = null;
+  @JsonProperty("fileId")
+  private UUID fileId = null;
 
   @JsonProperty("mineId")
   private String mineId = null;
@@ -25,24 +26,25 @@ public class DataFilePropertiesQuestion   {
   @JsonProperty("question")
   private DataFilePropertiesQuestionQuestion question = null;
 
-  public DataFilePropertiesQuestion fileLocation(String fileLocation) {
-    this.fileLocation = fileLocation;
+  public DataFilePropertiesQuestion fileId(UUID fileId) {
+    this.fileId = fileId;
     return this;
   }
 
   /**
-   * Get fileLocation
-   * @return fileLocation
+   * Get fileId
+   * @return fileId
   **/
-  @ApiModelProperty(example = "/data/myGFF", required = true, value = "")
+  @ApiModelProperty(example = "03641b4d-bd7e-402f-803a-7aaf55c17238", required = true, value = "")
   @NotNull
 
-  public String getFileLocation() {
-    return fileLocation;
+  @Valid
+  public UUID getFileId() {
+    return fileId;
   }
 
-  public void setFileLocation(String fileLocation) {
-    this.fileLocation = fileLocation;
+  public void setFileId(UUID fileId) {
+    this.fileId = fileId;
   }
 
   public DataFilePropertiesQuestion mineId(String mineId) {
@@ -54,7 +56,8 @@ public class DataFilePropertiesQuestion   {
    * Get mineId
    * @return mineId
   **/
-  @ApiModelProperty(example = "123e4567-e89b-12d3-a456-556642440000", value = "")
+  @ApiModelProperty(example = "123e4567-e89b-12d3-a456-556642440000", required = true, value = "")
+  @NotNull
 
   public String getMineId() {
     return mineId;
@@ -95,14 +98,14 @@ public class DataFilePropertiesQuestion   {
       return false;
     }
     DataFilePropertiesQuestion dataFilePropertiesQuestion = (DataFilePropertiesQuestion) o;
-    return Objects.equals(this.fileLocation, dataFilePropertiesQuestion.fileLocation) &&
+    return Objects.equals(this.fileId, dataFilePropertiesQuestion.fileId) &&
         Objects.equals(this.mineId, dataFilePropertiesQuestion.mineId) &&
         Objects.equals(this.question, dataFilePropertiesQuestion.question);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(fileLocation, mineId, question);
+    return Objects.hash(fileId, mineId, question);
   }
 
   @Override
@@ -110,7 +113,7 @@ public class DataFilePropertiesQuestion   {
     StringBuilder sb = new StringBuilder();
     sb.append("class DataFilePropertiesQuestion {\n");
     
-    sb.append("    fileLocation: ").append(toIndentedString(fileLocation)).append("\n");
+    sb.append("    fileId: ").append(toIndentedString(fileId)).append("\n");
     sb.append("    mineId: ").append(toIndentedString(mineId)).append("\n");
     sb.append("    question: ").append(toIndentedString(question)).append("\n");
     sb.append("}");

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.UUID;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,13 +15,13 @@ import javax.validation.constraints.*;
  * DataFile
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-30T13:08:33.831Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T06:52:47.921Z[GMT]")
 public class DataFile   {
   @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("fileLocation")
-  private String fileLocation = null;
+  @JsonProperty("fileId")
+  private UUID fileId = null;
 
   /**
    * Gets or Sets fileFormat
@@ -82,24 +83,25 @@ public class DataFile   {
     this.name = name;
   }
 
-  public DataFile fileLocation(String fileLocation) {
-    this.fileLocation = fileLocation;
+  public DataFile fileId(UUID fileId) {
+    this.fileId = fileId;
     return this;
   }
 
   /**
-   * Get fileLocation
-   * @return fileLocation
+   * Get fileId
+   * @return fileId
   **/
-  @ApiModelProperty(example = "/data/myGFF", required = true, value = "")
+  @ApiModelProperty(example = "03641b4d-bd7e-402f-803a-7aaf55c17238", required = true, value = "")
   @NotNull
 
-  public String getFileLocation() {
-    return fileLocation;
+  @Valid
+  public UUID getFileId() {
+    return fileId;
   }
 
-  public void setFileLocation(String fileLocation) {
-    this.fileLocation = fileLocation;
+  public void setFileId(UUID fileId) {
+    this.fileId = fileId;
   }
 
   public DataFile fileFormat(FileFormatEnum fileFormat) {
@@ -153,14 +155,14 @@ public class DataFile   {
     }
     DataFile dataFile = (DataFile) o;
     return Objects.equals(this.name, dataFile.name) &&
-        Objects.equals(this.fileLocation, dataFile.fileLocation) &&
+        Objects.equals(this.fileId, dataFile.fileId) &&
         Objects.equals(this.fileFormat, dataFile.fileFormat) &&
         Objects.equals(this.organism, dataFile.organism);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, fileLocation, fileFormat, organism);
+    return Objects.hash(name, fileId, fileFormat, organism);
   }
 
   @Override
@@ -169,7 +171,7 @@ public class DataFile   {
     sb.append("class DataFile {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    fileLocation: ").append(toIndentedString(fileLocation)).append("\n");
+    sb.append("    fileId: ").append(toIndentedString(fileId)).append("\n");
     sb.append("    fileFormat: ").append(toIndentedString(fileFormat)).append("\n");
     sb.append("    organism: ").append(toIndentedString(organism)).append("\n");
     sb.append("}");
