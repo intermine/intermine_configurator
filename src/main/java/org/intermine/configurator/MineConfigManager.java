@@ -35,6 +35,7 @@ public class MineConfigManager {
 
     public static MineConfig getConfig(UUID mineId, UUID userId) {
         MultiKey key = new MultiKey(mineId, userId);
+        //TODO generate model and project XML
         return MINE_CONFIGS.get(key);
     }
 

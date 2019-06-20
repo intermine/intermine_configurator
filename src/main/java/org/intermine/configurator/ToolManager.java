@@ -100,11 +100,6 @@ public class ToolManager {
     }
 }
 
-//couldn't load map com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException: Unrecognized field "tools" (class org.intermine.configurator.ToolShed), not marked as ignorable (0 known properties: ])
-//        at [Source: (String)"{"tools":[{"names":{"human":"Protein Features","cljs":"bluegenesToolProtvista","npm":"@intermine/bluegenes-protvista"},"config":{"accepts":["id"],"classes":["Protein"],"columnMapping":{"Protein":{"id":"primaryAccession"}},"files":{"css":"dist/style.css","js":"dist/bundle.js"},"toolName":{"human":"Protein Features","cljs":"bluegenesToolProtvista"}},"packageName":{"description":"BlueGenes wrapper for protvista protein feature viewer","_id":"@intermine/bluegenes-protvista@1.1.1","_requiredBy":["/"]"[truncated 19155 chars]; line: 1, column: 11] (through reference chain: org.intermine.configurator.ToolShed["tools"])
-
-
-
 class ToolShed
 {
     @JsonProperty("tools")
