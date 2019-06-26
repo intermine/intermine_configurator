@@ -1,21 +1,22 @@
 package io.swagger.api;
 
 import io.swagger.model.DataFile;
-import io.swagger.model.DataFileProperties;
-import io.swagger.model.DataFilePropertiesResponseInner;
+import io.swagger.model.DataFilePropertiesResponse;
+
 import java.util.UUID;
 
-import java.util.*;
 
+import io.swagger.model.Organism;
+import org.intermine.configurator.DataFileManager;
+import org.intermine.configurator.ValidationResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,19 +27,44 @@ public class FileApiControllerIntegrationTest {
 
     @Test
     public void detectFilePropertiesTest() throws Exception {
-        DataFile body = new DataFile();
         UUID userId = java.util.UUID.randomUUID();
-        ResponseEntity<DataFileProperties> responseEntity = api.detectFileProperties(body, userId);
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        UUID mineId = java.util.UUID.randomUUID();
+//        ResponseEntity<DataFileProperties> responseEntity = api.detectFileProperties(body, userId, mineId);
+
+        String pathToFile = getClass().getClassLoader().getResource("test.fa").getPath();
+
+        ValidationResponse validationResponse = DataFileManager.processDataFile(mineId, userId, getDummyDataFile(), pathToFile);
+
+        assertEquals(true, validationResponse.isValid);
     }
 
     @Test
     public void saveFilePropertiesTest() throws Exception {
-        List<DataFilePropertiesResponseInner> body = Arrays.asList(new DataFilePropertiesResponseInner());
+        DataFilePropertiesResponse body = new DataFilePropertiesResponse();
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
-        ResponseEntity<Void> responseEntity = api.saveFileProperties(body, mineId, userId);
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+
+        String pathToFile = getClass().getClassLoader().getResource("test.fa").getPath();
+
+        ValidationResponse validationResponse = DataFileManager.processDataFile(mineId, userId, getDummyDataFile(), pathToFile);
+        assertTrue(validationResponse.isValid);
     }
 
+
+    private DataFile getDummyDataFile() {
+        DataFile dataFile = new DataFile();
+        UUID fileId = java.util.UUID.randomUUID();
+
+        dataFile.setName("test.fa");
+        dataFile.setFileId(fileId);
+        dataFile.setFileFormat(DataFile.FileFormatEnum.FASTA);
+
+        Organism organism = new Organism();
+        organism.setName("Homo sapiens");
+        organism.setTaxonID(9606);
+
+        dataFile.setOrganism(organism);
+
+        return dataFile;
+    }
 }

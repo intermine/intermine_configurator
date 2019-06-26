@@ -5,8 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.DataFilePropertiesQuestionQuestion;
-import java.util.UUID;
+import io.swagger.model.DataFilePropertiesAnswerOption;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -15,77 +16,103 @@ import javax.validation.constraints.*;
  * DataFilePropertiesQuestion
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T10:19:50.598Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-25T11:51:24.013Z[GMT]")
 public class DataFilePropertiesQuestion   {
-  @JsonProperty("fileId")
-  private UUID fileId = null;
+  @JsonProperty("questionId")
+  private String questionId = null;
 
-  @JsonProperty("mineId")
-  private String mineId = null;
+  @JsonProperty("questionHeader")
+  private String questionHeader = null;
 
-  @JsonProperty("question")
-  private DataFilePropertiesQuestionQuestion question = null;
+  @JsonProperty("questionWording")
+  private String questionWording = null;
 
-  public DataFilePropertiesQuestion fileId(UUID fileId) {
-    this.fileId = fileId;
-    return this;
-  }
-
-  /**
-   * Get fileId
-   * @return fileId
-  **/
-  @ApiModelProperty(example = "03641b4d-bd7e-402f-803a-7aaf55c17238", required = true, value = "")
-  @NotNull
-
+  @JsonProperty("possibleAnswers")
   @Valid
-  public UUID getFileId() {
-    return fileId;
-  }
+  private List<DataFilePropertiesAnswerOption> possibleAnswers = new ArrayList<DataFilePropertiesAnswerOption>();
 
-  public void setFileId(UUID fileId) {
-    this.fileId = fileId;
-  }
-
-  public DataFilePropertiesQuestion mineId(String mineId) {
-    this.mineId = mineId;
+  public DataFilePropertiesQuestion questionId(String questionId) {
+    this.questionId = questionId;
     return this;
   }
 
   /**
-   * Get mineId
-   * @return mineId
+   * Get questionId
+   * @return questionId
   **/
-  @ApiModelProperty(example = "123e4567-e89b-12d3-a456-556642440000", required = true, value = "")
+  @ApiModelProperty(example = "nucleotideOrProtein", required = true, value = "")
   @NotNull
 
-  public String getMineId() {
-    return mineId;
+  public String getQuestionId() {
+    return questionId;
   }
 
-  public void setMineId(String mineId) {
-    this.mineId = mineId;
+  public void setQuestionId(String questionId) {
+    this.questionId = questionId;
   }
 
-  public DataFilePropertiesQuestion question(DataFilePropertiesQuestionQuestion question) {
-    this.question = question;
+  public DataFilePropertiesQuestion questionHeader(String questionHeader) {
+    this.questionHeader = questionHeader;
     return this;
   }
 
   /**
-   * Get question
-   * @return question
+   * A header in bold above question for readability
+   * @return questionHeader
+  **/
+  @ApiModelProperty(example = "Sequence Type", required = true, value = "A header in bold above question for readability")
+  @NotNull
+
+  public String getQuestionHeader() {
+    return questionHeader;
+  }
+
+  public void setQuestionHeader(String questionHeader) {
+    this.questionHeader = questionHeader;
+  }
+
+  public DataFilePropertiesQuestion questionWording(String questionWording) {
+    this.questionWording = questionWording;
+    return this;
+  }
+
+  /**
+   * The text of the question
+   * @return questionWording
+  **/
+  @ApiModelProperty(example = "Does this file contain nucleotides or proteins?", value = "The text of the question")
+
+  public String getQuestionWording() {
+    return questionWording;
+  }
+
+  public void setQuestionWording(String questionWording) {
+    this.questionWording = questionWording;
+  }
+
+  public DataFilePropertiesQuestion possibleAnswers(List<DataFilePropertiesAnswerOption> possibleAnswers) {
+    this.possibleAnswers = possibleAnswers;
+    return this;
+  }
+
+  public DataFilePropertiesQuestion addPossibleAnswersItem(DataFilePropertiesAnswerOption possibleAnswersItem) {
+    this.possibleAnswers.add(possibleAnswersItem);
+    return this;
+  }
+
+  /**
+   * Get possibleAnswers
+   * @return possibleAnswers
   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
-
   @Valid
-  public DataFilePropertiesQuestionQuestion getQuestion() {
-    return question;
+  public List<DataFilePropertiesAnswerOption> getPossibleAnswers() {
+    return possibleAnswers;
   }
 
-  public void setQuestion(DataFilePropertiesQuestionQuestion question) {
-    this.question = question;
+  public void setPossibleAnswers(List<DataFilePropertiesAnswerOption> possibleAnswers) {
+    this.possibleAnswers = possibleAnswers;
   }
 
 
@@ -98,14 +125,15 @@ public class DataFilePropertiesQuestion   {
       return false;
     }
     DataFilePropertiesQuestion dataFilePropertiesQuestion = (DataFilePropertiesQuestion) o;
-    return Objects.equals(this.fileId, dataFilePropertiesQuestion.fileId) &&
-        Objects.equals(this.mineId, dataFilePropertiesQuestion.mineId) &&
-        Objects.equals(this.question, dataFilePropertiesQuestion.question);
+    return Objects.equals(this.questionId, dataFilePropertiesQuestion.questionId) &&
+        Objects.equals(this.questionHeader, dataFilePropertiesQuestion.questionHeader) &&
+        Objects.equals(this.questionWording, dataFilePropertiesQuestion.questionWording) &&
+        Objects.equals(this.possibleAnswers, dataFilePropertiesQuestion.possibleAnswers);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(fileId, mineId, question);
+    return Objects.hash(questionId, questionHeader, questionWording, possibleAnswers);
   }
 
   @Override
@@ -113,9 +141,10 @@ public class DataFilePropertiesQuestion   {
     StringBuilder sb = new StringBuilder();
     sb.append("class DataFilePropertiesQuestion {\n");
     
-    sb.append("    fileId: ").append(toIndentedString(fileId)).append("\n");
-    sb.append("    mineId: ").append(toIndentedString(mineId)).append("\n");
-    sb.append("    question: ").append(toIndentedString(question)).append("\n");
+    sb.append("    questionId: ").append(toIndentedString(questionId)).append("\n");
+    sb.append("    questionHeader: ").append(toIndentedString(questionHeader)).append("\n");
+    sb.append("    questionWording: ").append(toIndentedString(questionWording)).append("\n");
+    sb.append("    possibleAnswers: ").append(toIndentedString(possibleAnswers)).append("\n");
     sb.append("}");
     return sb.toString();
   }

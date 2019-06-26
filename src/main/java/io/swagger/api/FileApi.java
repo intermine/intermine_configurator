@@ -7,7 +7,7 @@ package io.swagger.api;
 
 import io.swagger.model.DataFile;
 import io.swagger.model.DataFileProperties;
-import io.swagger.model.DataFilePropertiesResponseInner;
+import io.swagger.model.DataFilePropertiesResponse;
 import java.util.UUID;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -25,18 +25,18 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T09:54:09.498Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-25T11:51:24.013Z[GMT]")
 @Api(value = "file", description = "the file API")
 public interface FileApi {
 
-    @ApiOperation(value = "Return information about this file", nickname = "detectFileProperties", notes = "", response = DataFileProperties.class, tags={  })
+    @ApiOperation(value = "Return information about this file", nickname = "detectFileProperties", notes = "Reads in data file, validates and returns file attributes, plus questions (if needed) for the user.", response = DataFileProperties.class, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successfully detected file type", response = DataFileProperties.class) })
     @RequestMapping(value = "/file/properties/detect",
         produces = { "application/json", "application/xml" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
-    ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody DataFile body,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+    ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody DataFile body,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId,@NotNull @ApiParam(value = "ID of mine", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId);
 
 
     @ApiOperation(value = "Save file properties to a given InterMine pre-build config", nickname = "saveFileProperties", notes = "Following on from `detectFileProperties`, we need to save a set of metadata associated with a file. This can be run multiple times, as the user may upload an unknown number of files.", tags={  })
@@ -45,6 +45,6 @@ public interface FileApi {
     @RequestMapping(value = "/file/properties/save",
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> saveFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody List<DataFilePropertiesResponseInner> body,@NotNull @ApiParam(value = "ID of mine to fetch", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+    ResponseEntity<Void> saveFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody DataFilePropertiesResponse body,@NotNull @ApiParam(value = "ID of mine to fetch", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 }

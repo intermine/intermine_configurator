@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.DataFile;
+import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataTool;
 import io.swagger.model.MineDescriptor;
 import io.swagger.model.SupplementaryDataSource;
@@ -16,11 +16,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * MineConfig
+ * MineUserConfig
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T10:19:50.598Z[GMT]")
-public class MineConfig   {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-25T11:51:24.013Z[GMT]")
+public class MineUserConfig   {
   @JsonProperty("mineDescriptor")
   private MineDescriptor mineDescriptor = null;
 
@@ -34,15 +34,9 @@ public class MineConfig   {
 
   @JsonProperty("dataFiles")
   @Valid
-  private List<DataFile> dataFiles = null;
+  private List<DataFileProperties> dataFiles = null;
 
-  @JsonProperty("projectXML")
-  private String projectXML = null;
-
-  @JsonProperty("globalAdditions")
-  private String globalAdditions = null;
-
-  public MineConfig mineDescriptor(MineDescriptor mineDescriptor) {
+  public MineUserConfig mineDescriptor(MineDescriptor mineDescriptor) {
     this.mineDescriptor = mineDescriptor;
     return this;
   }
@@ -62,12 +56,12 @@ public class MineConfig   {
     this.mineDescriptor = mineDescriptor;
   }
 
-  public MineConfig dataTools(List<DataTool> dataTools) {
+  public MineUserConfig dataTools(List<DataTool> dataTools) {
     this.dataTools = dataTools;
     return this;
   }
 
-  public MineConfig addDataToolsItem(DataTool dataToolsItem) {
+  public MineUserConfig addDataToolsItem(DataTool dataToolsItem) {
     if (this.dataTools == null) {
       this.dataTools = new ArrayList<DataTool>();
     }
@@ -89,12 +83,12 @@ public class MineConfig   {
     this.dataTools = dataTools;
   }
 
-  public MineConfig supplementaryDataSources(List<SupplementaryDataSource> supplementaryDataSources) {
+  public MineUserConfig supplementaryDataSources(List<SupplementaryDataSource> supplementaryDataSources) {
     this.supplementaryDataSources = supplementaryDataSources;
     return this;
   }
 
-  public MineConfig addSupplementaryDataSourcesItem(SupplementaryDataSource supplementaryDataSourcesItem) {
+  public MineUserConfig addSupplementaryDataSourcesItem(SupplementaryDataSource supplementaryDataSourcesItem) {
     if (this.supplementaryDataSources == null) {
       this.supplementaryDataSources = new ArrayList<SupplementaryDataSource>();
     }
@@ -116,14 +110,14 @@ public class MineConfig   {
     this.supplementaryDataSources = supplementaryDataSources;
   }
 
-  public MineConfig dataFiles(List<DataFile> dataFiles) {
+  public MineUserConfig dataFiles(List<DataFileProperties> dataFiles) {
     this.dataFiles = dataFiles;
     return this;
   }
 
-  public MineConfig addDataFilesItem(DataFile dataFilesItem) {
+  public MineUserConfig addDataFilesItem(DataFileProperties dataFilesItem) {
     if (this.dataFiles == null) {
-      this.dataFiles = new ArrayList<DataFile>();
+      this.dataFiles = new ArrayList<DataFileProperties>();
     }
     this.dataFiles.add(dataFilesItem);
     return this;
@@ -135,50 +129,12 @@ public class MineConfig   {
   **/
   @ApiModelProperty(value = "")
   @Valid
-  public List<DataFile> getDataFiles() {
+  public List<DataFileProperties> getDataFiles() {
     return dataFiles;
   }
 
-  public void setDataFiles(List<DataFile> dataFiles) {
+  public void setDataFiles(List<DataFileProperties> dataFiles) {
     this.dataFiles = dataFiles;
-  }
-
-  public MineConfig projectXML(String projectXML) {
-    this.projectXML = projectXML;
-    return this;
-  }
-
-  /**
-   * Get projectXML
-   * @return projectXML
-  **/
-  @ApiModelProperty(value = "")
-
-  public String getProjectXML() {
-    return projectXML;
-  }
-
-  public void setProjectXML(String projectXML) {
-    this.projectXML = projectXML;
-  }
-
-  public MineConfig globalAdditions(String globalAdditions) {
-    this.globalAdditions = globalAdditions;
-    return this;
-  }
-
-  /**
-   * Get globalAdditions
-   * @return globalAdditions
-  **/
-  @ApiModelProperty(value = "")
-
-  public String getGlobalAdditions() {
-    return globalAdditions;
-  }
-
-  public void setGlobalAdditions(String globalAdditions) {
-    this.globalAdditions = globalAdditions;
   }
 
 
@@ -190,31 +146,27 @@ public class MineConfig   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MineConfig mineConfig = (MineConfig) o;
-    return Objects.equals(this.mineDescriptor, mineConfig.mineDescriptor) &&
-        Objects.equals(this.dataTools, mineConfig.dataTools) &&
-        Objects.equals(this.supplementaryDataSources, mineConfig.supplementaryDataSources) &&
-        Objects.equals(this.dataFiles, mineConfig.dataFiles) &&
-        Objects.equals(this.projectXML, mineConfig.projectXML) &&
-        Objects.equals(this.globalAdditions, mineConfig.globalAdditions);
+    MineUserConfig mineUserConfig = (MineUserConfig) o;
+    return Objects.equals(this.mineDescriptor, mineUserConfig.mineDescriptor) &&
+        Objects.equals(this.dataTools, mineUserConfig.dataTools) &&
+        Objects.equals(this.supplementaryDataSources, mineUserConfig.supplementaryDataSources) &&
+        Objects.equals(this.dataFiles, mineUserConfig.dataFiles);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(mineDescriptor, dataTools, supplementaryDataSources, dataFiles, projectXML, globalAdditions);
+    return Objects.hash(mineDescriptor, dataTools, supplementaryDataSources, dataFiles);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class MineConfig {\n");
+    sb.append("class MineUserConfig {\n");
     
     sb.append("    mineDescriptor: ").append(toIndentedString(mineDescriptor)).append("\n");
     sb.append("    dataTools: ").append(toIndentedString(dataTools)).append("\n");
     sb.append("    supplementaryDataSources: ").append(toIndentedString(supplementaryDataSources)).append("\n");
     sb.append("    dataFiles: ").append(toIndentedString(dataFiles)).append("\n");
-    sb.append("    projectXML: ").append(toIndentedString(projectXML)).append("\n");
-    sb.append("    globalAdditions: ").append(toIndentedString(globalAdditions)).append("\n");
     sb.append("}");
     return sb.toString();
   }

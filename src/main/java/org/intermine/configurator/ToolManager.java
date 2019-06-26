@@ -1,22 +1,17 @@
 package org.intermine.configurator;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.model.DataTool;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Scanner;
 
 /**
@@ -39,12 +34,22 @@ public class ToolManager {
         return new ArrayList<>(dataTools.values());
     }
 
-    public static List<DataTool> getTools(List<String> toolIds) {
+    /**
+     * Transform the toolIDs into a list of DataTools they represent
+     *
+     * @param selectedToolIds the IDs of tools selected by the user
+     * @return
+     */
+    public static List<DataTool> getDataTools(List<String> selectedToolIds) {
+        if (selectedToolIds == null || selectedToolIds.isEmpty()) {
+            return null;
+        }
         List<DataTool> selectedTools = new ArrayList<DataTool>();
-        for (String toolId : toolIds) {
+        // for each selected id, get the matching object
+        for (String toolId : selectedToolIds) {
             DataTool tool = dataTools.get(toolId);
             if (tool == null) {
-                return null;
+                continue;
             }
             selectedTools.add(tool);
         }

@@ -5,10 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.DataFilePropertiesAnswerOptionOptions;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -17,106 +13,96 @@ import javax.validation.constraints.*;
  * DataFilePropertiesAnswerOption
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T10:19:50.598Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-25T11:51:24.013Z[GMT]")
 public class DataFilePropertiesAnswerOption   {
-  @JsonProperty("fileId")
-  private UUID fileId = null;
+  @JsonProperty("answerId")
+  private String answerId = null;
 
-  @JsonProperty("mineId")
-  private String mineId = null;
+  @JsonProperty("answerLabel")
+  private String answerLabel = null;
 
-  @JsonProperty("options")
-  @Valid
-  private List<DataFilePropertiesAnswerOptionOptions> options = null;
+  @JsonProperty("isDefault")
+  private Boolean isDefault = null;
 
-  @JsonProperty("defaultAnswer")
-  private String defaultAnswer = null;
+  @JsonProperty("isSelected")
+  private Boolean isSelected = null;
 
-  public DataFilePropertiesAnswerOption fileId(UUID fileId) {
-    this.fileId = fileId;
+  public DataFilePropertiesAnswerOption answerId(String answerId) {
+    this.answerId = answerId;
     return this;
   }
 
   /**
-   * Get fileId
-   * @return fileId
+   * Machine-readable value for this answer
+   * @return answerId
   **/
-  @ApiModelProperty(example = "03641b4d-bd7e-402f-803a-7aaf55c17238", required = true, value = "")
+  @ApiModelProperty(example = "primaryIdentifier", required = true, value = "Machine-readable value for this answer")
   @NotNull
 
-  @Valid
-  public UUID getFileId() {
-    return fileId;
+  public String getAnswerId() {
+    return answerId;
   }
 
-  public void setFileId(UUID fileId) {
-    this.fileId = fileId;
+  public void setAnswerId(String answerId) {
+    this.answerId = answerId;
   }
 
-  public DataFilePropertiesAnswerOption mineId(String mineId) {
-    this.mineId = mineId;
+  public DataFilePropertiesAnswerOption answerLabel(String answerLabel) {
+    this.answerLabel = answerLabel;
     return this;
   }
 
   /**
-   * Get mineId
-   * @return mineId
+   * Human readable answer to be displayed
+   * @return answerLabel
   **/
-  @ApiModelProperty(example = "123e4567-e89b-12d3-a456-556642440000", required = true, value = "")
+  @ApiModelProperty(example = "Primary Identifier", required = true, value = "Human readable answer to be displayed")
   @NotNull
 
-  public String getMineId() {
-    return mineId;
+  public String getAnswerLabel() {
+    return answerLabel;
   }
 
-  public void setMineId(String mineId) {
-    this.mineId = mineId;
+  public void setAnswerLabel(String answerLabel) {
+    this.answerLabel = answerLabel;
   }
 
-  public DataFilePropertiesAnswerOption options(List<DataFilePropertiesAnswerOptionOptions> options) {
-    this.options = options;
-    return this;
-  }
-
-  public DataFilePropertiesAnswerOption addOptionsItem(DataFilePropertiesAnswerOptionOptions optionsItem) {
-    if (this.options == null) {
-      this.options = new ArrayList<DataFilePropertiesAnswerOptionOptions>();
-    }
-    this.options.add(optionsItem);
+  public DataFilePropertiesAnswerOption isDefault(Boolean isDefault) {
+    this.isDefault = isDefault;
     return this;
   }
 
   /**
-   * Array of possible answers the user can choose from.
-   * @return options
+   * TRUE if this is the default value
+   * @return isDefault
   **/
-  @ApiModelProperty(example = "[{\"answerID\":\"nucleotides\",\"answerWording\":\"Nucleotides\"},{\"answerID\":\"proteins\",\"answerWording\":\"Proteins\"}]", value = "Array of possible answers the user can choose from.")
-  @Valid
-  public List<DataFilePropertiesAnswerOptionOptions> getOptions() {
-    return options;
+  @ApiModelProperty(example = "true", value = "TRUE if this is the default value")
+
+  public Boolean isIsDefault() {
+    return isDefault;
   }
 
-  public void setOptions(List<DataFilePropertiesAnswerOptionOptions> options) {
-    this.options = options;
+  public void setIsDefault(Boolean isDefault) {
+    this.isDefault = isDefault;
   }
 
-  public DataFilePropertiesAnswerOption defaultAnswer(String defaultAnswer) {
-    this.defaultAnswer = defaultAnswer;
+  public DataFilePropertiesAnswerOption isSelected(Boolean isSelected) {
+    this.isSelected = isSelected;
     return this;
   }
 
   /**
-   * Get defaultAnswer
-   * @return defaultAnswer
+   * TRUE if the user selected this value in the wizard
+   * @return isSelected
   **/
-  @ApiModelProperty(example = "answerID of one of the questions above", value = "")
+  @ApiModelProperty(example = "false", value = "TRUE if the user selected this value in the wizard")
 
-  public String getDefaultAnswer() {
-    return defaultAnswer;
+  public Boolean isIsSelected() {
+    return isSelected;
   }
 
-  public void setDefaultAnswer(String defaultAnswer) {
-    this.defaultAnswer = defaultAnswer;
+  public void setIsSelected(Boolean isSelected) {
+    this.isSelected = isSelected;
   }
 
 
@@ -129,15 +115,15 @@ public class DataFilePropertiesAnswerOption   {
       return false;
     }
     DataFilePropertiesAnswerOption dataFilePropertiesAnswerOption = (DataFilePropertiesAnswerOption) o;
-    return Objects.equals(this.fileId, dataFilePropertiesAnswerOption.fileId) &&
-        Objects.equals(this.mineId, dataFilePropertiesAnswerOption.mineId) &&
-        Objects.equals(this.options, dataFilePropertiesAnswerOption.options) &&
-        Objects.equals(this.defaultAnswer, dataFilePropertiesAnswerOption.defaultAnswer);
+    return Objects.equals(this.answerId, dataFilePropertiesAnswerOption.answerId) &&
+        Objects.equals(this.answerLabel, dataFilePropertiesAnswerOption.answerLabel) &&
+        Objects.equals(this.isDefault, dataFilePropertiesAnswerOption.isDefault) &&
+        Objects.equals(this.isSelected, dataFilePropertiesAnswerOption.isSelected);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(fileId, mineId, options, defaultAnswer);
+    return Objects.hash(answerId, answerLabel, isDefault, isSelected);
   }
 
   @Override
@@ -145,10 +131,10 @@ public class DataFilePropertiesAnswerOption   {
     StringBuilder sb = new StringBuilder();
     sb.append("class DataFilePropertiesAnswerOption {\n");
     
-    sb.append("    fileId: ").append(toIndentedString(fileId)).append("\n");
-    sb.append("    mineId: ").append(toIndentedString(mineId)).append("\n");
-    sb.append("    options: ").append(toIndentedString(options)).append("\n");
-    sb.append("    defaultAnswer: ").append(toIndentedString(defaultAnswer)).append("\n");
+    sb.append("    answerId: ").append(toIndentedString(answerId)).append("\n");
+    sb.append("    answerLabel: ").append(toIndentedString(answerLabel)).append("\n");
+    sb.append("    isDefault: ").append(toIndentedString(isDefault)).append("\n");
+    sb.append("    isSelected: ").append(toIndentedString(isSelected)).append("\n");
     sb.append("}");
     return sb.toString();
   }

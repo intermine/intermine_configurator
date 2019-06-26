@@ -12,10 +12,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DataFile
+ * Represents the data file
  */
+@ApiModel(description = "Represents the data file")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T10:19:50.598Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-25T11:51:24.013Z[GMT]")
 public class DataFile   {
   @JsonProperty("name")
   private String name = null;
