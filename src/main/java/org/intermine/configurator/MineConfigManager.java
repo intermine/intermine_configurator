@@ -304,7 +304,7 @@ public class MineConfigManager {
                 UUID fileId = dataFile.getFileId();
 
                 String fileLocation = DataFileManager.getFilePath(mineId.toString(), userId.toString(),
-                        fileId.toString(), System.getProperty("IM_DATA_DIR"), dataFile.getName());
+                        fileId.toString(), System.getenv("IM_DATA_DIR"), dataFile.getName());
 
                 DataFile.FileFormatEnum fileFormatEnum = dataFile.getFileFormat();
                 AbstractSource dataSource = SourceFactory.getDataSource(fileFormatEnum);

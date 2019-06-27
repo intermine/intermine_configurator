@@ -53,12 +53,12 @@ public class FileApiController implements FileApi {
         DataFile dataFile = (DataFile) body;
         UUID fileId = dataFile.getFileId();
 
-        if (System.getProperty("IM_DATA_DIR") == null) {
+        if (System.getenv("IM_DATA_DIR") == null) {
             throw new IllegalArgumentException("Please set ENV VAR '$IM_DATA_DIR'");
         }
 
         String fileLocation = DataFileManager.getFilePath(mineId.toString(), userId.toString(), fileId.toString(),
-                System.getProperty("IM_DATA_DIR"), dataFile.getName());
+                System.getenv("IM_DATA_DIR"), dataFile.getName());
 
         ValidationResponse validationResponse = DataFileManager.processDataFile(dataFile, fileLocation);
         if (validationResponse.isValid) {
@@ -75,7 +75,7 @@ public class FileApiController implements FileApi {
             throw new IllegalArgumentException("User or mine ID not found");
         }
 
-        if (System.getProperty("IM_DATA_DIR") == null) {
+        if (System.getenv("IM_DATA_DIR") == null) {
             throw new IllegalArgumentException("Please set ENV VAR '$IM_DATA_DIR'");
         }
 
@@ -84,7 +84,7 @@ public class FileApiController implements FileApi {
         UUID fileId = dataFile.getFileId();
 
         String fileLocation = DataFileManager.getFilePath(mineId.toString(), userId.toString(), fileId.toString(),
-                System.getProperty("IM_DATA_DIR"), dataFile.getName());
+                System.getenv("IM_DATA_DIR"), dataFile.getName());
 
         // set the user config
         ValidationResponse validationResponse = DataFileManager.processDataFile(dataFile, fileLocation);
