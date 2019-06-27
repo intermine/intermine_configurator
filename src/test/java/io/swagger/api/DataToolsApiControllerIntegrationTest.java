@@ -24,7 +24,7 @@ public class DataToolsApiControllerIntegrationTest {
     @Test
     public void dataToolsGetTest() throws Exception {
         ResponseEntity<List<DataTool>> responseEntity = api.dataToolsGet();
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
 }

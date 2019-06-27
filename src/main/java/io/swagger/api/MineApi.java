@@ -5,9 +5,11 @@
  */
 package io.swagger.api;
 
+import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataTool;
-import io.swagger.model.MineConfig;
+import io.swagger.model.MineBuildConfig;
 import io.swagger.model.MineDescriptor;
+import io.swagger.model.MineUserConfig;
 import io.swagger.model.SupplementaryDataSource;
 import java.util.UUID;
 import io.swagger.annotations.*;
@@ -26,25 +28,33 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T10:19:50.598Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-25T11:51:24.013Z[GMT]")
 @Api(value = "mine", description = "the mine API")
 public interface MineApi {
 
     @ApiOperation(value = "Delete config associated with mine instance", nickname = "deleteConfig", notes = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Mine config successfully deleted") })
-    @RequestMapping(value = "/mine/config",
+    @RequestMapping(value = "/mine/user-config",
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteConfig(@NotNull @ApiParam(value = "ID of mine config to delete", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
-    @ApiOperation(value = "Get mine config", nickname = "getMineConfig", notes = "return configured details (if any) for a given mine id.", response = MineConfig.class, tags={  })
+    @ApiOperation(value = "Delete config associated with file", nickname = "deleteMineFileProperties", notes = "", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "success", response = MineConfig.class) })
-    @RequestMapping(value = "/mine/config",
+        @ApiResponse(code = 200, message = "File config successfully deleted") })
+    @RequestMapping(value = "/mine/file-properties",
+        method = RequestMethod.DELETE)
+    ResponseEntity<Void> deleteMineFileProperties(@NotNull @ApiParam(value = "ID of mine", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId,@NotNull @ApiParam(value = "ID of file", required = true) @Valid @RequestParam(value = "fileId", required = true) UUID fileId);
+
+
+    @ApiOperation(value = "return config needed to build a mine", nickname = "getMineBuildConfig", notes = "return config needed to build a mine", response = MineBuildConfig.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "success", response = MineBuildConfig.class) })
+    @RequestMapping(value = "/mine/build-config",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
-    ResponseEntity<MineConfig> getMineConfig(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+    ResponseEntity<MineBuildConfig> getMineBuildConfig(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
     @ApiOperation(value = "Get mine descriptors", nickname = "getMineDescriptors", notes = "return descriptors (if any) for a given mine id.", response = MineDescriptor.class, tags={  })
@@ -56,6 +66,15 @@ public interface MineApi {
     ResponseEntity<MineDescriptor> getMineDescriptors(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
+    @ApiOperation(value = "Get config related to this file", nickname = "getMineFileProperties", notes = "return configured details (if any) for a given file", response = DataFileProperties.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "success", response = DataFileProperties.class) })
+    @RequestMapping(value = "/mine/file-properties",
+        produces = { "application/json", "application/xml" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<DataFileProperties> getMineFileProperties(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId,@NotNull @ApiParam(value = "ID of file", required = true) @Valid @RequestParam(value = "fileId", required = true) UUID fileId);
+
+
     @ApiOperation(value = "Get list of supplementary data sources set for this mine config", nickname = "getMineSupplementaryDataSources", notes = "Returns a list of external data sources to add to this mine, e.g. GO terms, publications, etc.", response = SupplementaryDataSource.class, responseContainer = "List", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Success", response = SupplementaryDataSource.class, responseContainer = "List") })
@@ -65,10 +84,19 @@ public interface MineApi {
     ResponseEntity<List<SupplementaryDataSource>> getMineSupplementaryDataSources(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
 
 
+    @ApiOperation(value = "Get user specified config for this mine", nickname = "getMineUserConfig", notes = "return configured details (if any) for a given mine id.", response = MineUserConfig.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "success", response = MineUserConfig.class) })
+    @RequestMapping(value = "/mine/user-config",
+        produces = { "application/json", "application/xml" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<MineUserConfig> getMineUserConfig(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);
+
+
     @ApiOperation(value = "Get mine ID", nickname = "getNewMine", notes = "return a new mine ID to use in all subsequent requests", response = UUID.class, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "success", response = UUID.class) })
-    @RequestMapping(value = "/mine/config/new/",
+    @RequestMapping(value = "/mine/user-config/new/",
         produces = { "application/json", "application/xml" }, 
         method = RequestMethod.GET)
     ResponseEntity<UUID> getNewMine(@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId);

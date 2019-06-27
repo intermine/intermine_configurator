@@ -12,10 +12,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DataFile
+ * Represents the data file
  */
+@ApiModel(description = "Represents the data file")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-18T10:19:50.598Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-27T09:01:47.965Z[GMT]")
 public class DataFile   {
   @JsonProperty("name")
   private String name = null;
@@ -61,7 +62,7 @@ public class DataFile   {
   private FileFormatEnum fileFormat = null;
 
   @JsonProperty("organism")
-  private Object organism = null;
+  private Organism organism = null;
 
   public DataFile name(String name) {
     this.name = name;
@@ -124,7 +125,7 @@ public class DataFile   {
     this.fileFormat = fileFormat;
   }
 
-  public DataFile organism(Object organism) {
+  public DataFile organism(Organism organism) {
     this.organism = organism;
     return this;
   }
@@ -136,11 +137,11 @@ public class DataFile   {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
-  public Object getOrganism() {
+  public Organism getOrganism() {
     return organism;
   }
 
-  public void setOrganism(Object organism) {
+  public void setOrganism(Organism organism) {
     this.organism = organism;
   }
 
