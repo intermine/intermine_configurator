@@ -16,16 +16,16 @@ import javax.validation.constraints.*;
  * DataFilePropertiesResponse
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-25T11:51:24.013Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-27T09:01:47.965Z[GMT]")
 public class DataFilePropertiesResponse   {
   @JsonProperty("dataFile")
-  private Object dataFile = null;
+  private DataFile dataFile = null;
 
   @JsonProperty("answers")
   @Valid
   private List<DataFilePropertiesResponseAnswers> answers = new ArrayList<DataFilePropertiesResponseAnswers>();
 
-  public DataFilePropertiesResponse dataFile(Object dataFile) {
+  public DataFilePropertiesResponse dataFile(DataFile dataFile) {
     this.dataFile = dataFile;
     return this;
   }
@@ -41,7 +41,7 @@ public class DataFilePropertiesResponse   {
     return dataFile;
   }
 
-  public void setDataFile(Object dataFile) {
+  public void setDataFile(DataFile dataFile) {
     this.dataFile = dataFile;
   }
 

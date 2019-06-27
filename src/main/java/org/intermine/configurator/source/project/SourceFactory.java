@@ -9,7 +9,7 @@ public class SourceFactory {
             return null;
         }
         if (FileFormatEnum.FASTA.compareTo(fileFormatEnum) == 0){
-            return new FastaSourceEntry();
+            return new FastaSource();
         }
         return null;
     }

@@ -109,7 +109,6 @@ public class FastaConfigGenerator implements AbstractConfigGenerator {
     static {
         FEATURE_TYPES.add("Protein");
         FEATURE_TYPES.add("Transcript");
-        FEATURE_TYPES.add("mRNA");
         FEATURE_TYPES.add("Exon");
         FEATURE_TYPES.add("CDS");
         FEATURE_TYPES.add("UTR");
@@ -123,7 +122,7 @@ public class FastaConfigGenerator implements AbstractConfigGenerator {
         question.setQuestionWording("What type of features are in this file?");
 
         DataFilePropertiesAnswerOption answer1 = new DataFilePropertiesAnswerOption();
-        answer1.setAnswerId("gene");
+        answer1.setAnswerId("Gene");
         answer1.setAnswerLabel("Gene");
         answer1.setIsDefault(true);
 
@@ -131,7 +130,7 @@ public class FastaConfigGenerator implements AbstractConfigGenerator {
 
         for (String dataType : FEATURE_TYPES) {
             DataFilePropertiesAnswerOption answer = new DataFilePropertiesAnswerOption();
-            answer.setAnswerId(dataType.toLowerCase());
+            answer.setAnswerId(dataType);
             answer.setAnswerLabel(dataType);
             answer.setIsDefault(false);
 

@@ -276,22 +276,23 @@ public class MineConfigManager {
         buildConfig.setMineDescriptor(userConfig.getMineDescriptor());
 
         List<DataTool> dataTools = userConfig.getDataTools();
-        if (dataTools == null || dataTools.isEmpty()) {
+        if (dataTools != null && !dataTools.isEmpty()) {
+            for (DataTool tool : dataTools) {
+                buildConfig.addDataToolsItem(tool.getToolId());
+            }
+        }
+        if (userConfig.getMineDescriptor() == null) {
             return null;
         }
-
-        for (DataTool tool : dataTools) {
-            buildConfig.addDataToolsItem(tool.getToolId());
-        }
-
-        String projectXML = generateProjectXML(userConfig);
+        String projectXML = generateProjectXML(mineId, userId, userConfig);
         buildConfig.setProjectXML(projectXML);
 
         return buildConfig;
     }
 
-    private static String generateProjectXML(MineUserConfig userConfig) {
+    private static String generateProjectXML(UUID mineId, UUID userId, MineUserConfig userConfig) {
         StringBuilder projectXML = new StringBuilder();
+
         String mineName = userConfig.getMineDescriptor().getMineName();
 
         projectXML.append(getPrefix(mineName));
@@ -299,10 +300,15 @@ public class MineConfigManager {
         List<DataFileProperties> dataFileProperties = userConfig.getDataFiles();
         if (dataFileProperties != null && !dataFileProperties.isEmpty()) {
             for (DataFileProperties propertiesForFile : dataFileProperties) {
-                DataFile dataFile = (DataFile) propertiesForFile.getDataFile();
+                DataFile dataFile = propertiesForFile.getDataFile();
+                UUID fileId = dataFile.getFileId();
+
+                String fileLocation = DataFileManager.getFilePath(mineId.toString(), userId.toString(),
+                        fileId.toString(), System.getProperty("IM_DATA_DIR"), dataFile.getName());
+
                 DataFile.FileFormatEnum fileFormatEnum = dataFile.getFileFormat();
                 AbstractSource dataSource = SourceFactory.getDataSource(fileFormatEnum);
-                projectXML.append(dataSource.getProjectXML());
+                projectXML.append(dataSource.getProjectXML(propertiesForFile, fileLocation));
             }
         }
 

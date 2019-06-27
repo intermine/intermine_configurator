@@ -18,25 +18,25 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "All of the config input by the user via the wizard")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-25T11:51:24.013Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-27T09:01:47.965Z[GMT]")
 public class DataFileProperties   {
   @JsonProperty("dataFile")
-  private Object dataFile = null;
+  private DataFile dataFile = null;
 
   @JsonProperty("descriptors")
   @Valid
   private List<DataFileDescriptor> descriptors = null;
 
   @JsonProperty("filePreview")
-  private Object filePreview = null;
+  private DataFilePreview filePreview = null;
 
   @JsonProperty("questions")
   @Valid
   private List<DataFilePropertiesQuestion> questions = null;
 
-  public DataFileProperties dataFile(Object dataFile) {
+  public DataFile dataFile(DataFile dataFile) {
     this.dataFile = dataFile;
-    return this;
+    return dataFile;
   }
 
   /**
@@ -46,11 +46,11 @@ public class DataFileProperties   {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
-  public Object getDataFile() {
+  public DataFile getDataFile() {
     return dataFile;
   }
 
-  public void setDataFile(Object dataFile) {
+  public void setDataFile(DataFile dataFile) {
     this.dataFile = dataFile;
   }
 
@@ -81,7 +81,7 @@ public class DataFileProperties   {
     this.descriptors = descriptors;
   }
 
-  public DataFileProperties filePreview(Object filePreview) {
+  public DataFileProperties filePreview(DataFilePreview filePreview) {
     this.filePreview = filePreview;
     return this;
   }
@@ -92,11 +92,11 @@ public class DataFileProperties   {
   **/
   @ApiModelProperty(value = "")
 
-  public Object getFilePreview() {
+  public DataFilePreview getFilePreview() {
     return filePreview;
   }
 
-  public void setFilePreview(Object filePreview) {
+  public void setFilePreview(DataFilePreview filePreview) {
     this.filePreview = filePreview;
   }
 

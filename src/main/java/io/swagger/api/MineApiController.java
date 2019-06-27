@@ -69,6 +69,9 @@ public class MineApiController implements MineApi {
             throw new IllegalArgumentException("User or mine ID not found");
         }
         MineBuildConfig config = MineConfigManager.getMineBuildConfig(mineId, userId);
+        if (config == null) {
+            throw new IllegalArgumentException("Error generating config. Mine name required.");
+        }
         return new ResponseEntity<MineBuildConfig>(config, HttpStatus.OK);
     }
 

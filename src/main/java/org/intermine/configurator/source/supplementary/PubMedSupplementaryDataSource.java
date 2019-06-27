@@ -1,6 +1,7 @@
 package org.intermine.configurator.source.supplementary;
 
 
+import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataFilePropertiesResponseAnswers;
 import io.swagger.model.SupplementaryDataSource;
 import org.intermine.configurator.source.project.AbstractSource;
@@ -13,9 +14,9 @@ public class PubMedSupplementaryDataSource implements AbstractSource {
 
     SupplementaryDataSource supplementaryDataSource;
     
-    public String getProjectXML() {
-        String snippet = " <source name=\"update-publications\" type=\"update-publications\" >\n"
-                + "<property name=\"src.data.file\" location=\"publications.xml\"/>\n"
+    public String getProjectXML(DataFileProperties propertiesForFile, String fileLocation) {
+        String snippet = " <source name=\"update-publications\" type=\"update-publications\" >"
+                + "<property name=\"src.data.file\" location=\"publications.xml\"/>"
                 + "</source>\n";
         return snippet;
     }

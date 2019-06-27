@@ -21,6 +21,7 @@ public class Swagger2SpringBoot implements CommandLineRunner {
     }
 
     public static void main(String[] args) throws Exception {
+        System.setProperty("IM_DATA_DIR", "/tmp/data");
         new SpringApplication(Swagger2SpringBoot.class).run(args);
     }
 

@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * DataFilePropertiesAnswerOption
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-25T11:51:24.013Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-27T09:01:47.965Z[GMT]")
 public class DataFilePropertiesAnswerOption   {
   @JsonProperty("answerId")
   private String answerId = null;

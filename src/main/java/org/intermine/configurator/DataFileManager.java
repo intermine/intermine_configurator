@@ -15,18 +15,13 @@ public class DataFileManager {
 
     public static ValidationResponse processDataFile(DataFile dataFile, String pathToFile) {
 
-        String fileName = "";
         String fileFormat = "";
-
-        if (dataFile.getName() != null) {
-            fileName = dataFile.getName().toString();
-        }
         if (dataFile.getFileFormat() != null) {
             fileFormat = dataFile.getFileFormat().toString();
         }
 
         // validate file
-        boolean isValid = BioValidator.Validate(pathToFile + fileName, fileFormat, true);
+        boolean isValid = BioValidator.Validate(pathToFile, fileFormat, true);
 
         // error if invalid file
         if (!isValid) {
@@ -42,15 +37,14 @@ public class DataFileManager {
 
         AbstractConfigGenerator configGenerator = ConfigGeneratorFactory.getDataSourceConfigGenerator(fileFormatEnum);
         if (configGenerator == null) {
-            ValidationResponse validationResponse = new ValidationResponse(false,
+            return new ValidationResponse(false,
                     "Error processing file: file format not found", null);
         }
         try {
             configGenerator.generateConfig(dataFileProperties, pathToFile);
         } catch (IOException e) {
-            ValidationResponse validationResponse = new ValidationResponse(false,
+            return new ValidationResponse(false,
                     "Error processing file:" + e.getMessage(), null);
-            return validationResponse;
         }
 
         ValidationResponse validationResponse = new ValidationResponse(true, null,
@@ -58,5 +52,8 @@ public class DataFileManager {
         return validationResponse;
     }
 
+    public static String getFilePath(String mineId, String userId, String fileId, String baseDir, String fileName) {
+        return baseDir + "/" + userId + "/" + mineId + "/" + fileId + "/" + fileName;
+    }
 
 }

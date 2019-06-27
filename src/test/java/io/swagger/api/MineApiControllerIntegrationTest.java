@@ -63,7 +63,9 @@ public class MineApiControllerIntegrationTest {
         UUID userId = java.util.UUID.randomUUID();
 
         MineConfigManager.addMineConfig(mineId,userId);
-
+        MineDescriptor descriptor = new MineDescriptor();
+        descriptor.setMineName("mytestmine");
+        MineConfigManager.setMineDescriptor(mineId, userId, descriptor);
         ResponseEntity<MineBuildConfig> responseEntity = api.getMineBuildConfig(mineId, userId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
