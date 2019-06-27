@@ -40,3 +40,12 @@ dependencies {
     testCompile('com.jayway.jsonpath:json-path')
 }
 
+task createUberJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'io.swagger.Swagger2SpringBoot'
+    }
+    baseName = 'intermine-configurator-uber'
+    version =  '0.1.0'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
