@@ -13,7 +13,6 @@ import java.util.Map;
 public class FastaSource implements AbstractSource {
 
     Map<String, String> selectedAnswers = new HashMap<>();
-    String taxonId, dataType, classAttribute, fileLocation;
     DataFileProperties dataFileProperties;
 
 
@@ -26,8 +25,24 @@ public class FastaSource implements AbstractSource {
             return null;
         }
 
-        // update our vars with what the user selected
-        processAnswers();
+        List<DataFilePropertiesQuestion> questions = dataFileProperties.getQuestions();
+        for (DataFilePropertiesQuestion question : questions) {
+            List<DataFilePropertiesAnswerOption> possibleAnswers = question.getPossibleAnswers();
+            for (DataFilePropertiesAnswerOption possibleAnswer : possibleAnswers) {
+                if (possibleAnswer.isIsSelected()) {
+                    selectedAnswers.put(question.getQuestionId(), possibleAnswer.getAnswerId());
+                }
+            }
+        }
+
+        DataFile dataFile = dataFileProperties.getDataFile();
+        Organism organism = dataFile.getOrganism();
+        String taxonId = organism.getTaxonID().toString();
+        String dataType = "org.intermine.model.bio." + selectedAnswers.get("featureType");
+        String classAttribute = selectedAnswers.get("identifierType");
+        if (classAttribute == null || dataType == null) {
+            return null;
+        }
 
         String snippet = " <source name=\"fasta\" type=\"fasta\" >"
                 + "<property name=\"fasta.taxonId\" value=\"" + taxonId + "\"/>"
@@ -39,28 +54,6 @@ public class FastaSource implements AbstractSource {
                 + "<property name=\"\"src.data.dir\" location=\"" + fileLocation + "\"/>"
                 + "</source>\n";
         return snippet;
-    }
-
-    private void processAnswers() {
-        putAnswersInMap();
-
-        DataFile dataFile = dataFileProperties.getDataFile();
-        Organism organism = dataFile.getOrganism();
-        taxonId = organism.getTaxonID().toString();
-        dataType = "org.intermine.model.bio." + selectedAnswers.get("featureType");
-        classAttribute = selectedAnswers.get("identifierType");
-    }
-
-    private void putAnswersInMap() {
-        List<DataFilePropertiesQuestion> questions = dataFileProperties.getQuestions();
-        for (DataFilePropertiesQuestion question : questions) {
-            List<DataFilePropertiesAnswerOption> possibleAnswers = question.getPossibleAnswers();
-            for (DataFilePropertiesAnswerOption possibleAnswer : possibleAnswers) {
-                if (possibleAnswer.isIsSelected()) {
-                    selectedAnswers.put(question.getQuestionId(), possibleAnswer.getAnswerId());
-                }
-            }
-        }
     }
 
     public String getDataModel() {
