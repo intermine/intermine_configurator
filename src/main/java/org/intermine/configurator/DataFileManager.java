@@ -6,30 +6,24 @@ import org.intermine.configurator.source.config.AbstractConfigGenerator;
 import org.intermine.configurator.source.config.ConfigGeneratorFactory;
 
 import java.io.IOException;
-import java.util.UUID;
+
 
 /**
  * manages the uploaded data files
  */
 public class DataFileManager {
 
-    public static ValidationResponse processDataFile(UUID mineId, UUID userId, DataFile dataFile, String pathToFile) {
+    public static ValidationResponse processDataFile(DataFile dataFile, String pathToFile) {
 
         String fileName = "";
-        UUID fileId = null;
         String fileFormat = "";
 
         if (dataFile.getName() != null) {
             fileName = dataFile.getName().toString();
         }
-        if (dataFile.getFileId() != null) {
-            fileId = dataFile.getFileId();
-        }
         if (dataFile.getFileFormat() != null) {
             fileFormat = dataFile.getFileFormat().toString();
         }
-
-//
 
         // validate file
         boolean isValid = BioValidator.Validate(pathToFile + fileName, fileFormat, true);
@@ -46,7 +40,11 @@ public class DataFileManager {
         DataFileProperties dataFileProperties = new DataFileProperties();
         dataFileProperties.setDataFile(dataFile);
 
-        AbstractConfigGenerator configGenerator = ConfigGeneratorFactory.getDataSourceConfig(fileFormatEnum);
+        AbstractConfigGenerator configGenerator = ConfigGeneratorFactory.getDataSourceConfigGenerator(fileFormatEnum);
+        if (configGenerator == null) {
+            ValidationResponse validationResponse = new ValidationResponse(false,
+                    "Error processing file: file format not found", null);
+        }
         try {
             configGenerator.generateConfig(dataFileProperties, pathToFile);
         } catch (IOException e) {

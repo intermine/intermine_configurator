@@ -33,7 +33,7 @@ public class FileApiControllerIntegrationTest {
 
         String pathToFile = getClass().getClassLoader().getResource("test.fa").getPath();
 
-        ValidationResponse validationResponse = DataFileManager.processDataFile(mineId, userId, getDummyDataFile(), pathToFile);
+        ValidationResponse validationResponse = DataFileManager.processDataFile(getDummyDataFile(), pathToFile);
 
         assertEquals(true, validationResponse.isValid);
     }
@@ -46,7 +46,7 @@ public class FileApiControllerIntegrationTest {
 
         String pathToFile = getClass().getClassLoader().getResource("test.fa").getPath();
 
-        ValidationResponse validationResponse = DataFileManager.processDataFile(mineId, userId, getDummyDataFile(), pathToFile);
+        ValidationResponse validationResponse = DataFileManager.processDataFile(getDummyDataFile(), pathToFile);
         assertTrue(validationResponse.isValid);
     }
 

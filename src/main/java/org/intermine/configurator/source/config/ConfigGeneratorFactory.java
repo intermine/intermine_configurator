@@ -5,7 +5,7 @@ import io.swagger.model.DataFile.FileFormatEnum;
 
 public class ConfigGeneratorFactory {
 
-    public static AbstractConfigGenerator getDataSourceConfig(FileFormatEnum fileFormatEnum) {
+    public static AbstractConfigGenerator getDataSourceConfigGenerator(FileFormatEnum fileFormatEnum) {
         if (fileFormatEnum == null) {
             return null;
         }

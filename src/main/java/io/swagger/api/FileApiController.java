@@ -44,18 +44,23 @@ public class FileApiController implements FileApi {
     public ResponseEntity<DataFileProperties> detectFileProperties(@ApiParam(value = "File that needs to be identified." ,required=true )  @Valid @RequestBody DataFile body,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId,@NotNull @ApiParam(value = "ID of mine", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId) {
         String accept = request.getHeader("Accept");
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
         }
+
         DataFile dataFile = (DataFile) body;
         UUID fileId = dataFile.getFileId();
 
+        if (System.getenv("IM_DATA_DIR") == null) {
+            throw new IllegalArgumentException("Please set ENV VAR '$IM_DATA_DIR'");
+        }
+
         String fileLocation = getFilePath(mineId.toString(), userId.toString(), fileId.toString(), System.getenv("IM_DATA_DIR"));
 
-        ValidationResponse validationResponse = DataFileManager.processDataFile(mineId, userId, dataFile, fileLocation);
+        ValidationResponse validationResponse = DataFileManager.processDataFile(dataFile, fileLocation);
         if (validationResponse.isValid) {
             return new ResponseEntity(validationResponse.dataFileProperties, HttpStatus.OK);
         } else {
-            return new ResponseEntity(validationResponse.errorMessage, HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException(validationResponse.errorMessage);
         }
     }
 
@@ -63,7 +68,11 @@ public class FileApiController implements FileApi {
         String accept = request.getHeader("Accept");
 
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
+        }
+
+        if (System.getenv("IM_DATA_DIR") == null) {
+            throw new IllegalArgumentException("Please set ENV VAR '$IM_DATA_DIR'");
         }
 
         DataFile dataFile = (DataFile) body.getDataFile();
@@ -73,7 +82,7 @@ public class FileApiController implements FileApi {
         String fileLocation = getFilePath(mineId.toString(), userId.toString(), fileId.toString(), System.getenv("IM_DATA_DIR"));
 
         // set the user config
-        ValidationResponse validationResponse = DataFileManager.processDataFile(mineId, userId, dataFile, fileLocation);
+        ValidationResponse validationResponse = DataFileManager.processDataFile(dataFile, fileLocation);
         if (validationResponse.isValid) {
 
             DataFileProperties dataFileProperties = validationResponse.dataFileProperties;
@@ -85,7 +94,7 @@ public class FileApiController implements FileApi {
             MineConfigManager.addFileProperties(mineId, userId, fileId, dataFileProperties);
             return new ResponseEntity(HttpStatus.OK);
         }
-        return new ResponseEntity(validationResponse.errorMessage, HttpStatus.BAD_REQUEST);
+        throw new IllegalArgumentException(validationResponse.errorMessage);
     }
 
     private static String getFilePath(String userId, String mineId, String fileId, String baseDir) {

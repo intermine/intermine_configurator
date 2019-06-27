@@ -297,11 +297,13 @@ public class MineConfigManager {
         projectXML.append(getPrefix(mineName));
 
         List<DataFileProperties> dataFileProperties = userConfig.getDataFiles();
-        for (DataFileProperties propertiesForFile : dataFileProperties) {
-            DataFile dataFile = (DataFile) propertiesForFile.getDataFile();
-            DataFile.FileFormatEnum fileFormatEnum = dataFile.getFileFormat();
-            AbstractSource dataSource = SourceFactory.getDataSource(fileFormatEnum);
-            projectXML.append(dataSource.getProjectXML());
+        if (dataFileProperties != null && !dataFileProperties.isEmpty()) {
+            for (DataFileProperties propertiesForFile : dataFileProperties) {
+                DataFile dataFile = (DataFile) propertiesForFile.getDataFile();
+                DataFile.FileFormatEnum fileFormatEnum = dataFile.getFileFormat();
+                AbstractSource dataSource = SourceFactory.getDataSource(fileFormatEnum);
+                projectXML.append(dataSource.getProjectXML());
+            }
         }
 
         projectXML.append(fileSuffix);

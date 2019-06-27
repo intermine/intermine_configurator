@@ -97,7 +97,7 @@ public class MineApiControllerIntegrationTest {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
 
-        MineConfigManager.addMineConfig(mineId,userId);
+        MineConfigManager.addMineConfig(mineId, userId);
 
         ResponseEntity<List<SupplementaryDataSource>> responseEntity = api.getMineSupplementaryDataSources(mineId, userId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -162,13 +162,17 @@ public class MineApiControllerIntegrationTest {
         List<Object> body = null;
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
-        ResponseEntity<Void> responseEntity = api.setSupplementaryDataSources(body, mineId, userId);
+
         // didn't add the mine
-        assertEquals("Mine Config not found", responseEntity.getBody());
+        try {
+            api.setSupplementaryDataSources(body, mineId, userId);
+        } catch (IllegalArgumentException e) {
+            assertEquals("User or mine ID not found", e.getMessage());
+        }
 
         MineConfigManager.addMineConfig(mineId,userId);
 
-        responseEntity = api.setSupplementaryDataSources(body, mineId, userId);
+        ResponseEntity<Void> responseEntity = api.setSupplementaryDataSources(body, mineId, userId);
         // didn't add the mine
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }

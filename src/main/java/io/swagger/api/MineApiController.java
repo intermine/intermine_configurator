@@ -42,11 +42,11 @@ public class MineApiController implements MineApi {
     public ResponseEntity<Void> deleteConfig(@NotNull @ApiParam(value = "ID of mine config to delete", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
         }
         boolean success = MineConfigManager.removeConfig(mineId, userId);
         if (!success) {
-            return new ResponseEntity("Mine Config for that user and mine ID not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found, deletion failed");
         }
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -54,11 +54,11 @@ public class MineApiController implements MineApi {
     public ResponseEntity<Void> deleteMineFileProperties(@NotNull @ApiParam(value = "ID of mine", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId,@NotNull @ApiParam(value = "ID of file", required = true) @Valid @RequestParam(value = "fileId", required = true) UUID fileId) {
         String accept = request.getHeader("Accept");
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
         }
         boolean success = MineConfigManager.removeFileProperties(mineId, userId, fileId);
         if (!success) {
-            return new ResponseEntity("File properties not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("File properties not found");
         }
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -66,7 +66,7 @@ public class MineApiController implements MineApi {
     public ResponseEntity<MineBuildConfig> getMineBuildConfig(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
         }
         MineBuildConfig config = MineConfigManager.getMineBuildConfig(mineId, userId);
         return new ResponseEntity<MineBuildConfig>(config, HttpStatus.OK);
@@ -75,7 +75,7 @@ public class MineApiController implements MineApi {
     public ResponseEntity<MineDescriptor> getMineDescriptors(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
         }
         MineDescriptor mineDescriptor = MineConfigManager.getMineDescriptor(mineId, userId);
         return new ResponseEntity<MineDescriptor>(mineDescriptor, HttpStatus.OK);
@@ -85,7 +85,7 @@ public class MineApiController implements MineApi {
         String accept = request.getHeader("Accept");
         DataFileProperties dataFileProperties = MineConfigManager.getFileProperties(mineId, userId, fileId);
         if (dataFileProperties == null) {
-            return new ResponseEntity("FileId not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("File ID not found");
         }
         return new ResponseEntity<DataFileProperties>(dataFileProperties, HttpStatus.OK);
     }
@@ -93,7 +93,7 @@ public class MineApiController implements MineApi {
     public ResponseEntity<List<SupplementaryDataSource>> getMineSupplementaryDataSources(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
         }
         List<SupplementaryDataSource> dataSources = MineConfigManager.getSupplementaryDataSources(mineId, userId);
         return new ResponseEntity<List<SupplementaryDataSource>>(dataSources, HttpStatus.OK);
@@ -102,7 +102,7 @@ public class MineApiController implements MineApi {
     public ResponseEntity<MineUserConfig> getMineUserConfig(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
         }
         MineUserConfig config = MineConfigManager.getMineConfig(mineId, userId);
         return new ResponseEntity<MineUserConfig>(config, HttpStatus.OK);
@@ -118,7 +118,7 @@ public class MineApiController implements MineApi {
     public ResponseEntity<List<DataTool>> mineDataToolsGet(@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
         }
         List<DataTool> dataTools = MineConfigManager.getTools(mineId, userId);
         return new ResponseEntity<List<DataTool>>(dataTools, HttpStatus.OK);
@@ -127,7 +127,7 @@ public class MineApiController implements MineApi {
     public ResponseEntity<Void> mineDataToolsPost(@ApiParam(value = "Tool to be used with mine" ,required=true )  @Valid @RequestBody List<Object> body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
         }
         List<String> toolIds = (List<String>)(List<?>) body;
         MineConfigManager.setTools(mineId, userId, toolIds);
@@ -137,7 +137,7 @@ public class MineApiController implements MineApi {
     public ResponseEntity<Void> setMineDescriptors(@ApiParam(value = "Descriptors to set for Mine" ,required=true )  @Valid @RequestBody MineDescriptor body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
         }
         String mineName = "";
         String licence = "";
@@ -171,7 +171,7 @@ public class MineApiController implements MineApi {
     public ResponseEntity<Void> setSupplementaryDataSources(@ApiParam(value = "Supplementary sources to be used with mine" ,required=true )  @Valid @RequestBody List<Object> body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {
         String accept = request.getHeader("Accept");
         if (!MineConfigManager.isValid(mineId, userId)) {
-            return new ResponseEntity("Mine Config not found", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("User or mine ID not found");
         }
         List<SupplementaryDataSource> sources = (List<SupplementaryDataSource>)(List<?>) body;
         MineConfigManager.setSupplementaryDataSources(mineId, userId, sources);
