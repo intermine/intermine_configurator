@@ -16,7 +16,7 @@ WORKDIR /intermine
 
 RUN apk add --no-cache bash
 
-RUN /intermine/gradlew createUberJar
+RUN /intermine/gradlew bootJar
 
 FROM alpine:3.9 as RUNTIME
 LABEL maintainer="Ank"
@@ -28,10 +28,10 @@ RUN apk add --no-cache openjdk8-jre && \
 
 WORKDIR /intermine
 
-COPY --from=BUILD  /intermine/build/libs/intermine-configurator-uber-0.1.0.jar /intermine/intermine-configurator.jar
+COPY --from=BUILD  /intermine/build/libs/intermine-configurator-0.1.0.jar /intermine/intermine-configurator.jar
 COPY --from=BUILD  /intermine/src/main/resources/application.properties /intermine/app.properties
 ENV MEM_OPTS="-Xmx1g -Xms500m"
 ENV JAVA_OPTS="${MEM_OPTS} -XX:MaxHeapFreeRatio=99"
 ENV IM_DATA_DIR=/intermine/data
 EXPOSE 8080
-ENTRYPOINT [ "java", "-jar", "-Dspring.config.location=/intermine/app.properties", "/intermine/intermine-configurator.jar"]
+ENTRYPOINT [ "java", "-jar", "/intermine/intermine-configurator.jar"]
