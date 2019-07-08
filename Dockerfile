@@ -30,7 +30,8 @@ WORKDIR /intermine
 
 COPY --from=BUILD  /intermine/build/libs/intermine-configurator-uber-0.1.0.jar /intermine/intermine-configurator.jar
 COPY --from=BUILD  /intermine/src/main/resources/application.properties /intermine/app.properties
-ENV GRADLE_OPTS="-server ${MEM_OPTS} -XX:+UseParallelGC -XX:SoftRefLRUPolicyMSPerMB=1 -XX:MaxHeapFreeRatio=99 -Dorg.gradle.daemon=false"
+ENV MEM_OPTS="-Xmx1g -Xms500m"
+ENV JAVA_OPTS="${MEM_OPTS} -XX:MaxHeapFreeRatio=99"
 ENV IM_DATA_DIR=/intermine/data
 EXPOSE 8080
 ENTRYPOINT [ "java", "-jar", "-Dspring.config.location=/intermine/app.properties", "/intermine/intermine-configurator.jar"]
