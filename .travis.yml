@@ -15,4 +15,4 @@ jobs:
     - stage: apiMerge
       python: "3.6"
       script:
-        - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then python autoMerger.py fi'
+        - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then python autoMerger.py ; fi'
