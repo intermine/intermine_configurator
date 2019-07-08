@@ -16,8 +16,6 @@ Then to start the service, run this command:
 ./gradlew bootRun
 ```
 
-I use a chrome plugin to run the web services. None of the web services return anything yet. 
-
 API Specification
 -------------------------------
 
