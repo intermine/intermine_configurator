@@ -7,6 +7,9 @@ import java.util.UUID;
 
 
 import io.swagger.model.Organism;
+import org.intermine.biovalidator.api.ValidationFailureException;
+import org.intermine.biovalidator.api.ValidationResult;
+import org.intermine.biovalidator.api.ValidatorHelper;
 import org.intermine.configurator.DataFileManager;
 import org.intermine.configurator.ValidationResponse;
 import org.junit.Test;
@@ -16,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -36,6 +41,22 @@ public class FileApiControllerIntegrationTest {
         ValidationResponse validationResponse = DataFileManager.processDataFile(getDummyDataFile(), pathToFile);
 
         assertEquals(true, validationResponse.isValid);
+    }
+
+    @Test
+    public void bioValidator() throws Exception {
+        String pathToFile = getClass().getClassLoader().getResource("test.fa").getPath();
+        String fileFormat = "fasta";
+
+        ValidationResult validationResult = ValidatorHelper.validate(pathToFile, fileFormat, true);
+        assertNotNull(validationResult);
+        assertTrue(validationResult.isValid());
+
+        pathToFile = getClass().getClassLoader().getResource("bad-char.fa").getPath();
+
+        validationResult = ValidatorHelper.validate(pathToFile, fileFormat, true);
+        assertNotNull(validationResult);
+        assertFalse(validationResult.isValid());
     }
 
     @Test
