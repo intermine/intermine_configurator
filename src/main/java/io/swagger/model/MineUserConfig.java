@@ -11,6 +11,13 @@ import io.swagger.model.MineDescriptor;
 import io.swagger.model.SupplementaryDataSource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -19,8 +26,19 @@ import javax.validation.constraints.*;
  * MineUserConfig
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-27T09:01:47.965Z[GMT]")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RedisHash("MineUserConfig")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-11T16:42:11.071Z[GMT]")
 public class MineUserConfig   {
+  @JsonProperty("mineId")
+  @Id
+  private UUID mineId = null;
+
+  @JsonProperty("userId")
+  private UUID userId = null;
+
   @JsonProperty("mineDescriptor")
   private MineDescriptor mineDescriptor = null;
 
@@ -35,6 +53,46 @@ public class MineUserConfig   {
   @JsonProperty("dataFiles")
   @Valid
   private List<DataFileProperties> dataFiles = null;
+
+  public MineUserConfig mineId(UUID mineId) {
+    this.mineId = mineId;
+    return this;
+  }
+
+  /**
+   * Get mineId
+   * @return mineId
+  **/
+  @ApiModelProperty(example = "03641b4d-bd7e-402f-803a-7aaf55c17238", value = "")
+
+  @Valid
+  public UUID getMineId() {
+    return mineId;
+  }
+
+  public void setMineId(UUID mineId) {
+    this.mineId = mineId;
+  }
+
+  public MineUserConfig userId(UUID userId) {
+    this.userId = userId;
+    return this;
+  }
+
+  /**
+   * Get userId
+   * @return userId
+  **/
+  @ApiModelProperty(example = "549719c2-9b23-4e91-886d-cdb0250eeb09", value = "")
+
+  @Valid
+  public UUID getUserId() {
+    return userId;
+  }
+
+  public void setUserId(UUID userId) {
+    this.userId = userId;
+  }
 
   public MineUserConfig mineDescriptor(MineDescriptor mineDescriptor) {
     this.mineDescriptor = mineDescriptor;
@@ -147,7 +205,9 @@ public class MineUserConfig   {
       return false;
     }
     MineUserConfig mineUserConfig = (MineUserConfig) o;
-    return Objects.equals(this.mineDescriptor, mineUserConfig.mineDescriptor) &&
+    return Objects.equals(this.mineId, mineUserConfig.mineId) &&
+        Objects.equals(this.userId, mineUserConfig.userId) &&
+        Objects.equals(this.mineDescriptor, mineUserConfig.mineDescriptor) &&
         Objects.equals(this.dataTools, mineUserConfig.dataTools) &&
         Objects.equals(this.supplementaryDataSources, mineUserConfig.supplementaryDataSources) &&
         Objects.equals(this.dataFiles, mineUserConfig.dataFiles);
@@ -155,7 +215,7 @@ public class MineUserConfig   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(mineDescriptor, dataTools, supplementaryDataSources, dataFiles);
+    return Objects.hash(mineId, userId, mineDescriptor, dataTools, supplementaryDataSources, dataFiles);
   }
 
   @Override
@@ -163,6 +223,8 @@ public class MineUserConfig   {
     StringBuilder sb = new StringBuilder();
     sb.append("class MineUserConfig {\n");
     
+    sb.append("    mineId: ").append(toIndentedString(mineId)).append("\n");
+    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
     sb.append("    mineDescriptor: ").append(toIndentedString(mineDescriptor)).append("\n");
     sb.append("    dataTools: ").append(toIndentedString(dataTools)).append("\n");
     sb.append("    supplementaryDataSources: ").append(toIndentedString(supplementaryDataSources)).append("\n");

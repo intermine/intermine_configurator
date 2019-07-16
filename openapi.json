@@ -275,17 +275,6 @@
               "format": "uuid",
               "example": "4187cd22-7709-45f0-af33-94b36b6bf561"
             }
-          },
-          {
-            "name": "fileId",
-            "in": "query",
-            "description": "ID of file to save",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "0bca2cef-2541-49ec-84d9-0acb434a8c3c"
-            }
           }
         ],
         "responses": {
@@ -673,7 +662,7 @@
                 "type": "array",
                 "items": {
                   "format": "string",
-                  "example": "uniprot"
+                  "example": "Entrez Organism Data"
                 }
               }
             },
@@ -682,7 +671,7 @@
                 "type": "array",
                 "items": {
                   "format": "string",
-                  "example": "uniprot"
+                  "example": "Entrez Organism Data"
                 }
               }
             }
@@ -911,7 +900,9 @@
             "example": "fasta"
           },
           "organism": {
-            "$ref": "#/components/schemas/Organism"
+            "allOf": [{
+              "$ref": "#/components/schemas/Organism"
+            }]
           }
         },
         "xml": {
@@ -1057,7 +1048,9 @@
         ],
         "properties": {
           "dataFile": {
-            "$ref": "#/components/schemas/DataFile"
+            "allOf": [{
+              "$ref": "#/components/schemas/DataFile"
+            }]
           },
           "answers": {
             "type": "array",
@@ -1147,6 +1140,16 @@
       "MineUserConfig": {
         "type": "object",
         "properties": {
+          "mineId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "03641b4d-bd7e-402f-803a-7aaf55c17238"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "549719c2-9b23-4e91-886d-cdb0250eeb09"
+          },
           "mineDescriptor": {
             "$ref": "#/components/schemas/MineDescriptor"
           },
