@@ -99,7 +99,7 @@ public class MineApiControllerIntegrationTest {
 
         DataFileProperties dataFileProperties = getDummyDataFile(fileId);
 
-        mineConfigManager.addFileProperties(repository, mineId, userId, fileId, dataFileProperties);
+        mineConfigManager.addFileProperties(repository, mineId, fileId, dataFileProperties);
 
         ResponseEntity<Void> responseEntity = api.deleteMineFileProperties(mineId, userId, fileId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -115,7 +115,7 @@ public class MineApiControllerIntegrationTest {
 
         MineDescriptor descriptor = new MineDescriptor();
         descriptor.setMineName("mytestmine");
-        mineConfigManager.setMineDescriptor(repository, mineId, userId, descriptor);
+        mineConfigManager.setMineDescriptor(repository, mineId, descriptor);
         ResponseEntity<MineBuildConfig> responseEntity = api.getMineBuildConfig(mineId, userId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
@@ -138,7 +138,7 @@ public class MineApiControllerIntegrationTest {
         UUID fileId = java.util.UUID.randomUUID();
 
         mineConfigManager.addMineConfig(repository, mineId,userId);
-        mineConfigManager.addFileProperties(repository, mineId, userId, fileId, getDummyDataFile(fileId));
+        mineConfigManager.addFileProperties(repository, mineId, fileId, getDummyDataFile(fileId));
 
         ResponseEntity<DataFileProperties> responseEntity = api.getMineFileProperties(mineId, userId, fileId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());

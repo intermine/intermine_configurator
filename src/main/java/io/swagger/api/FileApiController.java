@@ -100,9 +100,9 @@ public class FileApiController implements FileApi {
 
             // add answers
             List<DataFilePropertiesResponseAnswers> answers = body.getAnswers();
-            mineConfigManager.setSelectedAnswers(repository, dataFileProperties, answers);
+            mineConfigManager.setSelectedAnswers(repository, mineId, dataFileProperties, answers);
 
-            mineConfigManager.addFileProperties(repository, mineId, userId, fileId, dataFileProperties);
+            mineConfigManager.addFileProperties(repository, mineId, fileId, dataFileProperties);
             return new ResponseEntity(HttpStatus.OK);
         }
         throw new IllegalArgumentException(validationResponse.errorMessage);
