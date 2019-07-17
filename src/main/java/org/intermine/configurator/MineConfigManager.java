@@ -11,6 +11,7 @@ import io.swagger.model.MineBuildConfig;
 import io.swagger.model.MineUserConfig;
 import io.swagger.model.SupplementaryDataSource;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,9 +91,15 @@ public class MineConfigManager {
         return config.getSupplementaryDataSources();
     }
 
-    public void setSupplementaryDataSources(MineUserConfigRepository repository, UUID mineId, List<SupplementaryDataSource> sources) {
+    public void setSupplementaryDataSources(MineUserConfigRepository repository, UUID mineId, List<String> sourceNames) {
         MineUserConfig config = getMineConfig(repository, mineId);
-        config.setSupplementaryDataSources(sources);
+        List<SupplementaryDataSource> supplementaryDataSources = new ArrayList<>();
+        for (String sourceName : sourceNames) {
+            SupplementaryDataSource supplementaryDataSource = new SupplementaryDataSource();
+            supplementaryDataSource.setLabel(sourceName);
+            supplementaryDataSources.add(supplementaryDataSource);
+        }
+        config.setSupplementaryDataSources(supplementaryDataSources);
         repository.save(config);
     }
 

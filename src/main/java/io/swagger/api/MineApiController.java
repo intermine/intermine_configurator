@@ -182,10 +182,8 @@ public class MineApiController implements MineApi {
         if (!mineConfigManager.isValid(repository, mineId, userId)) {
             throw new IllegalArgumentException("User or mine ID not found");
         }
-        List<SupplementaryDataSource> sources = (List<SupplementaryDataSource>)(List<?>) body;
+        List<String> sources = (List<String>)(List<?>) body;
         mineConfigManager.setSupplementaryDataSources(repository, mineId, sources);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
-
-
 }
