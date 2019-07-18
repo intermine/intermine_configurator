@@ -1,37 +1,26 @@
 package io.swagger.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.DataFileProperties;
-import io.swagger.model.DataTool;
-import io.swagger.model.MineDescriptor;
-import io.swagger.model.SupplementaryDataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.validation.annotation.Validated;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+
 
 /**
  * MineUserConfig
  */
 @Validated
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @RedisHash("MineUserConfig")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-11T16:42:11.071Z[GMT]")
-public class MineUserConfig   {
+public class MineUserConfig implements Serializable {
   @JsonProperty("mineId")
   @Id
   private UUID mineId = null;

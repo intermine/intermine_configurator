@@ -1,5 +1,6 @@
 package org.intermine.configurator;
 
+import io.swagger.configuration.MineUserConfigRepository;
 import io.swagger.model.DataFile;
 import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataFilePropertiesAnswerOption;
@@ -10,159 +11,141 @@ import io.swagger.model.MineBuildConfig;
 import io.swagger.model.MineUserConfig;
 import io.swagger.model.SupplementaryDataSource;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import io.swagger.model.MineDescriptor;
-import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.intermine.configurator.source.project.AbstractSource;
 import org.intermine.configurator.source.project.SourceFactory;
 import org.springframework.util.StringUtils;
 
-
 public class MineConfigManager {
 
-    // temporary class. this is all going in mongo db
-    private static Map<MultiKey, MineUserConfig> MINE_CONFIGS = new HashMap<>();
-
-    public static boolean isValid(UUID mineId, UUID userId) {
-        MultiKey key = new MultiKey(mineId, userId);
-        if (MINE_CONFIGS.get(key) != null) {
+    /**
+     * checks if this combo of user and mine is in our database
+     *
+     * @param mineId UUID for user
+     * @param userId UUID for mine
+     * @return TRUE if valid combo
+     */
+    public boolean isValid(MineUserConfigRepository repository, UUID mineId, UUID userId) {
+        MineUserConfig mineUserConfig = getMineConfig(repository, mineId);
+        if (mineUserConfig == null) {
+            return false;
+        }
+        if (mineUserConfig.getUserId() != null && mineUserConfig.getUserId().equals(userId)) {
             return true;
         }
         return false;
     }
 
-    public static void addMineConfig(UUID mineId, UUID userId) {
+    public void addMineConfig(MineUserConfigRepository repository, UUID mineId, UUID userId) {
         MineUserConfig mineUserConfig = new MineUserConfig();
-        MultiKey multiKey = new MultiKey(mineId, userId);
-        MINE_CONFIGS.put(multiKey, mineUserConfig);
+        mineUserConfig.setMineId(mineId);
+        mineUserConfig.setUserId(userId);
+        repository.save(mineUserConfig);
     }
 
-    public static MineUserConfig getMineConfig(UUID mineId, UUID userId) {
-        if (!isValid(mineId, userId)) {
+    public MineUserConfig getMineConfig(MineUserConfigRepository repository, UUID mineId) {
+        Optional<MineUserConfig> optionalMineUserConfig = repository.findById(mineId.toString());
+        if (!optionalMineUserConfig.isPresent()) {
             return null;
         }
-        MultiKey key = new MultiKey(mineId, userId);
-        return MINE_CONFIGS.get(key);
+        return optionalMineUserConfig.get();
     }
 
     /**
      * Destroy the associated config for mine
      *
      * @param mineId id of mine
-     * @param userId id of user who owns mine
      * @return TRUE if operation successful, FALSE is mineId/userId not found
      */
-    public static boolean removeConfig(UUID mineId, UUID userId) {
-        if (!isValid(mineId, userId)) {
-            return false;
-        }
-        MultiKey key = new MultiKey(mineId, userId);
-        MINE_CONFIGS.remove(key);
+    public boolean removeConfig(MineUserConfigRepository repository, UUID mineId) {
+        repository.deleteById(mineId.toString());
         return true;
     }
 
-    public static MineDescriptor getMineDescriptor(UUID mineId, UUID userId) {
-        if (!isValid(mineId, userId)) {
-            return null;
-        }
-        MultiKey key = new MultiKey(mineId, userId);
-        MineUserConfig config = MINE_CONFIGS.get(key);
+    public MineDescriptor getMineDescriptor(MineUserConfigRepository repository, UUID mineId) {
+        MineUserConfig config = getMineConfig(repository, mineId);
         return config.getMineDescriptor();
     }
 
-    public static void setMineDescriptor(UUID mineId, UUID userId, MineDescriptor descriptor) {
-        if (!isValid(mineId, userId)) {
-            return;
-        }
-        MultiKey key = new MultiKey(mineId, userId);
-        MineUserConfig config = MINE_CONFIGS.get(key);
+    public void setMineDescriptor(MineUserConfigRepository repository, UUID mineId, MineDescriptor descriptor) {
+        MineUserConfig config = getMineConfig(repository, mineId);
         config.setMineDescriptor(descriptor);
+        repository.save(config);
     }
 
     /**
      * Retrieve the sources assigned to this mine
      *
      * @param mineId id of mine
-     * @param userId id of user who owns mine
      * @return list of supp sources for this mine
      */
-    public static List<SupplementaryDataSource> getSupplementaryDataSources(UUID mineId, UUID userId) {
-        if (!isValid(mineId, userId)) {
-            return null;
-        }
-        MultiKey key = new MultiKey(mineId, userId);
-        MineUserConfig config = MINE_CONFIGS.get(key);
+    public List<SupplementaryDataSource> getSupplementaryDataSources(MineUserConfigRepository repository, UUID mineId) {
+        MineUserConfig config = getMineConfig(repository, mineId);
         return config.getSupplementaryDataSources();
     }
 
-    public static void setSupplementaryDataSources(UUID mineId, UUID userId, List<SupplementaryDataSource> sources) {
-        if (!isValid(mineId, userId)) {
-            return;
+    public void setSupplementaryDataSources(MineUserConfigRepository repository, UUID mineId, List<String> sourceNames) {
+        MineUserConfig config = getMineConfig(repository, mineId);
+        List<SupplementaryDataSource> supplementaryDataSources = new ArrayList<>();
+        for (String sourceName : sourceNames) {
+            SupplementaryDataSource supplementaryDataSource = new SupplementaryDataSource();
+            supplementaryDataSource.setLabel(sourceName);
+            supplementaryDataSources.add(supplementaryDataSource);
         }
-
-        MultiKey key = new MultiKey(mineId, userId);
-        MineUserConfig config = MINE_CONFIGS.get(key);
-        config.setSupplementaryDataSources(sources);
+        config.setSupplementaryDataSources(supplementaryDataSources);
+        repository.save(config);
     }
 
     /**
      * Retrieve the tools assigned to this mine
      *
      * @param mineId id of mine
-     * @param userId id of user who owns mine
      * @return list of tools for this mine
      */
-    public static List<DataTool> getTools(UUID mineId, UUID userId) {
-        if (!isValid(mineId, userId)) {
-            return null;
-        }
-        MultiKey key = new MultiKey(mineId, userId);
-        MineUserConfig config = MINE_CONFIGS.get(key);
+    public List<DataTool> getTools(MineUserConfigRepository repository, UUID mineId) {
+        MineUserConfig config = getMineConfig(repository, mineId);
         return config.getDataTools();
     }
 
     /**
      * set the tools assigned to this mine
-     *
-     * @param mineId id of mine
-     * @param userId id of user who owns mine
+     *  @param mineId id of mine
      * @param toolIds list of tools for this mine
      */
-    public static void setTools(UUID mineId, UUID userId, List<String> toolIds) {
-        if (!isValid(mineId, userId)) {
-            return;
-        }
-        MultiKey key = new MultiKey(mineId, userId);
-        MineUserConfig config = MINE_CONFIGS.get(key);
+    public void setTools(MineUserConfigRepository repository, UUID mineId, List<String> toolIds) {
+        MineUserConfig config = getMineConfig(repository, mineId);
         List<DataTool> tools = ToolManager.getDataTools(toolIds);
         config.setDataTools(tools);
+        repository.save(config);
     }
 
     /**
      * Destroy the associated config for file
      *
      * @param mineId id of mine
-     * @param userId id of user who owns mine
      * @return TRUE if operation successful, FALSE is mineId/userId not found
      */
-    public static boolean removeFileProperties(UUID mineId, UUID userId, UUID fileId) {
-        if (!isValid(mineId, userId) || fileId == null) {
+    public boolean removeFileProperties(MineUserConfigRepository repository, UUID mineId, UUID fileId) {
+        if (fileId == null) {
             return false;
         }
-        MultiKey key = new MultiKey(mineId, userId);
-        MineUserConfig config = MINE_CONFIGS.get(key);
+        MineUserConfig config = getMineConfig(repository, mineId);
         List<DataFileProperties> dataFileProperties = config.getDataFiles();
         if (dataFileProperties == null || dataFileProperties.isEmpty()) {
             return false;
         }
-        DataFileProperties propertyToDelete = getFileProperties(mineId, userId, fileId);
+        DataFileProperties propertyToDelete = getFileProperties(repository, mineId, fileId);
         if (propertyToDelete != null) {
             dataFileProperties.remove(propertyToDelete);
             config.setDataFiles(dataFileProperties);
+            repository.save(config);
             return true;
         }
         return false;
@@ -172,22 +155,17 @@ public class MineConfigManager {
      * Add the associated file config
      *
      * @param mineId id of mine
-     * @param userId id of user who owns mine
      * @return TRUE if operation successful, FALSE is mineId/userId not found
      */
-    public static boolean addFileProperties(UUID mineId, UUID userId, UUID fileId,
+    public boolean addFileProperties(MineUserConfigRepository repository, UUID mineId, UUID fileId,
         DataFileProperties dataFileProperties) {
-        if (!isValid(mineId, userId)) {
-            return false;
-        }
-        MultiKey key = new MultiKey(mineId, userId);
-
         // delete if there
-        removeFileProperties(mineId, userId, fileId);
+        removeFileProperties(repository, mineId, fileId);
 
         // add entry
-        MineUserConfig config = MINE_CONFIGS.get(key);
+        MineUserConfig config = getMineConfig(repository, mineId);
         config.addDataFilesItem(dataFileProperties);
+        repository.save(config);
         return true;
     }
 
@@ -195,16 +173,10 @@ public class MineConfigManager {
      * get the associated file config
      *
      * @param mineId id of mine
-     * @param userId id of user who owns mine
      * @return TRUE if operation successful, FALSE is mineId/userId not found
      */
-    public static DataFileProperties getFileProperties(UUID mineId, UUID userId, UUID fileId) {
-        if (!isValid(mineId, userId)) {
-            return null;
-        }
-        MultiKey key = new MultiKey(mineId, userId);
-
-        MineUserConfig config = MINE_CONFIGS.get(key);
+    public DataFileProperties getFileProperties(MineUserConfigRepository repository, UUID mineId, UUID fileId) {
+        MineUserConfig config = getMineConfig(repository, mineId);
         List<DataFileProperties> dataFileProperties = config.getDataFiles();
 
         if (dataFileProperties == null || dataFileProperties.isEmpty()) {
@@ -212,7 +184,7 @@ public class MineConfigManager {
         }
 
         for (DataFileProperties propertyForFile : dataFileProperties) {
-            DataFile dataFile = (DataFile) propertyForFile.getDataFile();
+            DataFile dataFile = propertyForFile.getDataFile();
             if (fileId.equals(dataFile.getFileId())) {
                 return propertyForFile;
             }
@@ -220,18 +192,19 @@ public class MineConfigManager {
         return null;
     }
 
-    public static void setSelectedAnswers(DataFileProperties dataFileProperties,
+    public void setSelectedAnswers(MineUserConfigRepository repository, UUID mineId, DataFileProperties dataFileProperties,
         List<DataFilePropertiesResponseAnswers> userResponses) {
+        MineUserConfig config = getMineConfig(repository, mineId);
         Map<String, String> selectedAnswers = new HashMap<>();
         for (DataFilePropertiesResponseAnswers answer : userResponses) {
             selectedAnswers.put(answer.getQuestionId(), answer.getAnswerId());
         }
-        updateUserSelectionInConfig(dataFileProperties, selectedAnswers);
+        updateUserSelectionInConfig(repository, config, dataFileProperties, selectedAnswers);
     }
 
     // update the config
-    private static void updateUserSelectionInConfig(DataFileProperties dataFileProperties,
-        Map<String, String> selectedAnswers) {
+    private void updateUserSelectionInConfig(MineUserConfigRepository repository, MineUserConfig config,
+        DataFileProperties dataFileProperties, Map<String, String> selectedAnswers) {
         List<DataFilePropertiesQuestion> questions = null;
         questions = dataFileProperties.getQuestions();
         if (questions == null || questions.isEmpty()) {
@@ -252,6 +225,7 @@ public class MineConfigManager {
                 }
             }
         }
+        repository.save(config);
     }
 
     /**
@@ -261,17 +235,15 @@ public class MineConfigManager {
      * @param userId id of user who owns mine
      * @return TRUE if operation successful, FALSE is mineId/userId not found
      */
-    public static MineBuildConfig getMineBuildConfig(UUID mineId, UUID userId) {
-        if (!isValid(mineId, userId)) {
+    public MineBuildConfig getMineBuildConfig(MineUserConfigRepository repository, UUID mineId, UUID userId) {
+        if (!isValid(repository, mineId, userId)) {
             return null;
         }
         // config needed for the mine
         MineBuildConfig buildConfig = new MineBuildConfig();
 
-        MultiKey key = new MultiKey(mineId, userId);
-
         // config generated for the user
-        MineUserConfig userConfig = MINE_CONFIGS.get(key);
+        MineUserConfig userConfig = getMineConfig(repository, mineId);
 
         buildConfig.setMineDescriptor(userConfig.getMineDescriptor());
 
@@ -290,7 +262,7 @@ public class MineConfigManager {
         return buildConfig;
     }
 
-    private static String generateProjectXML(UUID mineId, UUID userId, MineUserConfig userConfig) {
+    private String generateProjectXML(UUID mineId, UUID userId, MineUserConfig userConfig) {
         StringBuilder projectXML = new StringBuilder();
 
         String mineName = userConfig.getMineDescriptor().getMineName();
