@@ -1,15 +1,19 @@
-package org.intermine.configurator.source.project;
+package org.intermine.configurator.config.buildconfig;
 
 import io.swagger.model.DataFile;
 import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataFilePropertiesAnswerOption;
 import io.swagger.model.DataFilePropertiesQuestion;
 import io.swagger.model.Organism;
+import org.intermine.configurator.config.buildconfig.AbstractSource;
 ;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * {@inheritDoc}
+ */
 public class FastaSource implements AbstractSource {
 
     Map<String, String> selectedAnswers = new HashMap<>();
@@ -20,6 +24,9 @@ public class FastaSource implements AbstractSource {
         // constructor
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getProjectXML(DataFileProperties dataFileProperties, String fileLocation) {
         if (dataFileProperties == null) {
             return null;
@@ -56,9 +63,10 @@ public class FastaSource implements AbstractSource {
         return snippet;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getDataModel() {
         return null;
     }
-
-
 }

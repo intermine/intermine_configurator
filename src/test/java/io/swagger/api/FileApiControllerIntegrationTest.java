@@ -7,11 +7,10 @@ import java.util.UUID;
 
 
 import io.swagger.model.Organism;
-import org.intermine.biovalidator.api.ValidationFailureException;
 import org.intermine.biovalidator.api.ValidationResult;
 import org.intermine.biovalidator.api.ValidatorHelper;
 import org.intermine.configurator.DataFileManager;
-import org.intermine.configurator.ValidationResponse;
+import org.intermine.configurator.validation.ValidationResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

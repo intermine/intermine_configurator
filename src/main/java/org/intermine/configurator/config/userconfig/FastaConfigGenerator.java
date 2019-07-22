@@ -1,4 +1,4 @@
-package org.intermine.configurator.source.config;
+package org.intermine.configurator.config.userconfig;
 
 import io.swagger.model.DataFileDescriptor;
 import io.swagger.model.DataFilePreview;
@@ -15,12 +15,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FastaConfigGenerator implements AbstractConfigGenerator {
+/**
+ * Generates config (questions, answers etc) needed by the wizard. Will be presented to the user.
+ */
+public class FastaConfigGenerator implements org.intermine.configurator.config.userconfig.AbstractConfigGenerator {
 
     private static final List<String> FEATURE_TYPES = new ArrayList<String>();
     private static final Map<String, String> IDENTIFIER_TYPES = new HashMap<>();
     private String headerRow = null;
 
+    /**
+     * {@inheritDoc}
+     */
     public void generateConfig(DataFileProperties dataFileProperties,
                                String fileLocation) throws IOException {
 
@@ -32,6 +38,9 @@ public class FastaConfigGenerator implements AbstractConfigGenerator {
         dataFileProperties.setDescriptors(getDescriptors(bf));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public List<DataFileDescriptor> getDescriptors(BufferedReader reader) throws IOException {
         String line;
         int entityCount = 0;
@@ -51,6 +60,9 @@ public class FastaConfigGenerator implements AbstractConfigGenerator {
         return descriptors;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public List<DataFilePropertiesQuestion> getQuestions(BufferedReader reader) throws IOException {
         List<DataFilePropertiesQuestion> questions = new ArrayList<>();
 
@@ -61,6 +73,9 @@ public class FastaConfigGenerator implements AbstractConfigGenerator {
         return questions;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public DataFilePreview getFilePreview(BufferedReader reader) throws IOException {
         DataFilePreview dataFilePreview = new DataFilePreview();
         dataFilePreview.setHeaderLabel("Header");
