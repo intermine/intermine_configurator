@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * manages available sources
  */
-public class SupplementarySourceManager {
+public class SupplementaryDataSourceManager {
 
     /**
      * Returns a list of all available supplementary data sources.

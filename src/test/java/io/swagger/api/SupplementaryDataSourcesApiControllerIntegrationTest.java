@@ -4,7 +4,7 @@ import io.swagger.model.SupplementaryDataSource;
 
 import java.util.*;
 
-import org.intermine.configurator.SupplementarySourceManager;
+import org.intermine.configurator.SupplementaryDataSourceManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class SupplementaryDataSourcesApiControllerIntegrationTest {
     @Test
     public void getSupplementaryDataSourcesTest() throws Exception {
 
-        List<SupplementaryDataSource> sources = SupplementarySourceManager.getAllSupplementarySources();
+        List<SupplementaryDataSource> sources = SupplementaryDataSourceManager.getAllSupplementarySources();
         assertFalse(sources.isEmpty());
 
         assertEquals(2, sources.size());
