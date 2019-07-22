@@ -61,7 +61,7 @@ public class MineApiControllerIntegrationTest {
         assertEquals("PONG", redisTemplate.getConnectionFactory().getConnection().ping());
     }
 
-    //@Test
+    @Test
     public void deleteConfigTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
@@ -71,25 +71,20 @@ public class MineApiControllerIntegrationTest {
         mineUserConfig.setUserId(userId);
         repository.save(mineUserConfig);
 
-        Optional<MineUserConfig> opt = repository.findById(mineId.toString());
-        assertTrue(opt.isPresent());
+        //testing this mine manager
+        mineConfigManager.addMineConfig(repository, mineId, userId);
+        assertNotNull(mineConfigManager.getMineConfig(repository, mineId));
 
-        repository.deleteById(mineId.toString());
+        mineConfigManager.removeConfig(repository, mineId);
+        assertNull(mineConfigManager.getMineConfig(repository, mineId));
 
-        opt = repository.findById(mineId.toString());
-        assertFalse(opt.isPresent());
-
-//        mineConfigManager.addMineConfig(repository, mineId, userId);
-//        assertNotNull(mineConfigManager.getMineConfig(repository, mineId, userId));
-//
-//        mineConfigManager.removeConfig(repository, mineId, userId);
-//        assertNull(mineConfigManager.getMineConfig(repository, mineId, userId));
-
-//        ResponseEntity<Void> responseEntity = api.deleteConfig(mineId, userId);
-//        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        // test again - the API instead
+        mineConfigManager.addMineConfig(repository, mineId, userId);
+        ResponseEntity<Void> responseEntity = api.deleteConfig(mineId, userId);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    //@Test
+    @Test
     public void deleteMineFilePropertiesTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
@@ -105,7 +100,7 @@ public class MineApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    //@Test
+    @Test
     public void getMineBuildConfigTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
@@ -120,7 +115,7 @@ public class MineApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    //@Test
+    @Test
     public void getMineDescriptorsTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
@@ -131,7 +126,7 @@ public class MineApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    //@Test
+    @Test
     public void getMineFilePropertiesTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
@@ -144,7 +139,7 @@ public class MineApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    //@Test
+    @Test
     public void getMineSupplementaryDataSourcesTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
@@ -155,7 +150,7 @@ public class MineApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    //@Test
+    @Test
     public void getMineUserConfigTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
@@ -166,7 +161,7 @@ public class MineApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    //@Test
+    @Test
     public void getNewMineTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
@@ -174,7 +169,7 @@ public class MineApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-   // @Test
+    @Test
     public void mineDataToolsGetTest() throws Exception {
         UUID mineId = java.util.UUID.randomUUID();
         UUID userId = java.util.UUID.randomUUID();
@@ -185,7 +180,7 @@ public class MineApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    //@Test
+    @Test
     public void mineDataToolsPostTest() throws Exception {
         List<Object> body = null;
         UUID mineId = java.util.UUID.randomUUID();
@@ -197,7 +192,7 @@ public class MineApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    //@Test
+    @Test
     public void setMineDescriptorsTest() throws Exception {
         MineDescriptor body = new MineDescriptor();
         UUID mineId = java.util.UUID.randomUUID();
@@ -209,7 +204,7 @@ public class MineApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-   // @Test
+    @Test
     public void setSupplementaryDataSourcesTest() throws Exception {
         List<Object> body = null;
         UUID mineId = java.util.UUID.randomUUID();
@@ -228,7 +223,6 @@ public class MineApiControllerIntegrationTest {
         // didn't add the mine
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
-
 
     private DataFileProperties getDummyDataFile(UUID fileId) {
 

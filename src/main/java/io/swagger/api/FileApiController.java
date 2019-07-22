@@ -84,6 +84,7 @@ public class FileApiController implements FileApi {
         DataFile.FileFormatEnum fileFormatEnum = dataFile.getFileFormat();
         UUID fileId = dataFile.getFileId();
 
+        // TODO refactor this to be overridden in the unit tests.
         String fileLocation = DataFileManager.getFilePath(mineId.toString(), userId.toString(), fileId.toString(),
                 System.getenv("IM_DATA_DIR"), dataFile.getName());
 

@@ -141,10 +141,12 @@ public class MineConfigManager {
     public void setSupplementaryDataSources(MineUserConfigRepository repository, UUID mineId, List<String> sourceNames) {
         MineUserConfig config = getMineConfig(repository, mineId);
         List<SupplementaryDataSource> supplementaryDataSources = new ArrayList<>();
-        for (String sourceName : sourceNames) {
-            SupplementaryDataSource supplementaryDataSource = new SupplementaryDataSource();
-            supplementaryDataSource.setLabel(sourceName);
-            supplementaryDataSources.add(supplementaryDataSource);
+        if (sourceNames != null && !sourceNames.isEmpty()) {
+            for (String sourceName : sourceNames) {
+                SupplementaryDataSource supplementaryDataSource = new SupplementaryDataSource();
+                supplementaryDataSource.setLabel(sourceName);
+                supplementaryDataSources.add(supplementaryDataSource);
+            }
         }
         config.setSupplementaryDataSources(supplementaryDataSources);
         repository.save(config);

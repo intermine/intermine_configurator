@@ -31,8 +31,8 @@ public class SupplementaryDataSourcesApiControllerIntegrationTest {
 
         assertEquals(2, sources.size());
 
-//        ResponseEntity<List<SupplementaryDataSource>> responseEntity = api.getSupplementaryDataSources();
-//        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        ResponseEntity<List<SupplementaryDataSource>> responseEntity = api.getSupplementaryDataSources();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
 }
