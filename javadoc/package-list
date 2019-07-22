@@ -3,6 +3,7 @@ io.swagger.api
 io.swagger.configuration
 io.swagger.model
 org.intermine.configurator
-org.intermine.configurator.source.config
-org.intermine.configurator.source.project
-org.intermine.configurator.source.supplementary
+org.intermine.configurator.config.buildconfig
+org.intermine.configurator.config.buildconfig.supplementary
+org.intermine.configurator.config.userconfig
+org.intermine.configurator.validation
