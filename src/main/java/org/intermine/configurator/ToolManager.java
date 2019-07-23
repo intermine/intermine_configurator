@@ -15,14 +15,20 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * manages the tools
+ * Manages the tools available for the InterMine wizard.
+ *
+ * TODO gets the list of tools from a URL that might not be production ready!
  */
 public class ToolManager {
 
     private static final String URL = "http://bluegenes.apps.intermine.org/api/tools/all";
     private static Map<String, DataTool> dataTools = new HashMap<String, DataTool>();
 
-
+    /**
+     * Based on the list from Bluegenes, return a list of all available tools.
+     *
+     * @return list of data tools available
+     */
     public static List<DataTool> getAllTools() {
         if (dataTools.isEmpty()) {
             try {
@@ -38,7 +44,7 @@ public class ToolManager {
      * Transform the toolIDs into a list of DataTools they represent
      *
      * @param selectedToolIds the IDs of tools selected by the user
-     * @return
+     * @return list of data tools
      */
     public static List<DataTool> getDataTools(List<String> selectedToolIds) {
         if (selectedToolIds == null || selectedToolIds.isEmpty()) {

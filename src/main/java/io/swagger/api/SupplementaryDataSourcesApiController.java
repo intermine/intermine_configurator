@@ -2,7 +2,7 @@ package io.swagger.api;
 
 import io.swagger.model.SupplementaryDataSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.intermine.configurator.SupplementarySourceManager;
+import org.intermine.configurator.SupplementaryDataSourceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class SupplementaryDataSourcesApiController implements SupplementaryDataS
 
     public ResponseEntity<List<SupplementaryDataSource>> getSupplementaryDataSources() {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<SupplementaryDataSource>>(SupplementarySourceManager.getAllSupplementarySources(), HttpStatus.OK);
+        return new ResponseEntity<List<SupplementaryDataSource>>(SupplementaryDataSourceManager.getAllSupplementarySources(), HttpStatus.OK);
     }
 
 }

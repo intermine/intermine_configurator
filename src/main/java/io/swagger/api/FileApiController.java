@@ -10,26 +10,21 @@ import io.swagger.annotations.*;
 import io.swagger.model.DataFilePropertiesResponseAnswers;
 import org.intermine.configurator.DataFileManager;
 import org.intermine.configurator.MineConfigManager;
-import org.intermine.configurator.ValidationResponse;
+import org.intermine.configurator.validation.ValidationResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-27T09:01:47.965Z[GMT]")
 @Controller
 public class FileApiController implements FileApi {
@@ -89,6 +84,7 @@ public class FileApiController implements FileApi {
         DataFile.FileFormatEnum fileFormatEnum = dataFile.getFileFormat();
         UUID fileId = dataFile.getFileId();
 
+        // TODO refactor this to be overridden in the unit tests.
         String fileLocation = DataFileManager.getFilePath(mineId.toString(), userId.toString(), fileId.toString(),
                 System.getenv("IM_DATA_DIR"), dataFile.getName());
 

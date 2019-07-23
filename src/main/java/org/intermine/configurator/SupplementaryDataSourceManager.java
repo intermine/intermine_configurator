@@ -10,8 +10,15 @@ import java.util.List;
 /**
  * manages available sources
  */
-public class SupplementarySourceManager {
+public class SupplementaryDataSourceManager {
 
+    /**
+     * Returns a list of all available supplementary data sources.
+     *
+     * This list is hardcoded.
+     *
+     * @return list of all available supplementary data sources.
+     */
     public static List<SupplementaryDataSource> getAllSupplementarySources() {
         List<SupplementaryDataSource> sources = new ArrayList<>();
 
