@@ -5,8 +5,7 @@ import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataFilePropertiesAnswerOption;
 import io.swagger.model.DataFilePropertiesQuestion;
 import io.swagger.model.Organism;
-import org.intermine.configurator.config.buildconfig.AbstractSource;
-;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +16,6 @@ import java.util.Map;
 public class FastaSource implements AbstractSource {
 
     Map<String, String> selectedAnswers = new HashMap<>();
-    DataFileProperties dataFileProperties;
-
 
     public FastaSource() {
         // constructor
@@ -58,7 +55,7 @@ public class FastaSource implements AbstractSource {
                 // "org.intermine.model.bio.Gene"
                 + "<property name=\"fasta.className\" value=\"" + dataType + "\"/>"
                 + "<property name=\"fasta.classAttribute\" value=\"" + classAttribute + "\"/>"
-                + "<property name=\"\"src.data.dir\" location=\"" + fileLocation + "\"/>"
+                + "<property name=\"src.data.dir\" location=\"" + fileLocation + "\"/>"
                 + "</source>\n";
         return snippet;
     }

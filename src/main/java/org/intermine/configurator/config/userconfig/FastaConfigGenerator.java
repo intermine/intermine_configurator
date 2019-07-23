@@ -22,7 +22,7 @@ public class FastaConfigGenerator implements org.intermine.configurator.config.u
 
     private static final List<String> FEATURE_TYPES = new ArrayList<String>();
     private static final Map<String, String> IDENTIFIER_TYPES = new HashMap<>();
-    private String headerRow = null;
+    private String headerRow;
 
     /**
      * {@inheritDoc}
@@ -63,7 +63,7 @@ public class FastaConfigGenerator implements org.intermine.configurator.config.u
     /**
      * {@inheritDoc}
      */
-    public List<DataFilePropertiesQuestion> getQuestions(BufferedReader reader) throws IOException {
+    public List<DataFilePropertiesQuestion> getQuestions(BufferedReader reader) {
         List<DataFilePropertiesQuestion> questions = new ArrayList<>();
 
         questions.add(getQuestion1());
@@ -84,7 +84,6 @@ public class FastaConfigGenerator implements org.intermine.configurator.config.u
         while ((line = reader.readLine()) != null) {
             if (line.startsWith(">")) {
                 dataFilePreview.setHeaderRow(Arrays.asList(line));
-                // needed for display later
                 headerRow = line;
             }
             // fast forward to next valid line
@@ -99,7 +98,7 @@ public class FastaConfigGenerator implements org.intermine.configurator.config.u
         return null;
     }
 
-    private DataFilePropertiesQuestion getQuestion1() {
+    protected DataFilePropertiesQuestion getQuestion1() {
         DataFilePropertiesQuestion question = new DataFilePropertiesQuestion();
         question.setQuestionId("nucleotideOrProtein");
         question.setQuestionHeader("Sequence Type");
@@ -130,7 +129,7 @@ public class FastaConfigGenerator implements org.intermine.configurator.config.u
         FEATURE_TYPES.add("Chromosome");
     }
 
-    private DataFilePropertiesQuestion getQuestion2() {
+    protected DataFilePropertiesQuestion getQuestion2() {
         DataFilePropertiesQuestion question = new DataFilePropertiesQuestion();
         question.setQuestionId("featureType");
         question.setQuestionHeader("Sequence Features");
@@ -160,8 +159,7 @@ public class FastaConfigGenerator implements org.intermine.configurator.config.u
         IDENTIFIER_TYPES.put("primaryAccession", "Accession");
     }
 
-    private DataFilePropertiesQuestion getQuestion3() {
-
+    protected DataFilePropertiesQuestion getQuestion3() {
         String identifier = getIdentifier(headerRow);
         String questionWording = null;
         if (identifier != null) {
@@ -193,15 +191,17 @@ public class FastaConfigGenerator implements org.intermine.configurator.config.u
         return question;
     }
 
-    private String getIdentifier(String headerRow) {
-        if (headerRow == null) {
+    protected String getIdentifier(String headerRow) {
+        if (headerRow == null || headerRow.isEmpty()) {
             return null;
         }
         String[] bits = headerRow.split(" ");
-        if (bits.length > 1 && bits[0].startsWith(">")) {
+        if (bits.length >= 1 && bits[0].startsWith(">")) {
             // >FBgn100001
-            return bits[0].substring(1, bits[0].length());
+            return bits[0].substring(1);
         }
-        return null;
+        return headerRow;
     }
+
+
 }
