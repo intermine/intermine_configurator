@@ -5,12 +5,12 @@ import io.swagger.model.DataFilePreview;
 import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataFilePropertiesAnswerOption;
 import io.swagger.model.DataFilePropertiesQuestion;
+import io.swagger.model.DataFileRow;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * Generates config (questions, answers etc) needed by the wizard. Will be presented to the user.
  */
-public class GFF3ConfigGenerator implements AbstractConfigGenerator {
+public class GFF3ConfigGenerator implements ConfigGenerator {
 
     private static final List<String> FEATURE_TYPES = new ArrayList<>();
     private static final Map<String, String> IDENTIFIER_TYPES = new HashMap<>();
@@ -100,19 +100,21 @@ public class GFF3ConfigGenerator implements AbstractConfigGenerator {
             }
 
             // line 1
-            line = reader.readLine();
-
-            String[] lineArray = line.split("\t");
-
+            dataFilePreview.addFileRowsItem(getRows(reader));
             // line 2
-            // fast forward to next valid line
-            line = reader.readLine();
-
-
-            //dataFilePreview.setFileRows();
+            dataFilePreview.addFileRowsItem(getRows(reader));
             return dataFilePreview;
         }
         return null;
+    }
+
+    private DataFileRow getRows(BufferedReader reader) throws IOException {
+        String line = reader.readLine();
+        DataFileRow row = new DataFileRow();
+        for (String s : line.split("\t")) {
+            row.add(s);
+        }
+        return row;
     }
 
     protected DataFilePropertiesQuestion getQuestion1() {
@@ -207,18 +209,5 @@ public class GFF3ConfigGenerator implements AbstractConfigGenerator {
         }
         return question;
     }
-
-    protected String getIdentifier(String headerRow) {
-        if (headerRow == null || headerRow.isEmpty()) {
-            return null;
-        }
-        String[] bits = headerRow.split(" ");
-        if (bits.length >= 1 && bits[0].startsWith(">")) {
-            // >FBgn100001
-            return bits[0].substring(1);
-        }
-        return headerRow;
-    }
-
 
 }

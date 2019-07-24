@@ -6,7 +6,7 @@ import org.intermine.biovalidator.api.Message;
 import org.intermine.biovalidator.api.ValidationFailureException;
 import org.intermine.biovalidator.api.ValidationResult;
 import org.intermine.biovalidator.api.ValidatorHelper;
-import org.intermine.configurator.config.userconfig.AbstractConfigGenerator;
+import org.intermine.configurator.config.userconfig.ConfigGenerator;
 import org.intermine.configurator.config.userconfig.ConfigGeneratorFactory;
 import org.intermine.configurator.validation.ValidationResponse;
 
@@ -67,7 +67,7 @@ public class DataFileManager {
         dataFileProperties.setDataFile(dataFile);
 
         // use factory to get correct config-generator for our filetype
-        AbstractConfigGenerator configGenerator = ConfigGeneratorFactory.getDataSourceConfigGenerator(fileFormatEnum);
+        ConfigGenerator configGenerator = ConfigGeneratorFactory.getDataSourceConfigGenerator(fileFormatEnum);
         if (configGenerator == null) {
             return new ValidationResponse(false,
                     "Error processing file: file format not found", null);

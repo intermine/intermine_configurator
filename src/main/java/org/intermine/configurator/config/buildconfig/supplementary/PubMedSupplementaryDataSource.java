@@ -1,13 +1,13 @@
 package org.intermine.configurator.config.buildconfig.supplementary;
 
 import io.swagger.model.DataFileProperties;
-
+import org.intermine.configurator.config.buildconfig.DataSource;
 
 
 /**
  * Project XML entry for the update-publications supplementary data source
  */
-public class PubMedSupplementaryDataSource implements org.intermine.configurator.config.buildconfig.AbstractSource {
+public class PubMedSupplementaryDataSource implements DataSource {
 
     /**
      * {@inheritDoc}

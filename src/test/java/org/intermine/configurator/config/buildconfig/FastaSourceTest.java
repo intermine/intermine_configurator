@@ -6,14 +6,9 @@ import io.swagger.model.DataFilePropertiesAnswerOption;
 import io.swagger.model.DataFilePropertiesQuestion;
 import io.swagger.model.Organism;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -34,7 +29,7 @@ public class FastaSourceTest {
 
     @Test
     public void testgetProjectXML() {
-        FastaSource source = new FastaSource();
+        FastaDataSource source = new FastaDataSource();
         DataFileProperties dataFileProperties = new DataFileProperties();
 
         DataFile dataFile = new DataFile();
@@ -72,7 +67,7 @@ public class FastaSourceTest {
 
     @Test
     public void testGetModel() {
-        FastaSource source = new FastaSource();
+        FastaDataSource source = new FastaDataSource();
         assertNull(source.getDataModel());
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Interface defining methods needed to define config for a data type.
  */
-public interface AbstractConfigGenerator {
+public interface ConfigGenerator {
 
     /**
      * @param dataFileProperties for this data file
