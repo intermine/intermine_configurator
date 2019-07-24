@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.model.DataFileRow;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -15,39 +16,39 @@ import javax.validation.constraints.*;
  * DataFilePreview
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-27T09:01:47.965Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-24T09:08:54.055Z[GMT]")
 public class DataFilePreview   {
-  @JsonProperty("headerLabel")
-  private String headerLabel = null;
+  @JsonProperty("headerRowLabel")
+  private String headerRowLabel = null;
 
   @JsonProperty("headerRow")
   @Valid
   private List<String> headerRow = null;
 
-  @JsonProperty("snippetLabel")
-  private String snippetLabel = null;
+  @JsonProperty("fileRowLabel")
+  private String fileRowLabel = null;
 
-  @JsonProperty("fileSnippet")
+  @JsonProperty("fileRows")
   @Valid
-  private List<String> fileSnippet = null;
+  private List<DataFileRow> fileRows = null;
 
-  public DataFilePreview headerLabel(String headerLabel) {
-    this.headerLabel = headerLabel;
+  public DataFilePreview headerRowLabel(String headerRowLabel) {
+    this.headerRowLabel = headerRowLabel;
     return this;
   }
 
   /**
    * Bold header to label the header row in the file preview
-   * @return headerLabel
+   * @return headerRowLabel
   **/
   @ApiModelProperty(example = "Header row", value = "Bold header to label the header row in the file preview")
 
-  public String getHeaderLabel() {
-    return headerLabel;
+  public String getHeaderRowLabel() {
+    return headerRowLabel;
   }
 
-  public void setHeaderLabel(String headerLabel) {
-    this.headerLabel = headerLabel;
+  public void setHeaderRowLabel(String headerRowLabel) {
+    this.headerRowLabel = headerRowLabel;
   }
 
   public DataFilePreview headerRow(List<String> headerRow) {
@@ -77,50 +78,50 @@ public class DataFilePreview   {
     this.headerRow = headerRow;
   }
 
-  public DataFilePreview snippetLabel(String snippetLabel) {
-    this.snippetLabel = snippetLabel;
+  public DataFilePreview fileRowLabel(String fileRowLabel) {
+    this.fileRowLabel = fileRowLabel;
     return this;
   }
 
   /**
    * Bold header to label the file snippet in the file preview
-   * @return snippetLabel
+   * @return fileRowLabel
   **/
   @ApiModelProperty(example = "Sequence", value = "Bold header to label the file snippet in the file preview")
 
-  public String getSnippetLabel() {
-    return snippetLabel;
+  public String getFileRowLabel() {
+    return fileRowLabel;
   }
 
-  public void setSnippetLabel(String snippetLabel) {
-    this.snippetLabel = snippetLabel;
+  public void setFileRowLabel(String fileRowLabel) {
+    this.fileRowLabel = fileRowLabel;
   }
 
-  public DataFilePreview fileSnippet(List<String> fileSnippet) {
-    this.fileSnippet = fileSnippet;
+  public DataFilePreview fileRows(List<DataFileRow> fileRows) {
+    this.fileRows = fileRows;
     return this;
   }
 
-  public DataFilePreview addFileSnippetItem(String fileSnippetItem) {
-    if (this.fileSnippet == null) {
-      this.fileSnippet = new ArrayList<String>();
+  public DataFilePreview addFileRowsItem(DataFileRow fileRowsItem) {
+    if (this.fileRows == null) {
+      this.fileRows = new ArrayList<DataFileRow>();
     }
-    this.fileSnippet.add(fileSnippetItem);
+    this.fileRows.add(fileRowsItem);
     return this;
   }
 
   /**
-   * The first interesting line of the file
-   * @return fileSnippet
+   * Zero to many rows of the data file for display
+   * @return fileRows
   **/
-  @ApiModelProperty(value = "The first interesting line of the file")
-
-  public List<String> getFileSnippet() {
-    return fileSnippet;
+  @ApiModelProperty(value = "Zero to many rows of the data file for display")
+  @Valid
+  public List<DataFileRow> getFileRows() {
+    return fileRows;
   }
 
-  public void setFileSnippet(List<String> fileSnippet) {
-    this.fileSnippet = fileSnippet;
+  public void setFileRows(List<DataFileRow> fileRows) {
+    this.fileRows = fileRows;
   }
 
 
@@ -133,15 +134,15 @@ public class DataFilePreview   {
       return false;
     }
     DataFilePreview dataFilePreview = (DataFilePreview) o;
-    return Objects.equals(this.headerLabel, dataFilePreview.headerLabel) &&
+    return Objects.equals(this.headerRowLabel, dataFilePreview.headerRowLabel) &&
         Objects.equals(this.headerRow, dataFilePreview.headerRow) &&
-        Objects.equals(this.snippetLabel, dataFilePreview.snippetLabel) &&
-        Objects.equals(this.fileSnippet, dataFilePreview.fileSnippet);
+        Objects.equals(this.fileRowLabel, dataFilePreview.fileRowLabel) &&
+        Objects.equals(this.fileRows, dataFilePreview.fileRows);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(headerLabel, headerRow, snippetLabel, fileSnippet);
+    return Objects.hash(headerRowLabel, headerRow, fileRowLabel, fileRows);
   }
 
   @Override
@@ -149,10 +150,10 @@ public class DataFilePreview   {
     StringBuilder sb = new StringBuilder();
     sb.append("class DataFilePreview {\n");
     
-    sb.append("    headerLabel: ").append(toIndentedString(headerLabel)).append("\n");
+    sb.append("    headerRowLabel: ").append(toIndentedString(headerRowLabel)).append("\n");
     sb.append("    headerRow: ").append(toIndentedString(headerRow)).append("\n");
-    sb.append("    snippetLabel: ").append(toIndentedString(snippetLabel)).append("\n");
-    sb.append("    fileSnippet: ").append(toIndentedString(fileSnippet)).append("\n");
+    sb.append("    fileRowLabel: ").append(toIndentedString(fileRowLabel)).append("\n");
+    sb.append("    fileRows: ").append(toIndentedString(fileRows)).append("\n");
     sb.append("}");
     return sb.toString();
   }

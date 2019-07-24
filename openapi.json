@@ -912,7 +912,7 @@
       "DataFilePreview": {
         "type": "object",
         "properties": {
-          "headerLabel": {
+          "headerRowLabel": {
             "type": "string",
             "description": "Bold header to label the header row in the file preview",
             "example": "Header row"
@@ -934,31 +934,38 @@
               ]
             }
           },
-          "snippetLabel": {
+          "fileRowLabel": {
             "type": "string",
             "description": "Bold header to label the file snippet in the file preview",
             "example": "Sequence"
           },
-          "fileSnippet": {
+          "fileRows": {
             "type": "array",
-            "description": "The first interesting line of the file",
+            "description": "Zero to many rows of the data file for display",
             "items": {
-              "type": "string",
-              "example": [
-                "NC_000001.11",
-                "RefSeq",
-                "region  1",
-                "248956422",
-                ".",
-                "+",
-                ".",
-                "ID=id0;Dbxref=taxon:9606;Name=1;chromosome=1;gbkey=Src;genome=chromosome;mol_type=genomic DNA"
-              ]
+              "$ref": "#/components/schemas/DataFileRow"
             }
           }
         },
         "xml": {
           "name": "DataFilePreview"
+        }
+      },
+      "DataFileRow": {
+        "type": "array",
+        "description": "Array of strings representing a row in the data file",
+        "items": {
+          "type": "string",
+          "example": [
+            "NC_000001.11",
+            "RefSeq",
+            "region  1",
+            "248956422",
+            ".",
+            "+",
+            ".",
+            "ID=id0;Dbxref=taxon:9606;Name=1;chromosome=1;gbkey=Src;genome=chromosome;mol_type=genomic DNA"
+          ]
         }
       },
       "DataFileDescriptor": {

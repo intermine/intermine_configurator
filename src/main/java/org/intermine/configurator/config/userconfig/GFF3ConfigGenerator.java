@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +21,9 @@ import java.util.Map;
  */
 public class GFF3ConfigGenerator implements AbstractConfigGenerator {
 
-    private static final List<String> FEATURE_TYPES = new ArrayList<String>();
+    private static final List<String> FEATURE_TYPES = new ArrayList<>();
     private static final Map<String, String> IDENTIFIER_TYPES = new HashMap<>();
-    private String headerRow;
+    private static final List<String> HEADER = new LinkedList<>();
 
     /**
      * {@inheritDoc}
@@ -45,7 +46,7 @@ public class GFF3ConfigGenerator implements AbstractConfigGenerator {
         String line;
         int entityCount = 0;
         while ((line = reader.readLine()) != null) {
-            if (line.startsWith(">")) {
+            if (!line.startsWith("#")) {
                 entityCount++;
             }
         }
@@ -53,7 +54,7 @@ public class GFF3ConfigGenerator implements AbstractConfigGenerator {
         List<DataFileDescriptor> descriptors = new ArrayList<>();
 
         DataFileDescriptor descriptor = new DataFileDescriptor();
-        descriptor.setAttributeName("Number of entities in the file");
+        descriptor.setAttributeName("Number of rows in the file");
         descriptor.setAttributeValue(String.valueOf(entityCount));
 
         descriptors.add(descriptor);
@@ -73,26 +74,42 @@ public class GFF3ConfigGenerator implements AbstractConfigGenerator {
         return questions;
     }
 
+    static {
+        HEADER.add("seqid");
+        HEADER.add("source");
+        HEADER.add("type");
+        HEADER.add("start");
+        HEADER.add("end");
+        HEADER.add("score");
+        HEADER.add("strand");
+        HEADER.add("phase");
+        HEADER.add("attributes");
+    }
+
     /**
      * {@inheritDoc}
      */
     public DataFilePreview getFilePreview(BufferedReader reader) throws IOException {
         DataFilePreview dataFilePreview = new DataFilePreview();
-        dataFilePreview.setHeaderLabel("Header");
-        dataFilePreview.setSnippetLabel("Sequence");
+        dataFilePreview.setHeaderRowLabel("Quick preview of your data");
+        dataFilePreview.setHeaderRow(HEADER);
         String line;
         while ((line = reader.readLine()) != null) {
-            if (line.startsWith(">")) {
-                dataFilePreview.setHeaderRow(Arrays.asList(line));
-                headerRow = line;
+            if (line.startsWith("#")) {
+                continue;
             }
+
+            // line 1
+            line = reader.readLine();
+
+            String[] lineArray = line.split("\t");
+
+            // line 2
             // fast forward to next valid line
             line = reader.readLine();
-            // truncate for readability
-            if (line.length() > 50) {
-                line = line.substring(0, 49);
-            }
-            dataFilePreview.setFileSnippet(Arrays.asList(line));
+
+
+            //dataFilePreview.setFileRows();
             return dataFilePreview;
         }
         return null;
@@ -160,7 +177,7 @@ public class GFF3ConfigGenerator implements AbstractConfigGenerator {
     }
 
     protected DataFilePropertiesQuestion getQuestion3() {
-        String identifier = getIdentifier(headerRow);
+        String identifier = "";
         String questionWording = null;
         if (identifier != null) {
             questionWording = "The first item (e.g.'" + identifier + "') is a:";

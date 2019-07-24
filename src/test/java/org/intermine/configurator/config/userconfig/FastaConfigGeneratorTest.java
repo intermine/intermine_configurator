@@ -3,6 +3,7 @@ package org.intermine.configurator.config.userconfig;
 import io.swagger.model.DataFileDescriptor;
 import io.swagger.model.DataFilePreview;
 import io.swagger.model.DataFilePropertiesQuestion;
+import io.swagger.model.DataFileRow;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -22,9 +23,14 @@ public class FastaConfigGeneratorTest {
 
         FastaConfigGenerator fastaConfigGenerator = new FastaConfigGenerator();
         DataFilePreview preview = fastaConfigGenerator.getFilePreview(reader);
-        assertEquals("Header", preview.getHeaderLabel());
-        assertEquals("Sequence", preview.getSnippetLabel());
-        assertEquals(Arrays.asList("NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"), preview.getFileSnippet());
+        assertEquals("Header", preview.getHeaderRowLabel());
+        assertEquals("Sequence", preview.getFileRowLabel());
+        List<DataFileRow> rows = preview.getFileRows();
+        String expected = "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN";
+        DataFileRow row = rows.get(0);
+        String column = row.iterator().next();
+        assertEquals(expected, column);
+
         assertEquals(Arrays.asList(">ref|NC_000001.11| Homo sapiens chromosome 1, GRCh38.p12 Primary Assembly"), preview.getHeaderRow());
     }
 
