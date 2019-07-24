@@ -5,10 +5,12 @@ import io.swagger.model.DataFilePreview;
 import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataFilePropertiesAnswerOption;
 import io.swagger.model.DataFilePropertiesQuestion;
+import io.swagger.model.DataFileRow;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -78,8 +80,8 @@ public class FastaConfigGenerator implements org.intermine.configurator.config.u
      */
     public DataFilePreview getFilePreview(BufferedReader reader) throws IOException {
         DataFilePreview dataFilePreview = new DataFilePreview();
-        dataFilePreview.setHeaderLabel("Header");
-        dataFilePreview.setSnippetLabel("Sequence");
+        dataFilePreview.setHeaderRowLabel("Header");
+        dataFilePreview.setFileRowLabel("Sequence");
         String line;
         while ((line = reader.readLine()) != null) {
             if (line.startsWith(">")) {
@@ -92,7 +94,9 @@ public class FastaConfigGenerator implements org.intermine.configurator.config.u
             if (line.length() > 50) {
                 line = line.substring(0, 49);
             }
-            dataFilePreview.setFileSnippet(Arrays.asList(line));
+            DataFileRow row = new DataFileRow();
+            row.add(line);
+            dataFilePreview.addFileRowsItem(row);
             return dataFilePreview;
         }
         return null;
