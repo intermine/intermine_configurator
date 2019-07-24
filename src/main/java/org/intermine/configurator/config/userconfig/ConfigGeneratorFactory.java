@@ -16,6 +16,9 @@ public class ConfigGeneratorFactory {
         if (DataFile.FileFormatEnum.FASTA.compareTo(fileFormatEnum) == 0){
             return new org.intermine.configurator.config.userconfig.FastaConfigGenerator();
         }
+        if (FileFormatEnum.GFF.compareTo(fileFormatEnum) == 0){
+            return new org.intermine.configurator.config.userconfig.GFF3ConfigGenerator();
+        }
         return null;
     }
 }

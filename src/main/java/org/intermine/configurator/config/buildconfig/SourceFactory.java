@@ -19,6 +19,9 @@ public class SourceFactory {
         if (FileFormatEnum.FASTA.compareTo(fileFormatEnum) == 0){
             return new FastaSource();
         }
+        if (FileFormatEnum.GFF.compareTo(fileFormatEnum) == 0){
+            return new GFF3Source();
+        }
         return null;
     }
 }
