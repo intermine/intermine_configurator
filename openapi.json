@@ -14,7 +14,7 @@
     }
   },
   "paths": {
-    "/mine/user-config/new/": {
+    "/configurator/mine/user-config/new/": {
       "get": {
         "summary": "Get mine ID",
         "description": "return a new mine ID to use in all subsequent requests",
@@ -55,7 +55,7 @@
         }
       }
     },
-    "/mine/user-config": {
+    "/configurator/mine/user-config": {
       "get": {
         "summary": "Get user specified config for this mine",
         "description": "return configured details (if any) for a given mine id.",
@@ -136,7 +136,7 @@
         }
       }
     },
-    "/mine/build-config": {
+    "/configurator/mine/build-config": {
       "get": {
         "summary": "return config needed to build a mine",
         "description": "return config needed to build a mine",
@@ -300,7 +300,7 @@
         }
       }
     },
-    "/mine/file-properties": {
+    "/configurator/mine/file-properties": {
       "get": {
         "summary": "Get config related to this file",
         "description": "return configured details (if any) for a given file",
@@ -431,7 +431,7 @@
         }
       }
     },
-    "/mine/dataTools": {
+    "/configurator/mine/dataTools": {
       "get": {
         "summary": "Retrieve set tools to be used for the given mine",
         "parameters": [
@@ -569,7 +569,7 @@
         }
       }
     },
-    "/mine/supplementaryDataSources": {
+    "/configurator/mine/supplementaryDataSources": {
       "get": {
         "summary": "Get list of supplementary data sources set for this mine config",
         "description": "Returns a list of external data sources to add to this mine, e.g. GO terms, publications, etc.",
@@ -681,7 +681,7 @@
         }
       }
     },
-    "/mine/descriptors": {
+    "/configurator/mine/descriptors": {
       "post": {
         "summary": "Set mine descriptors",
         "description": "Set the properties associated with this mine, e.g. name",

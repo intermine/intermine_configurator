@@ -1,18 +1,25 @@
-language: python
+language: java
+
+jdk:
+  - openjdk8
 
 install:
-  - pip install -r requirements.txt
+  #- pip install -r requirements.txt
+  - true
+
+services:
+  - redis-server
 
 stages:
   - tests
-  - name: apiMerge
-    if: branch == master
+  #- name: apiMerge
+  #  if: branch == master
 
 jobs:
   include:
-    # - stage: tests
-    #   script: ./test.sh
-    - stage: apiMerge
-      python: "3.6"
-      script:
-        - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then python autoMerger.py ; fi'
+    - stage: tests
+      script: ./gradlew test
+   # - stage: apiMerge
+   #   python: "3.6"
+   #   script:
+   #     - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then python autoMerger.py ; fi'
