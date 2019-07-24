@@ -3,6 +3,9 @@ language: python
 install:
   - pip install -r requirements.txt
 
+services:
+  - redis-server
+
 stages:
   - tests
   - name: apiMerge
