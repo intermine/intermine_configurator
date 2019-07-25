@@ -1207,6 +1207,27 @@
           },
           "globalAdditions": {
             "type": "string"
+          },
+          "sourceConfigs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SourceConfig"
+            }
+          }
+        }
+      },
+      "SourceConfig": {
+        "type": "object",
+        "required": [
+          "fileName",
+          "fileContents"
+        ],
+        "properties": {
+          "fileName": {
+            "type": "string"
+          },
+          "fileContents": {
+            "type": "string"
           }
         }
       }
