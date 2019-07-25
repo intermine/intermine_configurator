@@ -10,7 +10,6 @@ import io.swagger.model.DataFileRow;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,7 +19,7 @@ import java.util.Map;
 /**
  * Generates config (questions, answers etc) needed by the wizard. Will be presented to the user.
  */
-public class FastaConfigGenerator implements org.intermine.configurator.config.userconfig.AbstractConfigGenerator {
+public class FastaConfigGenerator implements ConfigGenerator {
 
     private static final List<String> FEATURE_TYPES = new ArrayList<String>();
     private static final Map<String, String> IDENTIFIER_TYPES = new HashMap<>();
@@ -32,12 +31,10 @@ public class FastaConfigGenerator implements org.intermine.configurator.config.u
     public void generateConfig(DataFileProperties dataFileProperties,
                                String fileLocation) throws IOException {
 
-        BufferedReader bf = new BufferedReader(new FileReader(fileLocation));
-
         // file preview has to be first
-        dataFileProperties.setFilePreview(getFilePreview(bf));
-        dataFileProperties.setQuestions(getQuestions(bf));
-        dataFileProperties.setDescriptors(getDescriptors(bf));
+        dataFileProperties.setFilePreview(getFilePreview(new BufferedReader(new FileReader(fileLocation))));
+        dataFileProperties.setQuestions(getQuestions(new BufferedReader(new FileReader(fileLocation))));
+        dataFileProperties.setDescriptors(getDescriptors(new BufferedReader(new FileReader(fileLocation))));
     }
 
     /**

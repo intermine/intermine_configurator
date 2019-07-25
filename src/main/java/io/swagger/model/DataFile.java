@@ -30,7 +30,7 @@ public class DataFile   {
   public enum FileFormatEnum {
     FASTA("fasta"),
     
-    GFF("gff"),
+    GFF("gff3"),
     
     TAB("tab"),
     

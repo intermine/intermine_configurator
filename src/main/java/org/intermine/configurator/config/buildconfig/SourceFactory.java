@@ -12,15 +12,15 @@ public class SourceFactory {
      * @param fileFormatEnum enum representing filetype, e.g. FASTA
      * @return the class that can generate the appropriate config for filetype
      */
-    public static AbstractSource getDataSource(FileFormatEnum fileFormatEnum) {
+    public static DataSource getDataSource(FileFormatEnum fileFormatEnum) {
         if (fileFormatEnum == null) {
             return null;
         }
         if (FileFormatEnum.FASTA.compareTo(fileFormatEnum) == 0){
-            return new FastaSource();
+            return new FastaDataSource();
         }
         if (FileFormatEnum.GFF.compareTo(fileFormatEnum) == 0){
-            return new GFF3Source();
+            return new GFF3DataSource();
         }
         return null;
     }

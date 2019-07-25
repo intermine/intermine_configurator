@@ -184,7 +184,7 @@
         }
       }
     },
-    "/file/properties/detect": {
+    "/configurator/file/properties/detect": {
       "post": {
         "summary": "Return information about this file",
         "description": "Reads in data file, validates and returns file attributes, plus questions (if needed) for the user.",
@@ -248,7 +248,7 @@
         }
       }
     },
-    "/file/properties/save": {
+    "/configurator/file/properties/save": {
       "post": {
         "summary": "Save file properties to a given InterMine pre-build config",
         "description": "Following on from `detectFileProperties`, we need to save a set of metadata associated with a file. This can be run multiple times, as the user may upload an unknown number of files.",
@@ -403,7 +403,7 @@
         }
       }
     },
-    "/dataTools": {
+    "/configurator/dataTools": {
       "get": {
         "summary": "Retrieve all available tools",
         "responses": {
@@ -539,7 +539,7 @@
         }
       }
     },
-    "/supplementaryDataSources": {
+    "/configurator/supplementaryDataSources": {
       "get": {
         "summary": "Get list of possible supplementary data sources",
         "description": "Returns a list of possible external data sources to add to this mine, e.g. GO terms, publications, etc.",
@@ -893,7 +893,7 @@
             "type": "string",
             "enum": [
               "fasta",
-              "gff",
+              "gff3",
               "tab",
               "csv"
             ],

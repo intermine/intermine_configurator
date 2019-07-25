@@ -5,6 +5,7 @@ import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataFilePropertiesAnswerOption;
 import io.swagger.model.DataFilePropertiesQuestion;
 import io.swagger.model.Organism;
+import io.swagger.model.SourceConfig;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,11 +14,11 @@ import java.util.Map;
 /**
  * {@inheritDoc}
  */
-public class FastaSource implements AbstractSource {
+public class FastaDataSource implements DataSource {
 
     Map<String, String> selectedAnswers = new HashMap<>();
 
-    public FastaSource() {
+    public FastaDataSource() {
         // constructor
     }
 
@@ -64,6 +65,13 @@ public class FastaSource implements AbstractSource {
      * {@inheritDoc}
      */
     public String getDataModel() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<SourceConfig> getSourceConfigs(DataFileProperties dataFileProperties, String fileLocation) {
         return null;
     }
 }

@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import io.swagger.model.MineDescriptor;
-import org.intermine.configurator.config.buildconfig.AbstractSource;
+import org.intermine.configurator.config.buildconfig.DataSource;
 import org.intermine.configurator.config.buildconfig.SourceFactory;
 import org.springframework.util.StringUtils;
 
@@ -345,7 +345,7 @@ public class MineConfigManager {
                         fileId.toString(), System.getenv("IM_DATA_DIR"), dataFile.getName());
 
                 DataFile.FileFormatEnum fileFormatEnum = dataFile.getFileFormat();
-                AbstractSource dataSource = SourceFactory.getDataSource(fileFormatEnum);
+                DataSource dataSource = SourceFactory.getDataSource(fileFormatEnum);
                 projectXML.append(dataSource.getProjectXML(propertiesForFile, fileLocation));
             }
         }

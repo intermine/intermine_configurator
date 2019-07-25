@@ -9,7 +9,7 @@ import io.swagger.model.DataFile.FileFormatEnum;
  */
 public class ConfigGeneratorFactory {
 
-    public static AbstractConfigGenerator getDataSourceConfigGenerator(FileFormatEnum fileFormatEnum) {
+    public static ConfigGenerator getDataSourceConfigGenerator(FileFormatEnum fileFormatEnum) {
         if (fileFormatEnum == null) {
             return null;
         }

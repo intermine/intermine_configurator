@@ -1,6 +1,9 @@
 package org.intermine.configurator.config.buildconfig;
 
 import io.swagger.model.DataFileProperties;
+import io.swagger.model.SourceConfig;
+
+import java.util.List;
 
 /**
  * Represents a "project" entry in the project XML file.
@@ -9,7 +12,7 @@ import io.swagger.model.DataFileProperties;
  * a data model snippet needed. This can be NULL.
  *
  */
-public interface AbstractSource {
+public interface DataSource {
 
     /**
      *
@@ -29,4 +32,13 @@ public interface AbstractSource {
      */
     String getDataModel();
 
+    /**
+     * If the data source includes data types that are not in the core model, then we need
+     * to extend the data model. This method returns the additions.xml needed by this data source.
+     *
+     * Can be null!
+     *
+     * @return model XML to be merged into the core model
+     */
+    List<SourceConfig> getSourceConfigs(DataFileProperties dataFileProperties, String fileLocation);
 }
