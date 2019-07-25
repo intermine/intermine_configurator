@@ -21,13 +21,13 @@ import static org.junit.Assert.assertNull;
 
 public class GffSourceTest {
 
-    String expected = " <source name=\"gff3\" type=\"gff3\" >"
-            + "<property name=\"gff3.taxonId\" value=\"9606\"/>"
-            + "<property name=\"gff3.dataSetTitle\" value=\"gff3 data set\"/>"
-            + "<property name=\"gff3.dataSourceName\" value=\"InterMine import\"/>"
-            + "<property name=\"gff3.seqClsName\" value=\"Chromosome\"/>"
-            + "<property name=\"src.data.dir\" location=\"/tmp/data\"/>"
-            + "</source>\n";
+    String expected = "<source name=\"gff3\" type=\"gff3\" >" + System.lineSeparator()
+            + "<property name=\"gff3.taxonId\" value=\"9606\"/>" + System.lineSeparator()
+            + "<property name=\"gff3.dataSetTitle\" value=\"gff3 data set\"/>" + System.lineSeparator()
+            + "<property name=\"gff3.dataSourceName\" value=\"InterMine import\"/>" + System.lineSeparator()
+            + "<property name=\"gff3.seqClsName\" value=\"Chromosome\"/>" + System.lineSeparator()
+            + "<property name=\"src.data.dir\" location=\"/tmp/data\"/>" + System.lineSeparator()
+            + "</source>" + System.lineSeparator();
 
     @Test
     public void testgetProjectXML() {

@@ -9,6 +9,7 @@ import io.swagger.model.DataFilePropertiesResponseAnswers;
 import io.swagger.model.DataTool;
 import io.swagger.model.MineBuildConfig;
 import io.swagger.model.MineUserConfig;
+import io.swagger.model.SourceConfig;
 import io.swagger.model.SupplementaryDataSource;
 
 import java.util.ArrayList;
@@ -325,7 +326,40 @@ public class MineConfigManager {
         String projectXML = generateProjectXML(mineId, userId, userConfig);
         buildConfig.setProjectXML(projectXML);
 
+        List<SourceConfig> sourceConfigs = generateSourceConfigs(mineId, userId, userConfig);
+        buildConfig.setSourceConfigs(sourceConfigs);
+
         return buildConfig;
+    }
+
+    private List<SourceConfig> generateSourceConfigs(UUID mineId, UUID userId, MineUserConfig userConfig) {
+        List<SourceConfig> sourceConfigs = new ArrayList<>();
+        List<DataFileProperties> dataFileProperties = userConfig.getDataFiles();
+        if (dataFileProperties != null && !dataFileProperties.isEmpty()) {
+            for (DataFileProperties propertiesForFile : dataFileProperties) {
+                // file for this entry
+                DataFile dataFile = propertiesForFile.getDataFile();
+                // location of file
+                String fileLocation = getFileLocation(dataFile, mineId, userId);
+                // data source, e.g. GFF or FASTA
+                DataSource dataSource = getDataSource(dataFile);
+                List<SourceConfig> theseConfigs = dataSource.getSourceConfigs(propertiesForFile,
+                    fileLocation);
+                sourceConfigs.addAll(theseConfigs);
+            }
+        }
+        return sourceConfigs;
+    }
+
+    private DataSource getDataSource(DataFile dataFile) {
+        DataFile.FileFormatEnum fileFormatEnum = dataFile.getFileFormat();
+        return SourceFactory.getDataSource(fileFormatEnum);
+    }
+
+    private String getFileLocation(DataFile dataFile, UUID mineId, UUID userId) {
+        UUID fileId = dataFile.getFileId();
+        return DataFileManager.getFilePath(mineId.toString(), userId.toString(),
+                fileId.toString(), System.getenv("IM_DATA_DIR"), dataFile.getName());
     }
 
     private String generateProjectXML(UUID mineId, UUID userId, MineUserConfig userConfig) {
@@ -356,21 +390,20 @@ public class MineConfigManager {
     }
 
     private static String getPrefix(String mineName) {
-        return "<project type=\"bio\">\n"
-                + "  <property name=\"target.model\" value=\"genomic\"/>\n"
-                + "  <property name=\"common.os.prefix\" value=\"common\"/>\n"
-                + "  <property name=\"intermine.properties.file\" value=\"" + mineName + ".properties\"/>\n"
-                + "  <property name=\"default.intermine.properties.file\" location=\"../default.intermine.integrate.properties\"/>\n"
-                + "  <sources>\n";
+        return "<project type=\"bio\">"
+                + "<property name=\"target.model\" value=\"genomic\"/>" + System.lineSeparator()
+                + "<property name=\"common.os.prefix\" value=\"common\"/>" + System.lineSeparator()
+                + "<property name=\"intermine.properties.file\" value=\"" + mineName + ".properties\"/>" + System.lineSeparator()
+                + "<sources>" + System.lineSeparator();
     }
 
-    private final static String fileSuffix = "  <post-processing>\n"
-            + "    <post-process name=\"do-sources\" />\n"
-            + "    <post-process name=\"create-attribute-indexes\"/>\n"
-            + "    <post-process name=\"summarise-objectstore\"/>\n"
-            + "    <post-process name=\"create-autocomplete-index\"/>\n"
-            + "    <post-process name=\"create-search-index\"/>\n"
-            + "  </post-processing>\n"
+    private final static String fileSuffix = "</sources><post-processing>" + System.lineSeparator()
+            + "<post-process name=\"do-sources\" />" + System.lineSeparator()
+            + "<post-process name=\"create-attribute-indexes\"/>" + System.lineSeparator()
+            + "<post-process name=\"summarise-objectstore\"/>" + System.lineSeparator()
+            + "<post-process name=\"create-autocomplete-index\"/>" + System.lineSeparator()
+            + "<post-process name=\"create-search-index\"/>" + System.lineSeparator()
+            + "</post-processing>" + System.lineSeparator()
             + "</project>";
 
 }

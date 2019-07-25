@@ -43,13 +43,13 @@ public class GFF3DataSource implements DataSource {
         Organism organism = dataFile.getOrganism();
         String taxonId = organism.getTaxonID().toString();
 
-        String snippet = " <source name=\"gff3\" type=\"gff3\" >"
-                + "<property name=\"gff3.taxonId\" value=\"" + taxonId + "\"/>"
-                + "<property name=\"gff3.dataSetTitle\" value=\"gff3 data set\"/>"
-                + "<property name=\"gff3.dataSourceName\" value=\"InterMine import\"/>"
-                + "<property name=\"gff3.seqClsName\" value=\"Chromosome\"/>"
-                + "<property name=\"src.data.dir\" location=\"" + fileLocation + "\"/>"
-                + "</source>\n";
+        String snippet = "<source name=\"gff3\" type=\"gff3\" >" + System.lineSeparator()
+                + "<property name=\"gff3.taxonId\" value=\"" + taxonId + "\"/>" + System.lineSeparator()
+                + "<property name=\"gff3.dataSetTitle\" value=\"gff3 data set\"/>" + System.lineSeparator()
+                + "<property name=\"gff3.dataSourceName\" value=\"InterMine import\"/>" + System.lineSeparator()
+                + "<property name=\"gff3.seqClsName\" value=\"Chromosome\"/>" + System.lineSeparator()
+                + "<property name=\"src.data.dir\" location=\"" + fileLocation + "\"/>" + System.lineSeparator()
+                + "</source>" + System.lineSeparator();
         return snippet;
     }
 

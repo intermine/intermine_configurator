@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.MineDescriptor;
+import io.swagger.model.SourceConfig;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -16,7 +17,7 @@ import javax.validation.constraints.*;
  * MineBuildConfig
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-27T09:01:47.965Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-25T10:25:37.250Z[GMT]")
 public class MineBuildConfig   {
   @JsonProperty("mineDescriptor")
   private MineDescriptor mineDescriptor = null;
@@ -30,6 +31,10 @@ public class MineBuildConfig   {
 
   @JsonProperty("globalAdditions")
   private String globalAdditions = null;
+
+  @JsonProperty("sourceConfigs")
+  @Valid
+  private List<SourceConfig> sourceConfigs = null;
 
   public MineBuildConfig mineDescriptor(MineDescriptor mineDescriptor) {
     this.mineDescriptor = mineDescriptor;
@@ -117,6 +122,33 @@ public class MineBuildConfig   {
     this.globalAdditions = globalAdditions;
   }
 
+  public MineBuildConfig sourceConfigs(List<SourceConfig> sourceConfigs) {
+    this.sourceConfigs = sourceConfigs;
+    return this;
+  }
+
+  public MineBuildConfig addSourceConfigsItem(SourceConfig sourceConfigsItem) {
+    if (this.sourceConfigs == null) {
+      this.sourceConfigs = new ArrayList<SourceConfig>();
+    }
+    this.sourceConfigs.add(sourceConfigsItem);
+    return this;
+  }
+
+  /**
+   * Get sourceConfigs
+   * @return sourceConfigs
+  **/
+  @ApiModelProperty(value = "")
+  @Valid
+  public List<SourceConfig> getSourceConfigs() {
+    return sourceConfigs;
+  }
+
+  public void setSourceConfigs(List<SourceConfig> sourceConfigs) {
+    this.sourceConfigs = sourceConfigs;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -130,12 +162,13 @@ public class MineBuildConfig   {
     return Objects.equals(this.mineDescriptor, mineBuildConfig.mineDescriptor) &&
         Objects.equals(this.dataTools, mineBuildConfig.dataTools) &&
         Objects.equals(this.projectXML, mineBuildConfig.projectXML) &&
-        Objects.equals(this.globalAdditions, mineBuildConfig.globalAdditions);
+        Objects.equals(this.globalAdditions, mineBuildConfig.globalAdditions) &&
+        Objects.equals(this.sourceConfigs, mineBuildConfig.sourceConfigs);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(mineDescriptor, dataTools, projectXML, globalAdditions);
+    return Objects.hash(mineDescriptor, dataTools, projectXML, globalAdditions, sourceConfigs);
   }
 
   @Override
@@ -147,6 +180,7 @@ public class MineBuildConfig   {
     sb.append("    dataTools: ").append(toIndentedString(dataTools)).append("\n");
     sb.append("    projectXML: ").append(toIndentedString(projectXML)).append("\n");
     sb.append("    globalAdditions: ").append(toIndentedString(globalAdditions)).append("\n");
+    sb.append("    sourceConfigs: ").append(toIndentedString(sourceConfigs)).append("\n");
     sb.append("}");
     return sb.toString();
   }
