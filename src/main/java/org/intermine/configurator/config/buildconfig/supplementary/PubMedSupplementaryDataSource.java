@@ -1,7 +1,10 @@
 package org.intermine.configurator.config.buildconfig.supplementary;
 
 import io.swagger.model.DataFileProperties;
+import io.swagger.model.SourceConfig;
 import org.intermine.configurator.config.buildconfig.DataSource;
+
+import java.util.List;
 
 
 /**
@@ -26,5 +29,10 @@ public class PubMedSupplementaryDataSource implements DataSource {
         return null;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    public List<SourceConfig> getSourceConfigs(DataFileProperties dataFileProperties, String fileLocation) {
+        return null;
+    }
 }

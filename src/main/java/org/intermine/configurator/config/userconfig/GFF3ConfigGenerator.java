@@ -1,11 +1,13 @@
 package org.intermine.configurator.config.userconfig;
 
+import io.swagger.model.DataFile;
 import io.swagger.model.DataFileDescriptor;
 import io.swagger.model.DataFilePreview;
 import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataFilePropertiesAnswerOption;
 import io.swagger.model.DataFilePropertiesQuestion;
 import io.swagger.model.DataFileRow;
+import io.swagger.model.Organism;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,9 +23,8 @@ import java.util.Map;
  */
 public class GFF3ConfigGenerator implements ConfigGenerator {
 
-    private static final List<String> FEATURE_TYPES = new ArrayList<>();
-    private static final Map<String, String> IDENTIFIER_TYPES = new HashMap<>();
     private static final List<String> HEADER = new LinkedList<>();
+    protected String taxonId;
 
     /**
      * {@inheritDoc}
@@ -31,12 +32,13 @@ public class GFF3ConfigGenerator implements ConfigGenerator {
     public void generateConfig(DataFileProperties dataFileProperties,
                                String fileLocation) throws IOException {
 
-        BufferedReader bf = new BufferedReader(new FileReader(fileLocation));
+        DataFile dataFile = dataFileProperties.getDataFile();
+        Organism organism = dataFile.getOrganism();
+        taxonId = organism.getTaxonID().toString();
 
-        // file preview has to be first
-        dataFileProperties.setFilePreview(getFilePreview(bf));
-        dataFileProperties.setQuestions(getQuestions(bf));
-        dataFileProperties.setDescriptors(getDescriptors(bf));
+        dataFileProperties.setFilePreview(getFilePreview(new BufferedReader(new FileReader(fileLocation))));
+        dataFileProperties.setQuestions(getQuestions(new BufferedReader(new FileReader(fileLocation))));
+        dataFileProperties.setDescriptors(getDescriptors(new BufferedReader(new FileReader(fileLocation))));
     }
 
     /**
@@ -66,11 +68,11 @@ public class GFF3ConfigGenerator implements ConfigGenerator {
      */
     public List<DataFilePropertiesQuestion> getQuestions(BufferedReader reader) {
         List<DataFilePropertiesQuestion> questions = new ArrayList<>();
-
-        questions.add(getQuestion1());
-        questions.add(getQuestion2());
-        questions.add(getQuestion3());
-
+        try {
+            questions.add(getQuestion1(reader));
+        } catch (IOException e) {
+            // do nothing
+        }
         return questions;
     }
 
@@ -99,115 +101,92 @@ public class GFF3ConfigGenerator implements ConfigGenerator {
                 continue;
             }
 
-            // line 1
-            dataFilePreview.addFileRowsItem(getRows(reader));
-            // line 2
-            dataFilePreview.addFileRowsItem(getRows(reader));
+            DataFileRow row1 = getRows(reader);
+            if (row1 != null) {
+                dataFilePreview.addFileRowsItem(row1);
+                DataFileRow row2 = getRows(reader);
+                if (row2 != null) {
+                    dataFilePreview.addFileRowsItem(row2);
+                }
+            }
             return dataFilePreview;
         }
         return null;
     }
 
     private DataFileRow getRows(BufferedReader reader) throws IOException {
-        String line = reader.readLine();
         DataFileRow row = new DataFileRow();
-        for (String s : line.split("\t")) {
-            row.add(s);
+        String line = reader.readLine();
+        if (line != null) {
+            for (String s : line.split("\t")) {
+                row.add(s);
+            }
         }
         return row;
     }
 
-    protected DataFilePropertiesQuestion getQuestion1() {
+    protected DataFilePropertiesQuestion getQuestion1(BufferedReader reader)
+        throws IOException {
         DataFilePropertiesQuestion question = new DataFilePropertiesQuestion();
-        question.setQuestionId("nucleotideOrProtein");
-        question.setQuestionHeader("Sequence Type");
-        question.setQuestionWording("Does this file contain nucleotides or proteins?");
+        question.setQuestionId("genePrimaryIdentifier");
+        question.setQuestionHeader("Gene Identifier");
+        question.setQuestionWording("Which is the unique identifier for Gene?");
 
-        DataFilePropertiesAnswerOption answer1 = new DataFilePropertiesAnswerOption();
-        answer1.setAnswerId("nucleotide");
-        answer1.setAnswerLabel("Nucleotides");
-        answer1.setIsDefault(true);
-
-        question.addPossibleAnswersItem(answer1);
-
-        DataFilePropertiesAnswerOption answer2 = new DataFilePropertiesAnswerOption();
-        answer2.setAnswerId("protein");
-        answer2.setAnswerLabel("Proteins");
-        answer2.setIsDefault(false);
-
-        question.addPossibleAnswersItem(answer2);
-        return question;
-    }
-
-    static {
-        FEATURE_TYPES.add("Protein");
-        FEATURE_TYPES.add("Transcript");
-        FEATURE_TYPES.add("Exon");
-        FEATURE_TYPES.add("CDS");
-        FEATURE_TYPES.add("UTR");
-        FEATURE_TYPES.add("Chromosome");
-    }
-
-    protected DataFilePropertiesQuestion getQuestion2() {
-        DataFilePropertiesQuestion question = new DataFilePropertiesQuestion();
-        question.setQuestionId("featureType");
-        question.setQuestionHeader("Sequence Features");
-        question.setQuestionWording("What type of features are in this file?");
-
-        DataFilePropertiesAnswerOption answer1 = new DataFilePropertiesAnswerOption();
-        answer1.setAnswerId("Gene");
-        answer1.setAnswerLabel("Gene");
-        answer1.setIsDefault(true);
-
-        question.addPossibleAnswersItem(answer1);
-
-        for (String dataType : FEATURE_TYPES) {
-            DataFilePropertiesAnswerOption answer = new DataFilePropertiesAnswerOption();
-            answer.setAnswerId(dataType);
-            answer.setAnswerLabel(dataType);
-            answer.setIsDefault(false);
-
-            question.addPossibleAnswersItem(answer);
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (line.startsWith("#")) {
+                continue;
+            }
+            String[] lineArray = line.split("\t");
+            if (lineArray.length >= 3) {
+                String dataType = lineArray[2];
+                if ("gene".equals(dataType)) {
+                    question.setPossibleAnswers(getPossibleAnswers(lineArray[8]));
+                }
+            }
         }
         return question;
     }
 
-    static {
-        IDENTIFIER_TYPES.put("symbol", "Symbol");
-        IDENTIFIER_TYPES.put("name", "Name");
-        IDENTIFIER_TYPES.put("primaryAccession", "Accession");
+    private List<DataFilePropertiesAnswerOption> getPossibleAnswers(String column9) {
+        List<DataFilePropertiesAnswerOption> possibleAnswers = new ArrayList<>();
+
+//        ID=id1;Parent=rna0;Dbxref=GeneID:100287102,Genbank:NR_046018.2,HGNC:
+//        HGNC:37102;gbkey=misc_RNA;gene=DDX11L1;
+//        product=DEAD/H-box helicase 11 like 1;transcript_id=NR_046018.2
+        String[] attributes = column9.split(";");
+        for (String attribute : attributes) {
+            String[] keyValuePairs = attribute.split("=");
+            if (keyValuePairs.length == 2) {
+                if ("gene".equalsIgnoreCase(keyValuePairs[0])) {
+                    possibleAnswers.add(getAnswer(taxonId + ".attributes.gene=primaryIdentifier", attribute));
+                } else if ("locus_tag".equalsIgnoreCase(keyValuePairs[0])) {
+                        possibleAnswers.add(getAnswer(taxonId + ".attributes.locus_tag=primaryIdentifier", attribute));
+                } else if ("name".equalsIgnoreCase(keyValuePairs[0])) {
+                    possibleAnswers.add(getAnswer(taxonId + ".attributes.name=primaryIdentifier", attribute));
+                } else if ("Dbxref".equalsIgnoreCase(keyValuePairs[0])) {
+                    String[] dbxrefs = keyValuePairs[1].split(",");
+                    for (String dbxref : dbxrefs) {
+                        String[] xrefKeyValues = dbxref.split(":");
+                        //9606.gene.attributes.Dbxref.GeneID
+                        possibleAnswers.add(getAnswer(taxonId + ".gene.attributes.Dbxref." +
+                            xrefKeyValues[0] + "=primaryIdentifier", dbxref));
+
+//                        "ID=cds0;Parent=gene0;Dbxref=Genbank:WP_043903292.1;Name=WP_043903292.1;gbkey=CDS;
+//                        product=hypothetical protein;protein_id=WP_043903292.1;transl_table=11"
+
+                    }
+                }
+            }
+        }
+        return possibleAnswers;
     }
 
-    protected DataFilePropertiesQuestion getQuestion3() {
-        String identifier = "";
-        String questionWording = null;
-        if (identifier != null) {
-            questionWording = "The first item (e.g.'" + identifier + "') is a:";
-        } else {
-            questionWording = "The first item is a:";
-        }
-
-        DataFilePropertiesQuestion question = new DataFilePropertiesQuestion();
-        question.setQuestionId("identifierType");
-        question.setQuestionHeader("Identifier Type?");
-        question.setQuestionWording(questionWording);
-
-        DataFilePropertiesAnswerOption answer1 = new DataFilePropertiesAnswerOption();
-        answer1.setAnswerId("primaryIdentifier");
-        answer1.setAnswerLabel("Identifier");
-        answer1.setIsDefault(true);
-
-        question.addPossibleAnswersItem(answer1);
-
-        for (Map.Entry<String, String> entry : IDENTIFIER_TYPES.entrySet()) {
-            DataFilePropertiesAnswerOption answer = new DataFilePropertiesAnswerOption();
-            answer.setAnswerId(entry.getKey());
-            answer.setAnswerLabel(entry.getValue());
-            answer.setIsDefault(false);
-
-            question.addPossibleAnswersItem(answer);
-        }
-        return question;
+    private DataFilePropertiesAnswerOption getAnswer(String answerId, String answerLabel) {
+        DataFilePropertiesAnswerOption answer = new DataFilePropertiesAnswerOption();
+        answer.setAnswerId(answerId);
+        answer.setAnswerLabel(answerLabel);
+        return answer;
     }
 
 }

@@ -31,12 +31,10 @@ public class FastaConfigGenerator implements ConfigGenerator {
     public void generateConfig(DataFileProperties dataFileProperties,
                                String fileLocation) throws IOException {
 
-        BufferedReader bf = new BufferedReader(new FileReader(fileLocation));
-
         // file preview has to be first
-        dataFileProperties.setFilePreview(getFilePreview(bf));
-        dataFileProperties.setQuestions(getQuestions(bf));
-        dataFileProperties.setDescriptors(getDescriptors(bf));
+        dataFileProperties.setFilePreview(getFilePreview(new BufferedReader(new FileReader(fileLocation))));
+        dataFileProperties.setQuestions(getQuestions(new BufferedReader(new FileReader(fileLocation))));
+        dataFileProperties.setDescriptors(getDescriptors(new BufferedReader(new FileReader(fileLocation))));
     }
 
     /**
