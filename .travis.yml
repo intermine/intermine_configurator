@@ -14,7 +14,9 @@ jobs:
       jdk: "openjdk8"
       script: ./gradlew test
     - stage: apiMerge
-      python: "3.6"
-      install: "pip install -r requirements.txt"
+      dist: bionic
+      python: "3.6.7"
+      env: PYENV_VERSION=3.6.7
+      install: "pip3 install -r requirements.txt"
       script:
-        - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then python autoMerger.py ; fi'
+        - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then python3 autoMerger.py ; fi'
