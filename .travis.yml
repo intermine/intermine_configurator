@@ -15,7 +15,7 @@ jobs:
       script: ./gradlew test
     - stage: apiMerge
       dist: bionic
-      python: "3.6"
+      python: "3.6.7"
       install: "pip3 install -r requirements.txt"
       script:
         - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then python3 autoMerger.py ; fi'
