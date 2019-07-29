@@ -42,7 +42,7 @@ public class DataFileManagerTest {
     @Test
     public void testgetFilePath() {
         String expected = "baseDir/userId/mineId/fileId/fileName";
-        String filePath = DataFileManager.getFilePath("mineId", "userId",
+        String filePath = DataFileManager.getFilePath("userId",
                 "fileId", "baseDir", "fileName");
         assertEquals(expected, filePath);
     }

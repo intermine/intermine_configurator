@@ -358,7 +358,7 @@ public class MineConfigManager {
 
     private String getFileLocation(DataFile dataFile, UUID mineId, UUID userId) {
         UUID fileId = dataFile.getFileId();
-        return DataFileManager.getFilePath(mineId.toString(), userId.toString(),
+        return DataFileManager.getFilePath(userId.toString(),
                 fileId.toString(), System.getenv("IM_DATA_DIR"), dataFile.getName());
     }
 
@@ -375,7 +375,7 @@ public class MineConfigManager {
                 DataFile dataFile = propertiesForFile.getDataFile();
                 UUID fileId = dataFile.getFileId();
 
-                String fileLocation = DataFileManager.getFilePath(mineId.toString(), userId.toString(),
+                String fileLocation = DataFileManager.getFilePath(userId.toString(),
                         fileId.toString(), System.getenv("IM_DATA_DIR"), dataFile.getName());
 
                 DataFile.FileFormatEnum fileFormatEnum = dataFile.getFileFormat();
