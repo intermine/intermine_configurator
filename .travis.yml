@@ -1,4 +1,6 @@
 language: generic
+python: "3.6"
+jdk: "openjdk8"
 
 services:
   - redis-server
@@ -11,10 +13,8 @@ stages:
 jobs:
   include:
     - stage: tests
-      jdk: "openjdk8"
       script: ./gradlew test
     - stage: apiMerge
-      python: "3.6"
       install: "pip install -r requirements.txt"
       script:
         - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then python autoMerger.py ; fi'
