@@ -87,8 +87,8 @@ public class DataFileManager {
         return validationResponse;
     }
 
-    public static String getFilePath(String mineId, String userId, String fileId, String baseDir, String fileName) {
-        return baseDir + "/" + userId + "/" + mineId + "/" + fileId + "/" + fileName;
+    public static String getFilePath(String userId, String fileId, String baseDir, String fileName) {
+        return baseDir + "/" + userId + "/" + fileId + "/" + fileName;
     }
 
 }
