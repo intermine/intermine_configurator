@@ -4,14 +4,15 @@ import io.swagger.model.DataFileProperties;
 import io.swagger.model.SourceConfig;
 import org.intermine.configurator.config.buildconfig.DataSource;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Project XML entry for the entrez organism supplementary data source
+ *
+ * @author Julie Sullivan
  */
-public class EntrezOrganismSupplementaryDataSource implements DataSource {
+public class EntrezOrganismSupplementaryDataSource implements DataSource
+{
 
     /**
      * {@inheritDoc}

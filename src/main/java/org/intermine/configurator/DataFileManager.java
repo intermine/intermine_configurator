@@ -16,8 +16,15 @@ import java.util.List;
 
 /**
  * manages the uploaded data files
+ *
+ * @author Julie Sullivan
  */
-public class DataFileManager {
+public final class DataFileManager
+{
+    private DataFileManager() {
+        // don't instantiate
+    }
+
 
     /**
      * Validates the data file using the biovalidator library, and handles the response.
@@ -87,8 +94,16 @@ public class DataFileManager {
         return validationResponse;
     }
 
+    /**
+     * Based on the user params, build the path to specified files.
+     *
+     * @param userId ID for this user
+     * @param fileId ID for file
+     * @param baseDir base directory
+     * @param fileName name of file
+     * @return the full path to the file
+     */
     public static String getFilePath(String userId, String fileId, String baseDir, String fileName) {
         return baseDir + "/" + userId + "/" + fileId + "/" + fileName;
     }
-
 }

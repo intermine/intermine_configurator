@@ -4,16 +4,13 @@ import io.swagger.model.DataFile;
 import io.swagger.model.DataFileProperties;
 import io.swagger.model.DataFilePropertiesAnswerOption;
 import io.swagger.model.DataFilePropertiesQuestion;
-import io.swagger.model.DataFileRow;
 import io.swagger.model.Organism;
 import io.swagger.model.SourceConfig;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,11 +19,16 @@ import java.util.Set;
 
 /**
  * {@inheritDoc}
+ * @author Julie Sullivan
  */
-public class GFF3DataSource implements DataSource {
+public class GFF3DataSource implements DataSource
+{
 
     Map<String, String> selectedAnswers = new HashMap<>();
 
+    /**
+     * Constructor
+     */
     public GFF3DataSource() {
         // constructor
     }

@@ -117,10 +117,10 @@ public class ConfiguratorApiController implements ConfiguratorApi {
                 System.getenv("IM_DATA_DIR"), dataFile.getName());
 
         ValidationResponse validationResponse = DataFileManager.processDataFile(dataFile, fileLocation);
-        if (validationResponse.isValid) {
-            return new ResponseEntity(validationResponse.dataFileProperties, HttpStatus.OK);
+        if (validationResponse.isValid()) {
+            return new ResponseEntity(validationResponse.getDataFileProperties(), HttpStatus.OK);
         } else {
-            throw new IllegalArgumentException(validationResponse.errorMessage);
+            throw new IllegalArgumentException(validationResponse.getErrorMessage());
         }
     }
 
@@ -204,9 +204,8 @@ public class ConfiguratorApiController implements ConfiguratorApi {
 
         // set the user config
         ValidationResponse validationResponse = DataFileManager.processDataFile(dataFile, fileLocation);
-        if (validationResponse.isValid) {
-
-            DataFileProperties dataFileProperties = validationResponse.dataFileProperties;
+        if (validationResponse.isValid()) {
+            DataFileProperties dataFileProperties = validationResponse.getDataFileProperties();
 
             // add answers
             List<DataFilePropertiesResponseAnswers> answers = body.getAnswers();
@@ -215,7 +214,7 @@ public class ConfiguratorApiController implements ConfiguratorApi {
             mineConfigManager.addFileProperties(repository, mineId, fileId, dataFileProperties);
             return new ResponseEntity(HttpStatus.OK);
         }
-        throw new IllegalArgumentException(validationResponse.errorMessage);
+        throw new IllegalArgumentException(validationResponse.getErrorMessage());
     }
 
     public ResponseEntity<Void> setMineDescriptors(@ApiParam(value = "Descriptors to set for Mine" ,required=true )  @Valid @RequestBody MineDescriptor body,@NotNull @ApiParam(value = "ID of mine config to retrieve", required = true) @Valid @RequestParam(value = "mineId", required = true) UUID mineId,@NotNull @ApiParam(value = "ID of user who owns this mine", required = true) @Valid @RequestParam(value = "userId", required = true) UUID userId) {

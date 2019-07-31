@@ -20,9 +20,9 @@ public class ValidationResponseTest {
         DataFileProperties dataFileProperties = new DataFileProperties();
         dataFileProperties.addDescriptorsItem(getDescriptor());
         ValidationResponse response = new ValidationResponse(true, errorMessage, dataFileProperties);
-        assertEquals(errorMessage, response.errorMessage);
-        assertTrue(response.isValid);
-        assertEquals(dataFileProperties, response.dataFileProperties);
+        assertEquals(errorMessage, response.getErrorMessage());
+        assertTrue(response.isValid());
+        assertEquals(dataFileProperties, response.getDataFileProperties());
 
     }
 

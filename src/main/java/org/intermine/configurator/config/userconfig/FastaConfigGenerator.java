@@ -18,8 +18,11 @@ import java.util.Map;
 
 /**
  * Generates config (questions, answers etc) needed by the wizard. Will be presented to the user.
+ *
+ * @author Julie Sullivan
  */
-public class FastaConfigGenerator implements ConfigGenerator {
+public class FastaConfigGenerator implements ConfigGenerator
+{
 
     private static final List<String> FEATURE_TYPES = new ArrayList<String>();
     private static final Map<String, String> IDENTIFIER_TYPES = new HashMap<>();
@@ -99,6 +102,9 @@ public class FastaConfigGenerator implements ConfigGenerator {
         return null;
     }
 
+    /**
+     * @return the first question for this file type and associated answers
+     */
     protected DataFilePropertiesQuestion getQuestion1() {
         DataFilePropertiesQuestion question = new DataFilePropertiesQuestion();
         question.setQuestionId("nucleotideOrProtein");
@@ -130,6 +136,9 @@ public class FastaConfigGenerator implements ConfigGenerator {
         FEATURE_TYPES.add("Chromosome");
     }
 
+    /**
+     * @return the second question for this file type and associated answers
+     */
     protected DataFilePropertiesQuestion getQuestion2() {
         DataFilePropertiesQuestion question = new DataFilePropertiesQuestion();
         question.setQuestionId("featureType");
@@ -160,6 +169,9 @@ public class FastaConfigGenerator implements ConfigGenerator {
         IDENTIFIER_TYPES.put("primaryAccession", "Accession");
     }
 
+    /**
+     * @return the third question for this file type and associated answers
+     */
     protected DataFilePropertiesQuestion getQuestion3() {
         String identifier = getIdentifier(headerRow);
         String questionWording = null;
@@ -192,6 +204,10 @@ public class FastaConfigGenerator implements ConfigGenerator {
         return question;
     }
 
+    /**
+     * @param headerRow the row that starts with >
+     * @return the identifier from the header of a fasta file
+     */
     protected String getIdentifier(String headerRow) {
         if (headerRow == null || headerRow.isEmpty()) {
             return null;
