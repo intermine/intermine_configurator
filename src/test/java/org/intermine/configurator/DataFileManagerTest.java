@@ -29,13 +29,13 @@ public class DataFileManagerTest {
 
         dataFile.fileFormat(DataFile.FileFormatEnum.FASTA);
         ValidationResponse validationResponse = DataFileManager.processDataFile(dataFile, pathToFile);
-        assertTrue(validationResponse.isValid);
+        assertTrue(validationResponse.isValid());
 
         f = new File(getClass().getClassLoader().getResource("bad-char.fa").toURI());
         pathToFile = f.getAbsolutePath();
 
         validationResponse = DataFileManager.processDataFile(dataFile, pathToFile);
-        assertFalse(validationResponse.isValid);
+        assertFalse(validationResponse.isValid());
 
     }
 

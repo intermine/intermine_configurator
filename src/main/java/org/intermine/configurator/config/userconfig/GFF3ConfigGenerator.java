@@ -13,15 +13,16 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Generates config (questions, answers etc) needed by the wizard. Will be presented to the user.
+ *
+ * @author Julie Sullivan
  */
-public class GFF3ConfigGenerator implements ConfigGenerator {
+public class GFF3ConfigGenerator implements ConfigGenerator
+{
 
     private static final List<String> HEADER = new LinkedList<>();
     protected String taxonId;
@@ -125,6 +126,11 @@ public class GFF3ConfigGenerator implements ConfigGenerator {
         return row;
     }
 
+    /**
+     * @param reader the GFF3 file
+     * @return the question for this file type and associated answers
+     * @throws IOException if the file can't be read
+     */
     protected DataFilePropertiesQuestion getQuestion1(BufferedReader reader)
         throws IOException {
         DataFilePropertiesQuestion question = new DataFilePropertiesQuestion();
@@ -150,31 +156,26 @@ public class GFF3ConfigGenerator implements ConfigGenerator {
 
     private List<DataFilePropertiesAnswerOption> getPossibleAnswers(String column9) {
         List<DataFilePropertiesAnswerOption> possibleAnswers = new ArrayList<>();
-
-//        ID=id1;Parent=rna0;Dbxref=GeneID:100287102,Genbank:NR_046018.2,HGNC:
-//        HGNC:37102;gbkey=misc_RNA;gene=DDX11L1;
-//        product=DEAD/H-box helicase 11 like 1;transcript_id=NR_046018.2
         String[] attributes = column9.split(";");
         for (String attribute : attributes) {
             String[] keyValuePairs = attribute.split("=");
             if (keyValuePairs.length == 2) {
                 if ("gene".equalsIgnoreCase(keyValuePairs[0])) {
-                    possibleAnswers.add(getAnswer(taxonId + ".attributes.gene=primaryIdentifier", attribute));
+                    possibleAnswers.add(getAnswer(taxonId
+                        + ".attributes.gene=primaryIdentifier", attribute));
                 } else if ("locus_tag".equalsIgnoreCase(keyValuePairs[0])) {
-                        possibleAnswers.add(getAnswer(taxonId + ".attributes.locus_tag=primaryIdentifier", attribute));
+                    possibleAnswers.add(getAnswer(taxonId
+                        + ".attributes.locus_tag=primaryIdentifier", attribute));
                 } else if ("name".equalsIgnoreCase(keyValuePairs[0])) {
-                    possibleAnswers.add(getAnswer(taxonId + ".attributes.name=primaryIdentifier", attribute));
+                    possibleAnswers.add(getAnswer(taxonId
+                        + ".attributes.name=primaryIdentifier", attribute));
                 } else if ("Dbxref".equalsIgnoreCase(keyValuePairs[0])) {
                     String[] dbxrefs = keyValuePairs[1].split(",");
                     for (String dbxref : dbxrefs) {
                         String[] xrefKeyValues = dbxref.split(":");
                         //9606.gene.attributes.Dbxref.GeneID
-                        possibleAnswers.add(getAnswer(taxonId + ".gene.attributes.Dbxref." +
-                            xrefKeyValues[0] + "=primaryIdentifier", dbxref));
-
-//                        "ID=cds0;Parent=gene0;Dbxref=Genbank:WP_043903292.1;Name=WP_043903292.1;gbkey=CDS;
-//                        product=hypothetical protein;protein_id=WP_043903292.1;transl_table=11"
-
+                        possibleAnswers.add(getAnswer(taxonId + ".gene.attributes.Dbxref."
+                            + xrefKeyValues[0] + "=primaryIdentifier", dbxref));
                     }
                 }
             }

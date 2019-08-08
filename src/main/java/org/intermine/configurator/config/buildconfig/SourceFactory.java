@@ -4,8 +4,14 @@ import io.swagger.model.DataFile.FileFormatEnum;
 
 /**
  * Based on filetype, gets the correct config generator
+ *
+ * @author Julie Sullivan
  */
-public class SourceFactory {
+public final class SourceFactory
+{
+    private SourceFactory() {
+        // don't instantiate
+    }
 
     /**
      * Based on filetype, gets the correct config generator
@@ -16,10 +22,10 @@ public class SourceFactory {
         if (fileFormatEnum == null) {
             return null;
         }
-        if (FileFormatEnum.FASTA.compareTo(fileFormatEnum) == 0){
+        if (FileFormatEnum.FASTA.compareTo(fileFormatEnum) == 0) {
             return new FastaDataSource();
         }
-        if (FileFormatEnum.GFF.compareTo(fileFormatEnum) == 0){
+        if (FileFormatEnum.GFF.compareTo(fileFormatEnum) == 0) {
             return new GFF3DataSource();
         }
         return null;

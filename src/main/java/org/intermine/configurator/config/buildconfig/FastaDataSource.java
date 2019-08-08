@@ -13,11 +13,17 @@ import java.util.Map;
 
 /**
  * {@inheritDoc}
+ *
+ * @author Julie Sullivan
  */
-public class FastaDataSource implements DataSource {
+public class FastaDataSource implements DataSource
+{
 
     Map<String, String> selectedAnswers = new HashMap<>();
 
+    /**
+     * Constructor
+     */
     public FastaDataSource() {
         // constructor
     }

@@ -26,14 +26,18 @@ import org.springframework.util.StringUtils;
 
 /**
  * Handles all the interaction with the database and user-config previously created.
+ *
+ * @author Julie Sullivan
  */
-public class MineConfigManager {
+public class MineConfigManager
+{
 
     /**
      * checks if this combo of user and mine is in our database
      *
      * @param mineId UUID for user
      * @param userId UUID for mine
+     * @param repository link to database
      * @return TRUE if valid combo
      */
     public boolean isValid(MineUserConfigRepository repository, UUID mineId, UUID userId) {
@@ -110,9 +114,11 @@ public class MineConfigManager {
      * Overwrites any previously set mine descriptors.
      *
      * @param repository link to database
+     * @param descriptor descriptor (e.g. mineName) for this mine
      * @param mineId id of mine
      */
-    public void setMineDescriptor(MineUserConfigRepository repository, UUID mineId, MineDescriptor descriptor) {
+    public void setMineDescriptor(MineUserConfigRepository repository, UUID mineId, MineDescriptor
+            descriptor) {
         MineUserConfig config = getMineConfig(repository, mineId);
         config.setMineDescriptor(descriptor);
         repository.save(config);
@@ -183,6 +189,7 @@ public class MineConfigManager {
      * Destroy the associated config for file
      *
      * @param repository link to database
+     * @param fileId if of file to remove
      * @param mineId id of mine
      * @return TRUE if operation successful, FALSE is mineId/userId not found
      */
@@ -300,6 +307,7 @@ public class MineConfigManager {
      *
      * @param mineId id of mine
      * @param userId id of user who owns mine
+     * @param repository link to database
      * @return TRUE if operation successful, FALSE is mineId/userId not found
      */
     public MineBuildConfig getMineBuildConfig(MineUserConfigRepository repository, UUID mineId, UUID userId) {
@@ -384,7 +392,7 @@ public class MineConfigManager {
             }
         }
 
-        projectXML.append(fileSuffix);
+        projectXML.append(FILE_SUFFIX);
 
         return projectXML.toString();
     }
@@ -393,11 +401,12 @@ public class MineConfigManager {
         return "<project type=\"bio\">"
                 + "<property name=\"target.model\" value=\"genomic\"/>" + System.lineSeparator()
                 + "<property name=\"common.os.prefix\" value=\"common\"/>" + System.lineSeparator()
-                + "<property name=\"intermine.properties.file\" value=\"" + mineName + ".properties\"/>" + System.lineSeparator()
+                + "<property name=\"intermine.properties.file\" value=\""
+                + mineName + ".properties\"/>" + System.lineSeparator()
                 + "<sources>" + System.lineSeparator();
     }
 
-    private final static String fileSuffix = "</sources><post-processing>" + System.lineSeparator()
+    private static final String FILE_SUFFIX = "</sources><post-processing>" + System.lineSeparator()
             + "<post-process name=\"do-sources\" />" + System.lineSeparator()
             + "<post-process name=\"create-attribute-indexes\"/>" + System.lineSeparator()
             + "<post-process name=\"summarise-objectstore\"/>" + System.lineSeparator()

@@ -11,10 +11,13 @@ import java.util.List;
  * Generates the actual XML snippet needed to run this source in the build. Also includes
  * a data model snippet needed. This can be NULL.
  *
+ * @author Julie Sullivan
  */
-public interface DataSource {
+public interface DataSource
+{
 
     /**
+     * Retrieve the project XML entry for this data parser.
      *
      * @param dataFileProperties metadata about this data file
      * @param fileLocation absolute path to data file
@@ -38,6 +41,8 @@ public interface DataSource {
      *
      * Can be null!
      *
+     * @param dataFileProperties metadata about this data file
+     * @param fileLocation absolute path to data file
      * @return model XML to be merged into the core model
      */
     List<SourceConfig> getSourceConfigs(DataFileProperties dataFileProperties, String fileLocation);

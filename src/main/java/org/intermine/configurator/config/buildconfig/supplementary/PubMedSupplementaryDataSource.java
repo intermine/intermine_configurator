@@ -9,8 +9,11 @@ import java.util.List;
 
 /**
  * Project XML entry for the update-publications supplementary data source
+ *
+ * @author Julie Sullivan
  */
-public class PubMedSupplementaryDataSource implements DataSource {
+public class PubMedSupplementaryDataSource implements DataSource
+{
 
     /**
      * {@inheritDoc}

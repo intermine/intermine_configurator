@@ -134,8 +134,8 @@ public class ConfiguratorApiControllerIntegrationTest {
 
         ValidationResponse validationResponse = DataFileManager.processDataFile(getDummyDataFile(), pathToFile);
 
-        assertTrue(validationResponse.isValid);
-        DataFile dataFile = validationResponse.dataFileProperties.getDataFile();
+        assertTrue(validationResponse.isValid());
+        DataFile dataFile = validationResponse.getDataFileProperties().getDataFile();
         try {
             api.detectFileProperties(dataFile, userId, mineId);
         } catch (IllegalArgumentException e) {
@@ -247,12 +247,12 @@ public class ConfiguratorApiControllerIntegrationTest {
         String pathToFile = getClass().getClassLoader().getResource("test.fa").getPath();
 
         ValidationResponse validationResponse = DataFileManager.processDataFile(getDummyDataFile(), pathToFile);
-        assertTrue(validationResponse.isValid);
-        DataFileProperties dataFileProperties = validationResponse.dataFileProperties;
+        assertTrue(validationResponse.isValid());
+        DataFileProperties dataFileProperties = validationResponse.getDataFileProperties();
         DataFilePropertiesResponse dataFilePropertiesResponse = new DataFilePropertiesResponse();
         dataFilePropertiesResponse.setDataFile(dataFileProperties.getDataFile());
         try {
-            ResponseEntity<Void> responseEntity = api.saveFileProperties(dataFilePropertiesResponse, mineId, userId);
+            api.saveFileProperties(dataFilePropertiesResponse, mineId, userId);
         } catch (IllegalArgumentException e) {
             // validation fails because we don't have a file in the location the cloud expects.
             // let this fail until i figure out how to override the file location for testing.

@@ -11,11 +11,16 @@ import java.util.List;
 
 /**
  * Interface defining methods needed to define config for a data type.
+ *
+ * @author Julie Sullivan
  */
-public interface ConfigGenerator {
+public interface ConfigGenerator
+{
 
     /**
      * @param dataFileProperties for this data file
+     * @param fileLocation absolute path to the file
+     * @throws IOException if file can't be opened
      */
     void generateConfig(DataFileProperties dataFileProperties, String fileLocation)
         throws IOException;

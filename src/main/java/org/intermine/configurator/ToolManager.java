@@ -18,11 +18,18 @@ import java.util.Scanner;
  * Manages the tools available for the InterMine wizard.
  *
  * TODO gets the list of tools from a URL that might not be production ready!
+ *
+ * @author Julie Sullivan
  */
-public class ToolManager {
+public final class ToolManager
+{
 
     private static final String URL = "http://bluegenes.apps.intermine.org/api/tools/all";
-    private static Map<String, DataTool> dataTools = new HashMap<String, DataTool>();
+    private static Map<String, DataTool> dataTools = new HashMap<>();
+
+    private ToolManager() {
+        // don't instantiate
+    }
 
     /**
      * Based on the list from Bluegenes, return a list of all available tools.
@@ -99,7 +106,7 @@ public class ToolManager {
         ToolName names = tool.names;
         ToolPackage packageName = tool.packageName;
 
-        String toolId = packageName._id;
+        String toolId = packageName.id;
 
         DataTool dataTool = new DataTool();
         dataTool.setToolId(toolId);
@@ -111,13 +118,23 @@ public class ToolManager {
     }
 }
 
+/**
+ * List of available tools. Used to translate from JSON
+ *
+ * @author Julie Sullivan
+ */
 class ToolShed
 {
     @JsonProperty("tools")
     ArrayList<Tool> tools;
 }
 
-@JsonIgnoreProperties({"config"})
+/**
+ * Represents a tool
+ *
+ * @author Julie Sullivan
+ */
+@JsonIgnoreProperties("config")
 class Tool
 {
     @JsonProperty("hasimage")
@@ -128,6 +145,11 @@ class Tool
     ToolPackage packageName;
 }
 
+/**
+ * Represents a toolname in the provided JSON
+ *
+ * @author Julie Sullivan
+ */
 class ToolName
 {
     @JsonProperty("human")
@@ -138,11 +160,20 @@ class ToolName
     String npm;
 }
 
-@JsonIgnoreProperties({"_requiredBy", "_requested", "repository", "license", "homepage", "name", "_resolved", "scripts", "bundleDependencies", "_integrity", "_location", "_spec", "bugs", "keywords", "author", "_where", "devDependencies", "deprecated", "_phantomChildren", "_inBundle", "version", "main", "dependencies", "_shasum", "_from", "lint-staged", "husky"})
+/**
+ * Represents a "package" in the JSON we get from the server
+ *
+ * @author Julie Sullivan
+ */
+@JsonIgnoreProperties({"_requiredBy", "_requested", "repository", "license", "homepage",
+        "name", "_resolved", "scripts", "bundleDependencies", "_integrity", "_location", "_spec",
+        "bugs", "keywords", "author", "_where", "devDependencies", "deprecated",
+        "_phantomChildren", "_inBundle", "version", "main", "dependencies", "_shasum", "_from",
+        "lint-staged", "husky"})
 class ToolPackage
 {
     @JsonProperty("description")
     String description;
     @JsonProperty("_id")
-    String _id;
+    String id;
 }

@@ -9,8 +9,14 @@ import java.util.List;
 
 /**
  * manages available sources
+ *
+ * @author Julie Sullivan
  */
-public class SupplementaryDataSourceManager {
+public final class SupplementaryDataSourceManager
+{
+    private SupplementaryDataSourceManager() {
+        // don't instantiate
+    }
 
     /**
      * Returns a list of all available supplementary data sources.
