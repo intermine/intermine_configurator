@@ -14,7 +14,7 @@ jobs:
       jdk: openjdk8
       script: ./gradlew test
     - stage: apiMerge
-      dist: bionic
+     # dist: bionic
       python: "3.6.7"
       env: PYENV_VERSION=3.6.7
       install: "pip3 install -r requirements.txt"
