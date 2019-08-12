@@ -13,7 +13,7 @@ jobs:
     - stage: tests
       jdk: openjdk8
       script: ./gradlew test
-      dist: trusty
+      dist: xenial
     - stage: apiMerge
       dist: bionic
       python: "3.6.7"
