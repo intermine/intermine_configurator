@@ -10,6 +10,7 @@ import org.intermine.configurator.config.userconfig.ConfigGenerator;
 import org.intermine.configurator.config.userconfig.ConfigGeneratorFactory;
 import org.intermine.configurator.validation.ValidationResponse;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -38,6 +39,14 @@ public final class DataFileManager
         String fileFormat = "";
         if (dataFile.getFileFormat() != null) {
             fileFormat = dataFile.getFileFormat().toString();
+        }
+
+        // debug only
+        File f = new File(pathToFile);
+        if (!f.exists() || f.isDirectory()) {
+            ValidationResponse validationResponse = new ValidationResponse(false,
+                    "Can't find file. Looked here: '" + pathToFile + "'", null);
+            return validationResponse;
         }
 
         // validate file
