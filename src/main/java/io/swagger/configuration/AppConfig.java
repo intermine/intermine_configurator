@@ -19,7 +19,10 @@ public class AppConfig {
 
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory();
+        String redisHost = System.getenv().getOrDefault("REDIS_HOST_ENV", "192.168.99.100");
+        String redisPort = System.getenv().getOrDefault("REDIS_PORT_ENV", "6379");
+        System.out.println("Redis @ "+ redisHost + ":" + redisPort);
+        return new LettuceConnectionFactory(redisHost, Integer.valueOf(redisPort));  
     }
 
     @Bean(name="redisTemplate")
