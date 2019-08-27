@@ -1,0 +1,68 @@
+version: "3"
+
+services:
+  postgres:
+    container_name: compose_postgres
+    image: postgres:alpine
+    environment:
+      - POSTGRES_DB=${DB_NAME:-composedb_dev}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - ${POSTGRES_DATA_PATH:-./data/postgres}:/var/lib/postgresql/data
+  
+  redis:
+    container_name: compose_redis
+    image: redis:alpine
+    volumes:
+      - ${REDIS_DATA_PATH:-./data/redis}:/data
+  
+  configurator:
+    container_name: configurator
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - IM_DATA_DIR=${IM_DATA_DIR:-/intermine/sharedfs}
+      - REDIS_HOST_ENV=${REDIS_HOST_ENV:-redis}
+      - REDIS_PORT_ENV=${REDIS_PORT_ENV:-6379}
+    volumes:
+      - SharedFS:${IM_DATA_DIR:-/intermine/sharedfs}
+    depends_on: 
+      - redis
+    ports:
+      - ${CONFIGURATOR_HOST_PORT:-9999}:${CONFIGURATOR_PORT:-8080}
+  wizard:
+    container_name: wizard
+    image: intermine/wizard:latest
+    depends_on:
+      - compose
+      - configurator
+    ports:
+      - ${WIZARD_HOST_PORT:-9992}:${WIZARD_PORT:-8080}
+  compose:
+    container_name: compose
+    image: intermine/compose:latest
+    environment:
+      - FLASK_CONFIG_MODE=${FLASK_CONFIG_MODE:-docker_local}
+      - FLASK_DEBUG=${FLASK_DEBUG:-TRUE}
+      - SQLALCHEMY_DATABASE_URI=${SQLALCHEMY_DATABASE_URI:-postgres://postgres:postgres@postgres:5432/composedb}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL:-redis://redis:6379}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND:-redis}
+      - PGHOST=${PGHOST:-postgres}
+      - PGUSER=${PGUSER:-postgres}
+      - PGPASSWORD=${PGPASSWORD:-postgres}
+      - IM_DATA_DIR=${IM_DATA_DIR:-/intermine/sharedfs}
+      - CONFIGURATOR_URL=${CONFIGURATOR_URL:-http://configurator:8080/}
+    volumes:
+      - SharedFS:${IM_DATA_DIR:-/intermine/sharedfs}
+    ports:
+      - ${COMPOSE_HOST_PORT:-9991}:${COMPOSE_PORT:-9991}
+    depends_on: 
+      - postgres
+      - configurator
+      - redis
+
+volumes:
+  SharedFS:
+
