@@ -1,6 +1,12 @@
 # intermine-configurator
 a group of web services used to create an InterMine instance
 
+Requirements
+-------------------------------
+
+* Java 8+
+* [Redis](https://redis.io/topics/quickstart)
+
 Getting Started With InterMine
 -------------------------------
 
