@@ -113,6 +113,6 @@ public final class DataFileManager
      * @return the full path to the file
      */
     public static String getFilePath(String userId, String fileId, String baseDir, String fileName) {
-        return baseDir + "/" + userId + "/" + fileId + "/" + fileName;
+        return baseDir + "/" + userId + "/data/" + fileId;
     }
 }
