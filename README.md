@@ -1,6 +1,8 @@
 # intermine-configurator
 a group of web services used to create an InterMine instance
 
+[![Build Status](https://travis-ci.org/intermine/intermine_configurator.svg?branch=master)](https://travis-ci.org/intermine/intermine_configurator)
+
 Requirements
 -------------------------------
 
