@@ -9,6 +9,14 @@ Requirements
 * Java 8+
 * [Redis](https://redis.io/topics/quickstart)
 
+Add the environment $IM_DATA_DIR. This should be the same sirectory as set in your [intermine_compose .env file](https://github.com/intermine/intermine_compose#step-0). 
+
+On a mac or linux: 
+
+```bash
+export IM_DATA_DIR=/tmp/sharedfs
+```
+
 Getting Started With InterMine
 -------------------------------
 
