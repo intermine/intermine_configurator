@@ -31,7 +31,7 @@ services:
     depends_on: 
       - redis
     ports:
-      - ${CONFIGURATOR_HOST_PORT:-9999}:${CONFIGURATOR_PORT:-8080}
+      - ${CONFIGURATOR_HOST_PORT:-9999}:${CONFIGURATOR_PORT:-8082}
   wizard:
     container_name: wizard
     image: intermine/wizard:latest
@@ -39,7 +39,7 @@ services:
       - compose
       - configurator
     ports:
-      - ${WIZARD_HOST_PORT:-9992}:${WIZARD_PORT:-8080}
+      - ${WIZARD_HOST_PORT:-9992}:${WIZARD_PORT:-8082}
   compose:
     container_name: compose
     image: intermine/compose:latest
@@ -53,7 +53,7 @@ services:
       - PGUSER=${PGUSER:-postgres}
       - PGPASSWORD=${PGPASSWORD:-postgres}
       - IM_DATA_DIR=${IM_DATA_DIR:-/intermine/sharedfs}
-      - CONFIGURATOR_URL=${CONFIGURATOR_URL:-http://configurator:8080/}
+      - CONFIGURATOR_URL=${CONFIGURATOR_URL:-http://configurator:8082/}
     volumes:
       - SharedFS:${IM_DATA_DIR:-/intermine/sharedfs}
     ports:

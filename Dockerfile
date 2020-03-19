@@ -33,5 +33,5 @@ COPY --from=BUILD  /intermine/src/main/resources/application.properties /intermi
 ENV MEM_OPTS="-Xmx1g -Xms500m"
 ENV JAVA_OPTS="${MEM_OPTS} -XX:MaxHeapFreeRatio=99"
 ENV IM_DATA_DIR=/intermine/data
-EXPOSE 8080
+EXPOSE 8082
 ENTRYPOINT [ "java", "-jar", "/intermine/intermine-configurator.jar"]
